@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 
-function useEventListener(
-  eventName: string,
-  handler: (event: Event) => void,
-  element: HTMLElement | Window = window
-) {
+function useEventListener(eventName: string, handler: (event: Event) => void, element: HTMLElement | Window = window) {
   useEffect(() => {
     const targetElement = element || window;
     targetElement.addEventListener(eventName, handler);

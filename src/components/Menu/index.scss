@@ -1,0 +1,21 @@
+#menu {
+  .sub-menu {
+    .paper {
+      display: none;
+    }
+
+    .icon {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      .paper {
+        display: flex;
+      }
+
+      .icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
