@@ -45,3 +45,23 @@ export interface ShortNew {
   img: string;
   url: string;
 }
+
+export interface ProductAttribute {
+  product: string;
+  name: string;
+  values: string[];
+}
+
+export interface Type {
+  name: string;
+  img: string;
+}
+
+export interface UsageNeed {
+  value: string;
+}
+
+export interface Brand {
+  name: string;
+  img: string;
+}

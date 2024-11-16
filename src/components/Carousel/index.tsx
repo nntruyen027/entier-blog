@@ -53,7 +53,7 @@ const CustomCarousel: React.FC<CarouselProps> = ({ data }) => {
           ))}
         </Carousel>
         <FontAwesomeIcon
-          className={'absolute right-2 top-8 bg-gray-300 w-4 h-4 p-1 rounded-2xl cursor-pointer'}
+          className={'absolute right-2 top-2 bg-gray-300 w-4 h-4 p-1 rounded-2xl cursor-pointer'}
           icon={faClose}
           onClick={() => setShow(!show)}
         />

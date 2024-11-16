@@ -5,5 +5,18 @@
   "cart": "cart",
   "more": "more",
   "recommend": "Recommend",
-  "news": "News"
+  "news": "News",
+  "close": "close",
+  "under": "Under {{value}}",
+  "from-to": "From {{min}} to {{max}}",
+  "above": "Above {{value}}",
+  "units": {
+    "thousand": "thousand",
+    "million": "million",
+    "billion": "billion"
+  },
+  "price": "price",
+  "brand": "brand",
+  "type": "type",
+  "usage-needs": "usage needs"
 }

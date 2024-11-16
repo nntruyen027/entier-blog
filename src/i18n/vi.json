@@ -5,5 +5,18 @@
   "online-sale": "khuyến mãi online",
   "recommend": "Gợi ý cho bạn",
   "more": "Xem thêm",
-  "news": "Tin tức"
+  "news": "Tin tức",
+  "close": "đóng",
+  "brand": "hãng",
+  "under": "Dưới {{value}}",
+  "from-to": "Từ {{min}} đến {{max}}",
+  "above": "Trên {{value}}",
+  "units": {
+    "thousand": "nghìn",
+    "million": "triệu",
+    "billion": "tỷ"
+  },
+  "price": "giá",
+  "type": "loại",
+  "usage-needs": "nhu cầu"
 }
