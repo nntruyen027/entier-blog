@@ -331,4 +331,84 @@ const multiTabsNew = [
   }
 ]
 
-export { multiTabs, carousel, multiTabsNew }
+const brands = [
+  {
+    name: 'samsung',
+    img: 'https://cdnv2.tgdd.vn/mwg-static/common/Category/31/ce/31ce9dafafac121361ee7cbd313ae76b.png'
+  },
+  {
+    name: 'iPhone',
+    img: 'https://cdnv2.tgdd.vn/mwg-static/common/Category/92/e5/92e5003382a0bada9a770618b6c6099b.png'
+  },
+  {
+    name: 'oppo',
+    img: 'https://cdnv2.tgdd.vn/mwg-static/common/Category/b6/26/b62674c18cc7ec4de1de3670812af13d.png'
+  },
+  {
+    name: 'xiaomi',
+    img: 'https://cdnv2.tgdd.vn/mwg-static/common/Category/e6/02/e602583e5e16acedfe54ab41b08b5d4f.png'
+  }
+]
+
+const types = [
+  {
+    name: 'Android',
+    img: 'https://cdn.tgdd.vn/ValueIcons/android.jpg'
+  },
+  {
+    name: 'iphone (iOS)',
+    img: 'https://cdn.tgdd.vn/ValueIcons/iphone.jpg'
+  },
+  {
+    name: 'Khác',
+    img: 'https://cdn.tgdd.vn/ValueIcons/dien-thoai-pho-thong.jpg'
+  }
+]
+
+const usages = [
+  {
+    value: 'Chơi game khủng / Cấu hình cao'
+  },
+  {
+    value: 'Pin khủng trên 5000 mAh'
+  },
+  {
+    value: 'Chụp ảnh, quay phim'
+  },
+  {
+    value: 'Livestream'
+  },
+  {
+    value: 'Mỏng nhẹ'
+  }
+]
+
+const productAttributes = [
+  {
+    name: 'Ram',
+    product: 'dien-thoai',
+    values: ['3 GB', '4 GB', '6 GB', '8 GB', '12 GB']
+  },
+  {
+    name: 'Độ phân giải',
+    product: 'dien-thoai',
+    values: ['QQVGA', 'QVGA', 'HD+', 'Full HD+', '1.5K', '1.5K+', '2K+', 'Retina (iPhone)']
+  },
+  {
+    name: 'Tần số quét',
+    product: 'dien-thoai',
+    values: ['60 Hz', '144 Hz', '90 Hz', '120 Hz']
+  },
+  {
+    name: 'Dung lượng lưu trữ',
+    product: 'dien-thoai',
+    values: ['32 GB', '64 GB', '256 GB', '512 GB', '1 TB']
+  },
+  {
+    name: 'Tính năng sạc',
+    product: 'dien-thoại ',
+    values: ['Sạc nhanh (từ 20W)', 'Sạc siêu nhanh (từ 60W)', 'Sạc không dây']
+  }
+]
+
+export { multiTabs, carousel, multiTabsNew, brands, types, usages, productAttributes }

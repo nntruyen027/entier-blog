@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
-import { Brand, Type, UsageNeed } from '~/types';
+import { Brand, ProductAttribute, Type, UsageNeed } from '~/types';
 import { formatNumberToWordsLocalized } from '~/utils/currency';
 import { Divider } from '@mui/material';
 
@@ -14,7 +14,10 @@ interface FilterModalProps {
     brands: Brand[];
     types: Type[];
     usages: UsageNeed[];
+    productAttributes: ProductAttribute[];
   } | null;
+  filter: string[];
+  setFilter: (strings: string[]) => void;
 }
 
 function toggleSelection<T>(prevSelected: T[], item: T): T[] {
@@ -23,12 +26,17 @@ function toggleSelection<T>(prevSelected: T[], item: T): T[] {
     : [...prevSelected, item]; // Add if not exists
 }
 
-const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, position, value }) => {
+const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, position, value, setFilter }) => {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedPrices, setSelectedPrices] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedUsages, setSelectedUsages] = useState<string[]>([]);
-  const modalRef = useRef<HTMLDivElement>(null); // Ref for modal element
+  const [selectedAttributes, setSelectedAttributes] = useState<string[]>([]);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setFilter([...selectedBrands, ...selectedPrices, ...selectedTypes, ...selectedUsages, ...selectedAttributes]);
+  }, [selectedBrands, selectedPrices, selectedTypes, selectedUsages, selectedAttributes, setFilter]);
 
   const prices = [
     {
@@ -70,8 +78,13 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, position,
   ];
 
   useEffect(() => {
-    setSelectedBrands([]);
-    return setSelectedBrands([]);
+    if (!isVisible) {
+      setSelectedBrands([]);
+      setSelectedPrices([]);
+      setSelectedTypes([]);
+      setSelectedUsages([]);
+      setSelectedAttributes([]);
+    }
   }, [isVisible]);
 
   if (!isVisible || !value) return null;
@@ -92,14 +105,20 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, position,
     setSelectedUsages((prevSelected) => toggleSelection(prevSelected, usage));
   };
 
+  const toggleAttributesSelection = (attributeValues: string) => {
+    setSelectedAttributes((prevSelected) => toggleSelection(prevSelected, attributeValues));
+  };
+
   return (
     <div
       ref={modalRef}
-      className='fixed z-50 bg-white w-[890px] max-w-[890px] shadow-lg rounded-lg p-4 border'
+      className='fixed z-50 bg-white w-[890px] max-w-[890px] shadow-lg rounded-lg p-4 border custom-scrollbar'
       style={{
         left: position.left,
         top: position.top,
-        position: 'absolute'
+        position: 'absolute',
+        maxHeight: '50vh',
+        overflowY: 'auto'
       }}
     >
       <button
@@ -173,6 +192,25 @@ const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, position,
         </div>
       </div>
       <Divider sx={{ marginTop: '1rem' }} />
+      <div className={'flex flex-wrap'}>
+        {value.productAttributes?.map((item, index) => (
+          <div className={'w-1/3 mb-3 pr-3'} key={index}>
+            <h4 className='capitalize font-bold my-2'>{item.name}</h4>
+            <div className={'flex gap-3 flex-wrap'}>
+              {item.values.map((item, index) => (
+                <button
+                  key={index}
+                  value={item}
+                  onClick={() => toggleAttributesSelection(item)} // Handle selection
+                  className={`p-2 bg-white border text-sm ${selectedAttributes.includes(item) ? 'border-[#2f80ed]' : 'border-gray-300'} hover:border-[#2f80ed]`}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

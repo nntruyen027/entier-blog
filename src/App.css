@@ -39,3 +39,38 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Lớp chung cho thanh cuộn */
+.custom-scrollbar {
+  scrollbar-width: thin; /* Firefox: Kích thước thanh cuộn nhỏ */
+  scrollbar-color: #d9d9d9 #f5f5f5; /* Firefox: Màu thanh cuộn và nền */
+  overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+  max-height: 50vh; /* Giới hạn chiều cao (tối đa nửa màn hình) */
+}
+
+/* Webkit (Chrome, Safari, Edge) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Độ rộng của thanh cuộn */
+  height: 6px; /* Độ rộng của thanh cuộn ngang (nếu có) */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f5f5f5; /* Màu nền của track */
+  border-radius: 3px; /* Góc bo tròn */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #d9d9d9; /* Màu của thanh cuộn */
+  border-radius: 3px; /* Làm tròn góc */
+  border: 1px solid #ffffff; /* Viền trắng bao quanh thanh cuộn */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #bfbfbf; /* Màu khi hover */
+}
+
+/* Ẩn thanh cuộn ngang nếu không cần thiết */
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
