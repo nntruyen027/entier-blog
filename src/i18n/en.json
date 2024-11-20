@@ -19,5 +19,6 @@
   "brand": "brand",
   "type": "type",
   "usage-needs": "usage needs",
-  "filter": "filter"
+  "filter": "filter",
+  "order-by": "Order by"
 }

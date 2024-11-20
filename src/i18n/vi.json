@@ -19,5 +19,6 @@
   "price": "giá",
   "type": "loại",
   "usage-needs": "nhu cầu",
-  "filter": "lọc"
+  "filter": "lọc",
+  "order-by": "Sắp xếp theo"
 }

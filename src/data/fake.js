@@ -411,4 +411,6 @@ const productAttributes = [
   }
 ]
 
-export { multiTabs, carousel, multiTabsNew, brands, types, usages, productAttributes }
+const orderBy = ['Nổi bật', 'Bán chạy', 'Giảm giá', 'Mới', 'Giá']
+
+export { multiTabs, carousel, multiTabsNew, brands, types, usages, productAttributes, orderBy }
