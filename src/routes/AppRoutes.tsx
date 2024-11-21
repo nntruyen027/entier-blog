@@ -5,6 +5,8 @@ import { LoadingPage, NotFoundPage } from '~/pages';
 import homeRoutes from './customerRoutes/homeRoutes';
 
 import { HomeLayout } from '~/layouts';
+import cartRoutes from '~/routes/customerRoutes/cartRoutes';
+import CartLayout from '~/layouts/customerLayouts/CartLayout';
 
 const Routing = () => (
   <Suspense fallback={<LoadingPage />}>
@@ -13,7 +15,9 @@ const Routing = () => (
         {homeRoutes.map(({ id, path, element }) => (
           <Route key={id} path={path} element={<HomeLayout>{element}</HomeLayout>} />
         ))}
-
+        {cartRoutes.map(({ id, path, element }) => (
+          <Route key={id} path={path} element={<CartLayout>{element}</CartLayout>} />
+        ))}
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>

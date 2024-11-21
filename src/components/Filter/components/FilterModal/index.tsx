@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, useRef } from 'react';
 import { Brand, ProductAttribute, Type, UsageNeed } from '~/types';
 import { formatNumberToWordsLocalized } from '~/utils/currency';
 import { Divider } from '@mui/material';
+import { toggleSelection } from '~/utils/array';
 
 interface FilterModalProps {
   isVisible: boolean;
@@ -18,12 +19,6 @@ interface FilterModalProps {
   } | null;
   filter: string[];
   setFilter: Dispatch<SetStateAction<string[]>>;
-}
-
-function toggleSelection<T>(prevSelected: T[], item: T): T[] {
-  return prevSelected.includes(item)
-    ? prevSelected.filter((selectedItem) => selectedItem !== item) // Remove if exists
-    : [...prevSelected, item];
 }
 
 const FilterModal: React.FC<FilterModalProps> = ({ isVisible, onClose, position, value, setFilter, filter }) => {

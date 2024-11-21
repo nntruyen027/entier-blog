@@ -35,6 +35,9 @@ const ProductTypePage = () => {
               <ItemComponent key={index} item={item} />
             ))}
         </div>
+        <div className={'w-full grid justify-center mt-3'}>
+          <button className={'bg-white text-[#2a83e9] border-[#2a83e9]'}>{t('more')}</button>
+        </div>
       </Paper>
     </div>
   );

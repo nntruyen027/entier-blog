@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { Brand, ProductAttribute, Type, UsageNeed } from '~/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { toggleSelection } from '~/utils/array';
 
 interface FilterProps {
   value: {
@@ -36,6 +37,10 @@ const Filter: React.FC<FilterProps> = ({ filter, setFilter, value }) => {
       });
     }
     setFilterVisible(true);
+  };
+
+  const toggleFilterSelection = (filter: string) => {
+    setFilter((prevSelected) => toggleSelection(prevSelected, filter));
   };
 
   return (
@@ -79,7 +84,12 @@ const Filter: React.FC<FilterProps> = ({ filter, setFilter, value }) => {
 
         <div className={`flex gap-2 ${isFilterVisible ? 'pointer-events-none opacity-30' : ''}`}>
           {value.brands.map((item, index) => (
-            <button value={item.name} key={index} className='p-2 hover:border-[#4a90e2]'>
+            <button
+              value={item.name}
+              onClick={() => toggleFilterSelection(item.name)}
+              key={index}
+              className={`p-2 hover:border-[#4a90e2] ${filter.includes(item.name) ? 'border-[#2f80ed]' : 'border-gray-300'}`}
+            >
               <img className='h-5' alt={item.name} src={item.img} />
             </button>
           ))}

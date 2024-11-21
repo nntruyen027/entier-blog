@@ -7,7 +7,7 @@ interface ProductPaperProps {
 
 const ProductPaper: React.FC<ProductPaperProps> = ({ item }) => (
   <Link to={item.url}>
-    <div className='border min-h-[400px] px-4 py-2 border-gray-200 w-48 flex flex-col gap-3 rounded-lg'>
+    <div className='border min-h-[400px] px-4 py-2 border-gray-200 w-48 flex flex-col gap-3 rounded-lg hover:shadow-md'>
       <div className='h-fit text-left flex gap-1 flex-wrap'>
         {item.labels.map((label, labelIndex) => (
           <span
