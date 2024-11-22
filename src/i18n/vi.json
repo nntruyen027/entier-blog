@@ -20,5 +20,9 @@
   "type": "loại",
   "usage-needs": "nhu cầu",
   "filter": "lọc",
-  "order-by": "Sắp xếp theo"
+  "order-by": "Sắp xếp theo",
+  "consignee": "Người nhận",
+  "mr": "Anh",
+  "ms": "Chị",
+  "full-name": "Họ và tên"
 }

@@ -413,4 +413,11 @@ const productAttributes = [
 
 const orderBy = ['Nổi bật', 'Bán chạy', 'Giảm giá', 'Mới', 'Giá']
 
-export { multiTabs, carousel, multiTabsNew, brands, types, usages, productAttributes, orderBy }
+const consignee = {
+  name: 'Nguyễn Ngọc Truyện',
+  isMale: true,
+  phone: '0704776898',
+  address: '211, Lân Quới 1, xã Thạnh Mỹ, huyện Vĩnh Thạnh, thành phố Cần Thơ'
+}
+
+export { multiTabs, carousel, multiTabsNew, brands, types, usages, productAttributes, orderBy, consignee }

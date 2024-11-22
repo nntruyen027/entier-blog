@@ -1,1 +1,5 @@
-//TODO: develop cart item component here
+const CartItem = () => {
+  return <div>Address Component</div>;
+};
+
+export default CartItem;
