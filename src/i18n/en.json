@@ -29,5 +29,18 @@
   "province": "province",
   "district": "district",
   "ward": "ward",
-  "detail": "detail"
+  "detail": "detail",
+  "user-info": "User information",
+  "address": "address",
+  "consignee-info": "Consignee information",
+  "confirm": "confirm",
+  "product": "product",
+  "estimated-cost": "The estimated total cost",
+  "quantity": "quantity",
+  "delivery-cost": "Delivery cost",
+  "total-cost": "Total cost",
+  "recipient-info": "recipient information",
+  "payment": "Payment",
+  "online": "Cash Payment",
+  "cash": "Direct Payment"
 }

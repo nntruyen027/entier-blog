@@ -29,5 +29,18 @@
   "province": "Tỉnh/Thành phố",
   "district": "Huyện/Quận/Thành phố",
   "ward": "Xã/Phường/Thị trấn",
-  "detail": "Số nhà"
+  "detail": "Số nhà",
+  "user-info": "Thông tin khách hàng",
+  "address": "địa chỉ",
+  "consignee-info": "Thông tin người nhận",
+  "confirm": "Xác nhận",
+  "product": "sản phẩm",
+  "estimated-cost": "tạm tính",
+  "quantity": "Số lượng",
+  "delivery-cost": "Phí giao hàng",
+  "total-cost": "Tổng cộng",
+  "recipient-info": "thông tin nhận hàng",
+  "payment": "thanh toán",
+  "online": "trực tiếp",
+  "cash": "tiền mặt"
 }

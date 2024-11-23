@@ -45,13 +45,13 @@ const ConsigneeComponent = () => {
       >
         <div className={'text-left'}>
           <div className={'mb-1 text-black'}>
-            <span className={'capitalize  font-bold'}>{t('consignee')}: </span>
-            <span>{consignee.isMale === true ? t('mr') : t('ms')} </span>
+            <span className={'inline-block lowercase first-letter:uppercase  font-bold'}>{t('consignee')}: </span>
+            <span className={'ml-2'}>{consignee.isMale === true ? t('mr') : t('ms')} </span>
             <span className={'uppercase'}> {consignee.name}</span> - <span>{consignee.phone}</span>
           </div>
           <div className={'text-[#667085]'}>
-            <FontAwesomeIcon className={'text-red-500'} icon={faLocationDot} />
-            <span> {fullAddress}</span>
+            <FontAwesomeIcon className={'text-red-500 mr-3'} icon={faLocationDot} />
+            <span className={'capitalize'}> {fullAddress}</span>
           </div>
         </div>
         <div className={'flex items-center '}>

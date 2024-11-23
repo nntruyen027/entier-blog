@@ -92,7 +92,9 @@ const ConsigneeModal: React.FC<ConsigneeModalProps> = ({ show, setShow, consigne
         <div className='fixed z-20 w-screen h-screen top-0 left-0'>
           <div className='absolute top-1/2 left-1/2 w-1/3 h-[90%] -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg'>
             <div className='relative top-0 left-0 p-3'>
-              <span className='text-black font-bold'>{t('consignee-info')}</span>
+              <span className='text-black font-bold inline-block lowercase first-letter:uppercase'>
+                {t('consignee-info')}
+              </span>
               <FontAwesomeIcon
                 onClick={() => setShow(false)}
                 className='absolute right-4 top-4 cursor-pointer'
@@ -102,7 +104,9 @@ const ConsigneeModal: React.FC<ConsigneeModalProps> = ({ show, setShow, consigne
             <Divider />
             <div className='text-left p-3 text-sm'>
               <FormControl fullWidth>
-                <span className='font-bold text-sm'>{t('user-info')}</span>
+                <span className='font-bold text-sm inline-block lowercase first-letter:uppercase'>
+                  {t('user-info')}
+                </span>
                 <RadioGroup row value={isMale} onChange={(e) => setIsMale(e.target.value === 'true')}>
                   <FormControlLabel value={true} control={<Radio />} label={t('mr')} />
                   <FormControlLabel value={false} control={<Radio />} label={t('ms')} />
@@ -128,7 +132,7 @@ const ConsigneeModal: React.FC<ConsigneeModalProps> = ({ show, setShow, consigne
             <Divider bold={8} />
             <div className='text-left p-3 text-sm'>
               <FormControl fullWidth>
-                <span className='font-bold'>{t('address')}</span>
+                <span className='font-bold inline-block lowercase first-letter:uppercase'>{t('address')}</span>
                 <div className='flex justify-between gap-3 mt-2'>
                   <Select
                     value={province}
@@ -195,8 +199,19 @@ const ConsigneeModal: React.FC<ConsigneeModalProps> = ({ show, setShow, consigne
               </FormControl>
             </div>
             <Divider bold={8} />
-            <div className='absolute bottom-0 w-full left-0 p-3'>
-              <Button fullWidth variant='contained' onClick={onConfirm}>
+            <div className='absolute bottom-0 w-full left-0 p-3 '>
+              <Button
+                sx={{
+                  textTransform: 'lowercase',
+                  display: 'inline-block',
+                  ':first-letter': {
+                    textTransform: 'uppercase'
+                  }
+                }}
+                fullWidth
+                variant='contained'
+                onClick={onConfirm}
+              >
                 {t('confirm')}
               </Button>
             </div>

@@ -439,6 +439,11 @@ const cartItem = [
     product: multiTabs[0].items[0],
     quantity: 2,
     version: null
+  },
+  {
+    product: multiTabs[0].items[1],
+    quantity: 1,
+    version: null
   }
 ]
 

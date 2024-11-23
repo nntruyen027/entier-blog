@@ -13,7 +13,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
   const { t } = useTranslation();
   return (
     <div>
-      <div className={'text-sm mt-2'}>
+      <div className={'text-sm my-2'}>
         <div className={'flex justify-between gap-2'}>
           <img className={'h-[80px]'} alt={item.product.name} src={item.product.img} />
           <div className={'w-full'}>
