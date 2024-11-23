@@ -1,16 +1,42 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
-import { consignee } from '~/data/fake';
-import { useState } from 'react';
+import { consignee as consigneeDefault } from '~/data/fake';
+import { useEffect, useState } from 'react';
 import ConsigneeModal from '~/pages/customer/cart/CartPage/components/ConsigneeModal';
 
 const ConsigneeComponent = () => {
   const { t } = useTranslation();
   const [show, setShow] = useState<boolean>(false);
+  const [consignee, setConsignee] = useState(consigneeDefault);
+  const [fullAddress, setFullAddress] = useState('');
+
+  useEffect(() => {
+    setFullAddress(
+      [
+        consignee.address.detail,
+        consignee.address.ward.name,
+        consignee.address.district.name,
+        consignee.address.province.name
+      ]
+        .filter(Boolean)
+        .join(', ')
+    );
+  }, [consignee]);
+
   return (
     <>
-      <ConsigneeModal show={show} setShow={setShow} />
+      <ConsigneeModal
+        show={show}
+        setShow={setShow}
+        consignee={{
+          name: consignee.name,
+          address: consignee.address,
+          phone: consignee.phone,
+          isMale: consignee.isMale
+        }}
+        setConsignee={setConsignee}
+      />
       <div
         className={
           'w-full text-sm justify-between rounded-lg p-2 cursor-pointer flex bg-[rgb(241,248,254)] border-[rgb(42,131,233)] border-dotted border-[1px]'
@@ -25,7 +51,7 @@ const ConsigneeComponent = () => {
           </div>
           <div className={'text-[#667085]'}>
             <FontAwesomeIcon className={'text-red-500'} icon={faLocationDot} />
-            <span> {consignee.address}</span>
+            <span> {fullAddress}</span>
           </div>
         </div>
         <div className={'flex items-center '}>

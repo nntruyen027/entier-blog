@@ -1,8 +1,10 @@
-import { ConsigneeComponent, EmptyComponent } from './components';
+import { CartItem, ConsigneeComponent, EmptyComponent } from './components';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
+import { cartItem as data } from '~/data/fake';
+import { CartItem as CartItemType } from '~/types';
 
 const isEmpty = false;
 
@@ -20,6 +22,9 @@ const CartPage = () => {
         </div>
         <div className={'bg-white my-2 py-2 px-3'}>
           <ConsigneeComponent />
+          {data.map((value: CartItemType, index: number) => (
+            <CartItem item={value} key={index} />
+          ))}
         </div>
       </div>
     );

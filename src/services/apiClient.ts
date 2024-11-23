@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-// Tạo một axios instance với cấu hình mặc định
 const apiClient = axios.create({
-  baseURL: 'https://api.example.com', 
+  baseURL: 'https://api.example.com',
   headers: {
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 });
 
 apiClient.interceptors.request.use(
@@ -37,7 +36,7 @@ const sendJsonRequest = async (url: string, method: string, data?: object) => {
   const response = await apiClient({
     method,
     url,
-    data, 
+    data
   });
   return response.data;
 };
@@ -45,15 +44,15 @@ const sendFormDataRequest = async (url: string, method: string, formData: FormDa
   const response = await apiClient({
     method,
     url,
-    data: formData,  
+    data: formData,
     headers: {
-      'Content-Type': 'multipart/form-data',  // Đặt Content-Type cho các tệp tin
-    },
+      'Content-Type': 'multipart/form-data' // Đặt Content-Type cho các tệp tin
+    }
   });
   return response.data;
 };
 
 export default {
   sendJsonRequest,
-  sendFormDataRequest,
+  sendFormDataRequest
 };

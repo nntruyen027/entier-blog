@@ -24,5 +24,10 @@
   "consignee": "consignee",
   "mr": "Mr",
   "ms": "Mrs",
-  "full-name": "Full name"
+  "full-name": "Full name",
+  "phone": "Phone number",
+  "province": "province",
+  "district": "district",
+  "ward": "ward",
+  "detail": "detail"
 }

@@ -417,7 +417,29 @@ const consignee = {
   name: 'Nguyễn Ngọc Truyện',
   isMale: true,
   phone: '0704776898',
-  address: '211, Lân Quới 1, xã Thạnh Mỹ, huyện Vĩnh Thạnh, thành phố Cần Thơ'
+  address: {
+    detail: '211, Lân Quới 1',
+    province: {
+      id: 92,
+      name: 'Cần Thơ'
+    },
+    district: {
+      id: 924,
+      name: 'Vĩnh Thạnh'
+    },
+    ward: {
+      id: 31234,
+      name: 'Thạnh Mỹ'
+    }
+  }
 }
 
-export { multiTabs, carousel, multiTabsNew, brands, types, usages, productAttributes, orderBy, consignee }
+const cartItem = [
+  {
+    product: multiTabs[0].items[0],
+    quantity: 2,
+    version: null
+  }
+]
+
+export { multiTabs, carousel, multiTabsNew, brands, types, usages, productAttributes, orderBy, consignee, cartItem }

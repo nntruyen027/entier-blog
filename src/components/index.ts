@@ -9,6 +9,7 @@ import Footer from './Footer';
 import Filter from './Filter';
 import OrderBy from './OrderBy';
 import Divider from './Divider';
+import NumberStepper from './NumberStepper';
 
 export {
   Header,
@@ -21,5 +22,6 @@ export {
   NewComponent,
   Footer,
   Filter,
-  OrderBy
+  OrderBy,
+  NumberStepper
 };

@@ -24,5 +24,10 @@
   "consignee": "Người nhận",
   "mr": "Anh",
   "ms": "Chị",
-  "full-name": "Họ và tên"
+  "full-name": "Họ và tên",
+  "phone": "Số điện thoại",
+  "province": "Tỉnh/Thành phố",
+  "district": "Huyện/Quận/Thành phố",
+  "ward": "Xã/Phường/Thị trấn",
+  "detail": "Số nhà"
 }
