@@ -129,3 +129,8 @@ export interface CartItem {
   version: VersionProduct;
   quantity: number;
 }
+
+export interface LoginForm {
+  username: string;
+  password: string;
+}

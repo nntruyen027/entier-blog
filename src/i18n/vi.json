@@ -42,5 +42,7 @@
   "recipient-info": "thông tin nhận hàng",
   "payment": "thanh toán",
   "online": "trực tiếp",
-  "cash": "tiền mặt"
+  "cash": "tiền mặt",
+  "username": "Tên người dùng",
+  "password": "Mật khẩu"
 }

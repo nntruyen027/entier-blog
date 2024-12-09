@@ -42,5 +42,7 @@
   "recipient-info": "recipient information",
   "payment": "Payment",
   "online": "Cash Payment",
-  "cash": "Direct Payment"
+  "cash": "Direct Payment",
+  "username": "Username",
+  "password": "Password"
 }
