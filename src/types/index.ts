@@ -134,3 +134,12 @@ export interface LoginForm {
   username: string;
   password: string;
 }
+
+export interface MenuItemType {
+  id: number;
+  label: string;
+  route: string;
+  icon: JSX.Element;
+  hasChildren: boolean;
+  children?: MenuItemType[];
+}

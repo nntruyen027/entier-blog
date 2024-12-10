@@ -2,15 +2,16 @@ import { LayoutProps } from '~/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getSelfStart } from '~/redux/auth/slice';
 import { routes } from '~/config';
+import { Sidebar } from '~/components';
 
 const MainLayout: React.FC<LayoutProps> = ({ children }) => {
   const dispatch = useDispatch();
   const { token, isLogin } = useSelector((state: RootState) => state.auth);
   const nav = useNavigate();
-  console.log(isLogin);
+  const [isFullSiderbar, setIsFullSidebar] = useState(true);
 
   useEffect(() => {
     dispatch(getSelfStart());
@@ -23,7 +24,8 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
   }, [dispatch, isLogin]);
 
   const render = () => (
-    <div className='w-full min-h-screen bg-[#f2f4f7] pb-3'>
+    <div className='w-full min-h-screen bg-[#f2f4f7] pb-3 flex'>
+      <Sidebar isFull={isFullSiderbar} />
       <div className={'px-40 pt-28'}>{children}</div>
     </div>
   );

@@ -1,0 +1,21 @@
+.css-dip3t8 {
+  background-color: #ffd400 !important;
+}
+
+#admin-sidebar {
+  background-color: #ffd400;
+  height: 100vh;
+
+  li {
+    li {
+      background-color: rgba(255, 212, 0, 0.6);
+    }
+  }
+
+  li.ps-active {
+    & > a {
+      font-weight: bold;
+    }
+  }
+
+}

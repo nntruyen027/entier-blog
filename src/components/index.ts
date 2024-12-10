@@ -10,6 +10,7 @@ import Filter from './Filter';
 import OrderBy from './OrderBy';
 import Divider from './Divider';
 import NumberStepper from './NumberStepper';
+import Sidebar from './Sidebar';
 
 export {
   Header,
@@ -23,5 +24,6 @@ export {
   Footer,
   Filter,
   OrderBy,
-  NumberStepper
+  NumberStepper,
+  Sidebar
 };
