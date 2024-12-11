@@ -136,9 +136,9 @@ export interface LoginForm {
 }
 
 export interface MenuItemType {
-  id: number;
+  id: string | number;
   label: string;
-  route: string;
+  route?: string;
   icon: JSX.Element;
   hasChildren: boolean;
   children?: MenuItemType[];

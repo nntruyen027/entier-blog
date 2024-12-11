@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getSelfStart } from '~/redux/auth/slice';
 import { routes } from '~/config';
 import { Sidebar } from '~/components';
+import AdminHeader from '~/components/AdminHeader';
 
 const MainLayout: React.FC<LayoutProps> = ({ children }) => {
   const dispatch = useDispatch();
@@ -26,7 +27,10 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
   const render = () => (
     <div className='w-full min-h-screen bg-[#f2f4f7] pb-3 flex'>
       <Sidebar isFull={isFullSiderbar} />
-      <div className={'px-40 pt-28'}>{children}</div>
+      <div className={'w-full'}>
+        <AdminHeader />
+        <div className={'px-40 pt-28 w-full'}>{children}</div>
+      </div>
     </div>
   );
 

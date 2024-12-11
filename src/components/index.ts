@@ -11,6 +11,8 @@ import OrderBy from './OrderBy';
 import Divider from './Divider';
 import NumberStepper from './NumberStepper';
 import Sidebar from './Sidebar';
+import AdminHeader from './AdminHeader';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export {
   Header,
@@ -25,5 +27,7 @@ export {
   Filter,
   OrderBy,
   NumberStepper,
-  Sidebar
+  Sidebar,
+  AdminHeader,
+  LanguageSwitcher
 };

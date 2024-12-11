@@ -20,9 +20,11 @@ const CustomSidebar: React.FC<SidebarProps> = ({ isFull }) => {
           }
         }}
       >
+        <div className={'p-6'}>
+          <img src={'https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/noel/2024/tgdd/logo-dt.png'} alt={'logo'} />
+        </div>
         {sidebar.map((item, index) => {
           const isSubMenuActive = item.hasChildren && item.children?.some((sub) => sub.route === location.pathname); // Kiểm tra nếu SubMenu có bất kỳ route nào active
-
           return item.hasChildren ? (
             <SubMenu
               label={item.label}
