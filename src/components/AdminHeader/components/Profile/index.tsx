@@ -8,6 +8,8 @@ import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { logout } from '~/redux/auth/slice';
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -15,8 +17,14 @@ const Profile = () => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const dispatch = useDispatch();
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    dispatch(logout());
   };
 
   return (
@@ -78,7 +86,7 @@ const Profile = () => {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize='small' />
           </ListItemIcon>
