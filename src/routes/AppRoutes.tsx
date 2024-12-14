@@ -16,8 +16,8 @@ const Routing = () => (
         {authRoutes.map(({ id, path, element }) => (
           <Route key={id} path={path} element={<AuthLayout>{element}</AuthLayout>} />
         ))}
-        {adminMainRoutes.map(({ id, path, element }) => (
-          <Route key={id} path={path} element={<AdminMainLayout>{element}</AdminMainLayout>} />
+        {adminMainRoutes.map(({ id, path, element, label }) => (
+          <Route key={id} path={path} element={<AdminMainLayout title={label}>{element}</AdminMainLayout>} />
         ))}
         {homeRoutes.map(({ id, path, element }) => (
           <Route key={id} path={path} element={<HomeLayout>{element}</HomeLayout>} />

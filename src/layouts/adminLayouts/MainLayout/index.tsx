@@ -8,11 +8,11 @@ import { routes } from '~/config';
 import { Sidebar } from '~/components';
 import AdminHeader from '~/components/AdminHeader';
 
-const MainLayout: React.FC<LayoutProps> = ({ children }) => {
+const MainLayout: React.FC<LayoutProps> = ({ children, title }) => {
   const dispatch = useDispatch();
   const { token, isLogin } = useSelector((state: RootState) => state.auth);
   const nav = useNavigate();
-  const [isFullSiderbar, setIsFullSidebar] = useState(true);
+  const [isFullSiderbar] = useState(true);
 
   useEffect(() => {
     dispatch(getSelfStart());
@@ -25,10 +25,10 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
   }, [dispatch, isLogin]);
 
   const render = () => (
-    <div className='w-full min-h-screen bg-[#f2f4f7] pb-3 flex'>
+    <div className='w-full min-h-screen bg-[#f2f4f7] flex'>
       <Sidebar isFull={isFullSiderbar} />
       <div className={'w-full'}>
-        <AdminHeader />
+        <AdminHeader title={title} />
         <div className={'px-40 pt-28 w-full'}>{children}</div>
       </div>
     </div>

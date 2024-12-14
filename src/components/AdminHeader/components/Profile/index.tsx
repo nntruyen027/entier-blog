@@ -10,6 +10,8 @@ import Logout from '@mui/icons-material/Logout';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '~/redux/auth/slice';
+import { Link } from 'react-router-dom';
+import { routes } from '~/config';
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -80,12 +82,14 @@ const Profile = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize='small' />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
+        <Link to={routes.admin.main.accountSetting} className={'no-underline text-black hover:text-black'}>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <Settings fontSize='small' />
+            </ListItemIcon>
+            Settings
+          </MenuItem>
+        </Link>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize='small' />

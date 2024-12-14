@@ -1,13 +1,20 @@
 import { Route } from '~/types';
 import { v4 as uuid4 } from 'uuid';
 import { routes } from '~/config';
-import { DashboardPage } from '~/pages';
+import { AccountSettingPage, DashboardPage } from '~/pages';
 
 const authRoutes: Route[] = [
   {
-    id: `admin-auth-${uuid4()}`,
-    path: routes.admin.auth.index,
-    element: <DashboardPage />
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.index,
+    element: <DashboardPage />,
+    label: 'dashboard'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.accountSetting,
+    element: <AccountSettingPage />,
+    label: 'personal-setting'
   }
 ];
 

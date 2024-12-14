@@ -4,10 +4,12 @@ export interface Route {
   id: string;
   path: string;
   element: JSX.Element;
+  label?: string;
 }
 
 export interface LayoutProps {
   children: ReactNode;
+  title?: string;
 }
 
 // types.ts

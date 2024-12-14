@@ -1,6 +1,10 @@
 const auth = {
-  index: '/admin',
   login: '/admin/login'
 };
 
-export { auth };
+const main = {
+  index: '/admin',
+  accountSetting: '/admin/personal/account'
+};
+
+export { auth, main };

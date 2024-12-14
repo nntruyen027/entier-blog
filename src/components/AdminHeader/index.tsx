@@ -1,30 +1,16 @@
-import { useLocation } from 'react-router-dom';
-import { sidebar } from '~/config';
 import Profile from './components/Profile';
+import { useTranslation } from 'react-i18next';
 
-const AdminHeader = () => {
-  const location = useLocation();
-  const findCurrentLocation = (items: typeof sidebar, path: string) => {
-    for (const item of items) {
-      if (item.route === path) {
-        return item;
-      }
+interface AdminHeaderProps {
+  title?: string;
+}
 
-      if (item.hasChildren && item.children) {
-        const found = findCurrentLocation(item.children, path);
-        if (found) {
-          return found;
-        }
-      }
-    }
+const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
+  const { t } = useTranslation();
 
-    return '';
-  };
-
-  const currentLocation = findCurrentLocation(sidebar, location.pathname);
   return (
     <div className={'w-full p-3 bg-white shadow-lg flex justify-between'}>
-      <div className={'font-bold text-xl'}>{currentLocation.label}</div>
+      <div className={'font-bold text-xl'}>{t(title)}</div>
       <Profile />
     </div>
   );

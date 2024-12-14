@@ -17,7 +17,7 @@ const AuthLayout: React.FC<LayoutProps> = ({ children }) => {
 
   useEffect(() => {
     if (isLogin) {
-      nav(routes.admin.auth.index);
+      nav(routes.admin.main.index);
     }
   }, [dispatch, token, isLogin]);
 

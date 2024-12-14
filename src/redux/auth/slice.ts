@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { LoginForm } from '~/types';
 
 const initialState = {
   isLogin: false,
@@ -12,7 +13,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginStart: (state) => {
+    loginStart: (state, action: PayloadAction<LoginForm>) => {
       state.loading = true;
       state.error = null;
     },
