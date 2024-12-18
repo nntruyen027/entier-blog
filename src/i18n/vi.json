@@ -44,5 +44,8 @@
   "online": "trực tiếp",
   "cash": "tiền mặt",
   "username": "Tên người dùng",
-  "password": "Mật khẩu"
+  "password": "Mật khẩu",
+  "personal-setting": "Cài đặt cá nhân",
+  "setting": "Cài đặt",
+  "logout": "Đăng xuất"
 }

@@ -44,5 +44,8 @@
   "online": "Cash Payment",
   "cash": "Direct Payment",
   "username": "Username",
-  "password": "Password"
+  "password": "Password",
+  "personal-setting": "Personal setting",
+  "setting": "Setting",
+  "logout": "Logout"
 }

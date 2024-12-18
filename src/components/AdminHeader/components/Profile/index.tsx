@@ -12,9 +12,11 @@ import { useDispatch } from 'react-redux';
 import { logout } from '~/redux/auth/slice';
 import { Link } from 'react-router-dom';
 import { routes } from '~/config';
+import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { t } = useTranslation();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -87,14 +89,14 @@ const Profile = () => {
             <ListItemIcon>
               <Settings fontSize='small' />
             </ListItemIcon>
-            Settings
+            {t('setting')}
           </MenuItem>
         </Link>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize='small' />
           </ListItemIcon>
-          Logout
+          {t('logout')}
         </MenuItem>
       </Menu>
     </div>
