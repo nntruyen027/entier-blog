@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/auth';
+const BASE_URL = 'http://localhost:8080';
 
 export const login = async ({ username, password }) => {
   const formData = new FormData();
