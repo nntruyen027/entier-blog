@@ -25,27 +25,3 @@ export const updateSelf = async (body) => {
     }
   });
 };
-
-export const createOne = async (body) => {
-  return await axios.post(`${BASE_URL}`, JSON.stringify(body), {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  });
-};
-
-export const updateOne = async (id: string, body) => {
-  return await axios.put(`${BASE_URL}/${id}`, JSON.stringify(body), {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  });
-};
-
-export const deleteOne = async (id) => {
-  return await axios.delete(`${BASE_URL}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  });
-};

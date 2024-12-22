@@ -29,7 +29,7 @@ const MainLayout: React.FC<LayoutProps> = ({ children, title }) => {
       <Sidebar isFull={isFullSiderbar} />
       <div className={'w-full'}>
         <AdminHeader title={title} />
-        <div className={'px-40 pt-28 w-full'}>{children}</div>
+        <div className={'w-full'}>{children}</div>
       </div>
     </div>
   );
