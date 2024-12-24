@@ -45,6 +45,18 @@ const personalSlice = createSlice({
     updateFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    },
+    updateAvatarStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
+    updateAvatarSuccess: (state, action) => {
+      state.loading = false;
+      state.personal = action.payload;
+    },
+    updateAvatarFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     }
   }
 });
@@ -58,7 +70,10 @@ export const {
   updateStart,
   updateSuccess,
   getSuccess,
-  createSuccess
+  createSuccess,
+  updateAvatarFailure,
+  updateAvatarStart,
+  updateAvatarSuccess
 } = personalSlice.actions;
 
 export default personalSlice.reducer;

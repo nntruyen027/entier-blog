@@ -47,5 +47,9 @@
   "password": "Password",
   "personal-setting": "Personal setting",
   "setting": "Setting",
-  "logout": "Logout"
+  "logout": "Logout",
+  "male": "Male",
+  "female": "Female",
+  "gender": "Gender",
+  "save": "Save"
 }

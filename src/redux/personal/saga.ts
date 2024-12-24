@@ -1,4 +1,4 @@
-import { createSelf, getSelf, updateSelf } from './api';
+import { createSelf, getSelf, updateAvatar, updateSelf } from './api';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   createFailure,
@@ -6,6 +6,9 @@ import {
   createSuccess,
   getFailure,
   getSuccess,
+  updateAvatarFailure,
+  updateAvatarStart,
+  updateAvatarSuccess,
   updateFailure,
   updateStart,
   updateSuccess
@@ -39,10 +42,20 @@ function* updateSelfRequest(action) {
   }
 }
 
+function* updateAvatarSelfRequest(action) {
+  try {
+    const { data } = yield call(updateAvatar, action.payload);
+    yield put(updateAvatarSuccess(data));
+  } catch (error) {
+    yield put(updateAvatarFailure(error));
+  }
+}
+
 function* personalSaga() {
   yield takeLatest(getSelfStart.type, getSelfRequest);
   yield takeLatest(createStart.type, createSelfRequest);
   yield takeLatest(updateStart.type, updateSelfRequest);
+  yield takeLatest(updateAvatarStart.type, updateAvatarSelfRequest);
 }
 
 export default personalSaga;

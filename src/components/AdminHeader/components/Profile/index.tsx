@@ -1,22 +1,23 @@
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '~/redux/auth/slice';
 import { Link } from 'react-router-dom';
 import { routes } from '~/config';
 import { useTranslation } from 'react-i18next';
+import { RootState } from '~/redux/store';
+import { Button } from '@mui/material';
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { t } = useTranslation();
+  const { personal } = useSelector((state: RootState) => state.personal);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -35,7 +36,7 @@ const Profile = () => {
     <div>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title='Account settings'>
-          <IconButton
+          <Button
             onClick={handleClick}
             size='small'
             sx={{ ml: 2 }}
@@ -43,8 +44,8 @@ const Profile = () => {
             aria-haspopup='true'
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-          </IconButton>
+            <span className={'text-black font-bold'}>{personal?.fullName}</span>
+          </Button>
         </Tooltip>
       </Box>
       <Menu

@@ -35,14 +35,12 @@ const LoginPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               label={t('username')}
-              placeholder={t('username')}
               size={'small'}
             />
             <TextField
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               label={t('password')}
-              placeholder={t('password')}
               size={'small'}
               type={'password'}
             />

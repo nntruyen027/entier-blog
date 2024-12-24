@@ -47,5 +47,9 @@
   "password": "Mật khẩu",
   "personal-setting": "Cài đặt cá nhân",
   "setting": "Cài đặt",
-  "logout": "Đăng xuất"
+  "logout": "Đăng xuất",
+  "male": "Nam",
+  "female": "Nữ",
+  "gender": "Giới tính",
+  "save": "Lưu"
 }
