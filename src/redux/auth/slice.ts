@@ -50,10 +50,31 @@ const authSlice = createSlice({
       state.isLogin = false;
       state.token = null;
       localStorage.removeItem('token');
+    },
+    updatePassSelfStart: (state, action: PayloadAction<object>) => {
+      state.loading = true;
+      state.error = null;
+    },
+    updatePassSelfSuccess: (state) => {
+      state.loading = false;
+    },
+    updatePassSelfFail: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
     }
   }
 });
 
-export const { getSelfSuccess, getSelfFail, loginSuccess, loginFail, loginStart, getSelfStart, logout } =
-  authSlice.actions;
+export const {
+  getSelfSuccess,
+  getSelfFail,
+  loginSuccess,
+  loginFail,
+  loginStart,
+  getSelfStart,
+  logout,
+  updatePassSelfStart,
+  updatePassSelfSuccess,
+  updatePassSelfFail
+} = authSlice.actions;
 export default authSlice.reducer;

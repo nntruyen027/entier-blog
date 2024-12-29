@@ -51,5 +51,10 @@
   "male": "Nam",
   "female": "Nữ",
   "gender": "Giới tính",
-  "save": "Lưu"
+  "save": "Lưu",
+  "change-password": "Đổi mật khẩu",
+  "old-pass": "Mật khẩu hiện tại",
+  "new-pass": "Mật khẩu mới",
+  "confirm-new-pass": "Xác nhận khẩu mới",
+  "passwords-do-not-match": "Mật khẩu mới không khớp"
 }

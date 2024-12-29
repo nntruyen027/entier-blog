@@ -4,7 +4,10 @@ const auth = {
 
 const main = {
   index: '/admin',
-  accountSetting: '/admin/personal/account'
+  accountSetting: '/admin/personal/account',
+  passwordSetting: '/admin/personal/password',
+  role: '/admin/system/role',
+  user: '/admin/system/user'
 };
 
 export { auth, main };

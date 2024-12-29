@@ -13,6 +13,7 @@ import { routes } from '~/config';
 import { useTranslation } from 'react-i18next';
 import { RootState } from '~/redux/store';
 import { Button } from '@mui/material';
+import PasswordIcon from '@mui/icons-material/Password';
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -91,6 +92,14 @@ const Profile = () => {
               <Settings fontSize='small' />
             </ListItemIcon>
             {t('setting')}
+          </MenuItem>
+        </Link>
+        <Link to={routes.admin.main.passwordSetting} className={'no-underline text-black hover:text-black'}>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <PasswordIcon />
+            </ListItemIcon>
+            {t('change-password')}
           </MenuItem>
         </Link>
         <MenuItem onClick={handleLogout}>

@@ -51,5 +51,10 @@
   "male": "Male",
   "female": "Female",
   "gender": "Gender",
-  "save": "Save"
+  "save": "Save",
+  "change-password": "Change password",
+  "old-pass": "Current password",
+  "new-pass": "New password",
+  "confirm-new-pass": "Confirm-new-pass",
+  "passwords-do-not-match": "Passwords do not match"
 }

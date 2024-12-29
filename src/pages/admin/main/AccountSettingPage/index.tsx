@@ -27,7 +27,7 @@ const AccountSettingPage = () => {
     <div
       className={
         'bg-[url("https://img.pikbest.com/wp/202344/blur-color-vividly-blurred-texture-background-in-full_9930529.jpg!sw800")]' +
-        ' bg-no-repeat bg-cover'
+        ' bg-no-repeat bg-cover h-full'
       }
     >
       <Header />
@@ -50,7 +50,7 @@ const AccountSettingPage = () => {
           >
             <FormLabel id='demo-row-radio-buttons-group-label'>{t('gender')}</FormLabel>
             <RadioGroup
-              onChange={(e) => setIsMale(e.target.value === 'true')}
+              onChange={(e) => setIsMale(e.target.value == 'true')}
               value={isMale.toString()} // Convert boolean to string
               row
               aria-labelledby='demo-row-radio-buttons-group-label'

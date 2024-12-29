@@ -1,6 +1,16 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { getSelf, login } from './api';
-import { getSelfFail, getSelfStart, getSelfSuccess, loginFail, loginStart, loginSuccess } from './slice';
+import { getSelf, login, updatePassword } from './api';
+import {
+  getSelfFail,
+  getSelfStart,
+  getSelfSuccess,
+  loginFail,
+  loginStart,
+  loginSuccess,
+  updatePassSelfFail,
+  updatePassSelfStart,
+  updatePassSelfSuccess
+} from './slice';
 import { PayloadAction } from '@reduxjs/toolkit';
 
 interface loginForm {
@@ -27,9 +37,21 @@ function* getSelfRequest() {
   }
 }
 
+function* updatePassSelfRequest(action: PayloadAction<object>) {
+  try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    yield call(updatePassword, action.payload);
+    yield put(updatePassSelfSuccess());
+  } catch (error) {
+    yield put(updatePassSelfFail(error));
+  }
+}
+
 function* authSaga() {
   yield takeLatest(loginStart.type, loginRequest);
   yield takeLatest(getSelfStart.type, getSelfRequest);
+  yield takeLatest(updatePassSelfStart.type, updatePassSelfRequest);
 }
 
 export default authSaga;

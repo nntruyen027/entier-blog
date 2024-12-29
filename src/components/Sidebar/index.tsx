@@ -11,7 +11,6 @@ interface SidebarProps {
 const CustomSidebar: React.FC<SidebarProps> = ({ isFull }) => {
   const location = useLocation();
   const { t } = useTranslation();
-  console.log(sidebar);
 
   return (
     <Sidebar collapsed={!isFull} id={'admin-sidebar'}>

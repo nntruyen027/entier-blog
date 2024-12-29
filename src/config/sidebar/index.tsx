@@ -19,6 +19,28 @@ const sidebar: MenuItemType[] = [
         hasChildren: false
       }
     ]
+  },
+  {
+    id: `sidebar-${uuid()}`,
+    label: 'system-management',
+    icon: <FontAwesomeIcon icon={faChartSimple} />,
+    hasChildren: true,
+    children: [
+      {
+        id: `sidebar-${uuid()}`,
+        label: 'role',
+        route: main.role,
+        icon: <FontAwesomeIcon icon={faChartSimple} />,
+        hasChildren: false
+      },
+      {
+        id: `sidebar-${uuid()}`,
+        label: 'user',
+        route: main.user,
+        icon: <FontAwesomeIcon icon={faChartSimple} />,
+        hasChildren: false
+      }
+    ]
   }
 ];
 
