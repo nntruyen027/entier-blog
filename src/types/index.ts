@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 export interface Route {
   id: string;
@@ -144,4 +144,10 @@ export interface MenuItemType {
   icon: JSX.Element;
   hasChildren: boolean;
   children?: MenuItemType[];
+}
+
+export interface RowAction<T> {
+  label: string;
+  icon: React.ReactNode;
+  onClick: (row, table?) => void;
 }

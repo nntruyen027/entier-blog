@@ -56,5 +56,17 @@
   "old-pass": "Mật khẩu hiện tại",
   "new-pass": "Mật khẩu mới",
   "confirm-new-pass": "Xác nhận khẩu mới",
-  "passwords-do-not-match": "Mật khẩu mới không khớp"
+  "passwords-do-not-match": "Mật khẩu mới không khớp",
+  "system-management": "Quản trị hệ thống",
+  "role": "Nhóm quyền",
+  "user": "Người dùng",
+  "role-management": "Quản lý nhóm quyền",
+  "name": "Tên",
+  "add": "Thêm",
+  "yes": "Đồng ý",
+  "cancel": "Hủy bỏ",
+  "create": "Thêm {{value}}",
+  "update": "Cập nhật {{value}}",
+  "delete": "Xóa {{value}}",
+  "confirm-delete": "Bạn có chắc chắn muốn xóa {{value}} này?"
 }

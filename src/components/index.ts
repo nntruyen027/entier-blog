@@ -13,6 +13,8 @@ import NumberStepper from './NumberStepper';
 import Sidebar from './Sidebar';
 import AdminHeader from './AdminHeader';
 import LanguageSwitcher from './LanguageSwitcher';
+import Table from './Table';
+import ConfirmModal from './ConfirmModal';
 
 export {
   Header,
@@ -29,5 +31,7 @@ export {
   NumberStepper,
   Sidebar,
   AdminHeader,
-  LanguageSwitcher
+  LanguageSwitcher,
+  Table,
+  ConfirmModal
 };

@@ -1,24 +1,36 @@
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { MaterialReactTable, MRT_ColumnDef } from 'material-react-table';
+import { MRT_ColumnDef } from 'material-react-table';
 import { RootState } from '~/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getRolesStart } from '~/redux/role/slice';
+import { createRoleStart, deleteRoleStart, getRolesStart, updateRoleStart } from '~/redux/role/slice';
+import { ConfirmModal, Table } from '~/components';
+import { CreateComponent, UpdateComponent } from './components';
+import { RowAction } from '~/types';
+import { Delete as DeleteIcon, ModeEdit } from '@mui/icons-material';
 
 const RolePage = () => {
   const { t } = useTranslation();
-  const { roles } = useSelector((state: RootState) => state.role);
+  const { roles, pageCount, rowCount } = useSelector((state: RootState) => state.role);
   const dispatch = useDispatch();
+
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10
   });
 
+  const [openCreate, setOpenCreate] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState<boolean>();
+  const [currentRole, setCurrentRole] = useState({ id: 0, roleName: '' });
+
   const columns: MRT_ColumnDef<object>[] = [
     {
       header: '#',
-      accessorKey: 'no' // Số thứ tự
+      accessorKey: 'no',
+      size: 1
     },
     {
       header: t('name'), // Tên vai trò
@@ -28,54 +40,87 @@ const RolePage = () => {
     }
   ];
 
+  const actions: RowAction<object>[] = [
+    {
+      icon: <ModeEdit className={'text-teal-400'} />,
+      onClick: (row) => {
+        setCurrentRole(row.original);
+        setOpenUpdate(true);
+      },
+      label: t('edit')
+    },
+    {
+      icon: <DeleteIcon className={'text-red-500'} />,
+      onClick: (row) => {
+        setCurrentRole(row.original);
+        setOpenDelete(true);
+      },
+      label: t('delete')
+    }
+  ];
+
   useEffect(() => {
     dispatch(getRolesStart({})); // Gửi action để lấy danh sách vai trò
   }, [dispatch]);
 
+  const handleSave = ({ roleName }) => {
+    dispatch(createRoleStart({ roleName }));
+    setOpenCreate(false);
+  };
+
+  const handleUpdate = ({ id, roleName }) => {
+    dispatch(
+      updateRoleStart({
+        id,
+        body: {
+          roleName
+        }
+      })
+    ); // Gửi action cập nhật
+    setOpenUpdate(false); // Đóng modal cập nhật
+  };
+
+  useEffect(() => {
+    if (confirmDelete) {
+      dispatch(deleteRoleStart(currentRole.id));
+    }
+  }, [confirmDelete]);
+
   return (
-    <div>
-      <div className='flex mb-4'>
-        <div>Filter</div>
-        <Button variant='contained' style={{ marginLeft: 'auto' }}>
-          {t('add')}
-        </Button>
+    <>
+      <CreateComponent open={openCreate} setOpen={setOpenCreate} onSave={handleSave} />
+      <UpdateComponent open={openUpdate} setOpen={setOpenUpdate} onSave={handleUpdate} value={currentRole} />
+      <ConfirmModal
+        open={openDelete}
+        setOpen={setOpenDelete}
+        confirm={confirmDelete}
+        setConfirm={setConfirmDelete}
+        content={t('confirm-delete', {
+          value: t('role')
+        })}
+      />
+      <div className={'w-full p-3'}>
+        <div className='flex mb-4'>
+          <Button variant='contained' style={{ marginLeft: 'auto' }} onClick={() => setOpenCreate(true)}>
+            {t('add')}
+          </Button>
+        </div>
+        <div className={'w-full'}>
+          <Table
+            columns={columns}
+            data={roles.map((value, index) => ({
+              no: index + 1,
+              ...value
+            }))}
+            setPagination={setPagination}
+            pagination={pagination}
+            rowCount={rowCount}
+            pageCount={pageCount}
+            actions={actions}
+          />
+        </div>
       </div>
-      <div>
-        <MaterialReactTable
-          columns={columns}
-          data={roles.map((value, index) => ({
-            no: index + 1,
-            ...value
-          }))}
-          enableDensityToggle={false}
-          initialState={{ density: 'compact' }}
-          enableColumnOrdering
-          muiTableBodyRowProps={{ hover: false }}
-          muiTableProps={{
-            sx: {
-              border: '1px solid rgba(81, 81, 81, .5)',
-              caption: {
-                captionSide: 'top'
-              }
-            }
-          }}
-          muiTableHeadCellProps={{
-            sx: {
-              border: '1px solid rgba(81, 81, 81, .5)',
-              fontStyle: 'italic',
-              fontWeight: 'normal'
-            }
-          }}
-          muiTableBodyCellProps={{
-            sx: {
-              border: '1px solid rgba(81, 81, 81, .5)'
-            }
-          }}
-          // onPaginationChange={setPagination}
-          // state={{ pagination }}
-        />
-      </div>
-    </div>
+    </>
   );
 };
 

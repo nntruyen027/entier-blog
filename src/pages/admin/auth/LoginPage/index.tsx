@@ -13,7 +13,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const { token, account } = useSelector((state: RootState) => state.auth);
-  console.log(token, account);
 
   const handleLogin = () => {
     dispatch(loginStart({ username, password }));

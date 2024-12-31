@@ -4,7 +4,9 @@ const initialState = {
   loading: false,
   role: null,
   error: null,
-  roles: []
+  roles: [],
+  rowCount: 0,
+  pageCount: 1
 };
 
 const RoleSlice = createSlice({
@@ -17,7 +19,9 @@ const RoleSlice = createSlice({
     },
     getRolesSuccess: (state, action) => {
       state.loading = false;
-      state.roles = action.payload;
+      state.roles = action.payload.content;
+      state.rowCount = action.payload?.totalElements || 1;
+      state.pageCount = action.payload?.totalPages || 1;
     },
     getRolesFailure: (state, action) => {
       state.error = action.payload;
@@ -28,8 +32,8 @@ const RoleSlice = createSlice({
       state.error = null;
     },
     createRoleSuccess: (state, action) => {
-      state.role = action.payload;
       state.roles.push(action.payload);
+      state.rowCount = state.rowCount + 1;
     },
     createRoleFailure: (state, action) => {
       state.error = action.payload;
@@ -40,7 +44,6 @@ const RoleSlice = createSlice({
       state.error = null;
     },
     updateRoleSuccess: (state, action) => {
-      state.role = action.payload;
       const index = state.roles.findIndex((role) => role.id === action.payload.id);
       if (index !== -1) {
         state.roles[index] = action.payload; // Cập nhật role tại vị trí tìm thấy
@@ -51,13 +54,16 @@ const RoleSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
-    deleteRoleStart: (state) => {
+    deleteRoleStart: (state, action) => {
       state.loading = true;
       state.error = null;
     },
     deleteRoleSuccess: (state, action) => {
-      state.roles = state.roles.filter((role) => role.id !== action.payload); // Xóa role dựa vào id
+      state.roles = state.roles.filter((role) => {
+        return role.id != action.payload;
+      }); // Xóa role dựa vào id
       state.loading = false;
+      state.rowCount = state.rowCount - 1;
     },
     deleteRoleFailure: (state, action) => {
       state.error = action.payload;

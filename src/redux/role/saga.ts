@@ -18,7 +18,7 @@ import {
 function* getRolesRequest(action) {
   try {
     const { data } = yield call(getAll, action.payload);
-    yield put(getRolesSuccess(data.content));
+    yield put(getRolesSuccess(data));
   } catch (error) {
     yield put(getRolesFailure(error));
   }
@@ -27,7 +27,7 @@ function* getRolesRequest(action) {
 function* createRoleRequest(action) {
   try {
     const { data } = yield call(createOne, action.payload);
-    yield put(createRoleSuccess(data.content));
+    yield put(createRoleSuccess(data));
   } catch (error) {
     yield put(createRoleFailure(error));
   }
@@ -36,7 +36,7 @@ function* createRoleRequest(action) {
 function* updateRoleRequest(action) {
   try {
     const { data } = yield call(updateOne, action.payload);
-    yield put(updateRoleSuccess(data.content));
+    yield put(updateRoleSuccess(data));
   } catch (error) {
     yield put(updateRoleFailure(error));
   }
@@ -44,8 +44,8 @@ function* updateRoleRequest(action) {
 
 function* deleteRoleRequest(action) {
   try {
-    const { data } = yield call(deleteOne, action.payload);
-    yield put(deleteRoleSuccess(data.content));
+    yield call(deleteOne, action.payload);
+    yield put(deleteRoleSuccess(action.payload));
   } catch (error) {
     yield put(deleteRoleFailure(error));
   }

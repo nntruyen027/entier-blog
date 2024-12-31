@@ -56,5 +56,17 @@
   "old-pass": "Current password",
   "new-pass": "New password",
   "confirm-new-pass": "Confirm-new-pass",
-  "passwords-do-not-match": "Passwords do not match"
+  "passwords-do-not-match": "Passwords do not match",
+  "system-management": "System management",
+  "role": "Role",
+  "user": "User",
+  "role-management": "Role management",
+  "name": "Name",
+  "add": "Add",
+  "yes": "Yes",
+  "cancel": "Cancel",
+  "create": "Create {{value}}",
+  "update": "Update {{value}}",
+  "delete": "Delete {{value}}",
+  "confirm-delete": "Are you sure you want to delete thís {{value}}?"
 }
