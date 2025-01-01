@@ -20,7 +20,7 @@ const AccountSettingPage = () => {
   }, [dispatch]);
 
   const handleOnSave = () => {
-    dispatch(updateStart({ fullName, phone, male: isMale }));
+    dispatch(updateStart({ fullName, phone, isMale }));
   };
 
   return (
