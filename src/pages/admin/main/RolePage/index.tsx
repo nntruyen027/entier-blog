@@ -42,7 +42,7 @@ const RolePage = () => {
 
   const actions: RowAction<object>[] = [
     {
-      icon: <ModeEdit className={'text-teal-400'} />,
+      icon: <ModeEdit className={'text-green-500'} />,
       onClick: (row) => {
         setCurrentRole(row.original);
         setOpenUpdate(true);
