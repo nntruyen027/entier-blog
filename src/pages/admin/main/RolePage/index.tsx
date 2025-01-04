@@ -47,7 +47,7 @@ const RolePage = () => {
         setCurrentRole(row.original);
         setOpenUpdate(true);
       },
-      label: t('edit')
+      label: t('edit', { value: null })
     },
     {
       icon: <DeleteIcon className={'text-red-500'} />,
@@ -55,7 +55,7 @@ const RolePage = () => {
         setCurrentRole(row.original);
         setOpenDelete(true);
       },
-      label: t('delete')
+      label: t('delete', { value: null })
     }
   ];
 

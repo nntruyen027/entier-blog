@@ -48,7 +48,7 @@ const UpdateComponent: React.FC<IProps> = ({ open, setOpen, onSave, value }) => 
         }}
       >
         <div className={'w-full relative top-0 left-0 text-xl font-bold py-3'}>
-          <h3 className={'lowercase first-letter:uppercase'}>{t('update', { value: t('role') })}</h3>
+          <h3 className={'lowercase first-letter:uppercase'}>{t('update', { value: t('user') })}</h3>
           <CloseIcon
             className={'cursor-pointer absolute top-1/2 -translate-y-1/2 right-3 hover:text-red-600'}
             onClick={() => setOpen(false)}

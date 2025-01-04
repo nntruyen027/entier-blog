@@ -1,6 +1,9 @@
-import { createOne, deleteOne, getAll, updateOne } from './api';
+import { assignRolesToUser, createOne, deleteOne, getAll, resetPassword, updateOne } from './api';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
+  assignRolesFailure,
+  assignRolesStart,
+  assignRolesSuccess,
   createUserFailure,
   createUserStart,
   createUserSuccess,
@@ -10,6 +13,9 @@ import {
   getUsersFailure,
   getUsersStart,
   getUsersSuccess,
+  resetPassFailure,
+  resetPassStart,
+  resetPassSuccess,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess
@@ -51,11 +57,31 @@ function* deleteUserRequest(action) {
   }
 }
 
+function* assignRolesRequest(action) {
+  try {
+    yield call(assignRolesToUser, action.payload);
+    yield put(assignRolesSuccess(action.payload));
+  } catch (error) {
+    yield put(assignRolesFailure(error));
+  }
+}
+
+function* resetPassRequest(action) {
+  try {
+    yield call(resetPassword, action.payload);
+    yield put(resetPassSuccess(action.payload));
+  } catch (error) {
+    yield put(resetPassFailure(error));
+  }
+}
+
 function* UserSaga() {
   yield takeLatest(getUsersStart.type, getUsersRequest);
   yield takeLatest(createUserStart.type, createUserRequest);
   yield takeLatest(updateUserStart.type, updateUserRequest);
   yield takeLatest(deleteUserStart.type, deleteUserRequest);
+  yield takeLatest(assignRolesStart.type, assignRolesRequest);
+  yield takeLatest(resetPassStart.type, resetPassRequest);
 }
 
 export default UserSaga;

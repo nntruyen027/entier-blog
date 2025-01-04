@@ -5,14 +5,23 @@ import { RootState } from '~/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmModal, Table } from '~/components';
-import { CreateComponent, UpdateComponent } from './components';
+import { CreateComponent, DecentralizeComponent, UpdateComponent } from './components';
 import { RowAction } from '~/types';
-import { Delete as DeleteIcon, ModeEdit } from '@mui/icons-material';
-import { createUserStart, deleteUserStart, getUsersStart, updateUserStart } from '~/redux/user/slice';
+import { Delete as DeleteIcon, Group as GroupIcon, ModeEdit, RotateLeft } from '@mui/icons-material';
+import {
+  assignRolesStart,
+  createUserStart,
+  deleteUserStart,
+  getUsersStart,
+  resetPassStart,
+  resetStateStart,
+  updateUserStart
+} from '~/redux/user/slice';
+import { enqueueSnackbar } from 'notistack';
 
 const UserPage = () => {
   const { t } = useTranslation();
-  const { users, pageCount, rowCount } = useSelector((state: RootState) => state.user);
+  const { users, pageCount, rowCount, resetSuccess } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
   const [pagination, setPagination] = useState({
@@ -23,10 +32,26 @@ const UserPage = () => {
   const [openCreate, setOpenCreate] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openDecentralize, setOpenDecentralize] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>();
-  const [currentUser, setCurrentUser] = useState({ id: 0, fullName: '', email: '', phone: '', isMale: false });
+  const [currentUser, setCurrentUser] = useState({
+    id: 0,
+    fullName: '',
+    email: '',
+    phone: '',
+    isMale: false,
+    roles: [],
+    account: {}
+  });
 
   let columns: MRT_ColumnDef<object>[];
+
+  useEffect(() => {
+    if (resetSuccess == true) {
+      enqueueSnackbar(t('success', { value: t('reset-password') }), { variant: 'success' });
+      dispatch(resetStateStart());
+    }
+  }, [resetSuccess, dispatch, t]);
 
   // eslint-disable-next-line prefer-const
   columns = [
@@ -53,12 +78,29 @@ const UserPage = () => {
 
   const actions: RowAction<object>[] = [
     {
-      icon: <ModeEdit className={'text-teal-400'} />,
+      icon: <ModeEdit className={'text-green-500'} />,
       onClick: (row) => {
         setCurrentUser(row.original);
         setOpenUpdate(true);
       },
-      label: t('edit')
+      label: t('edit', { value: null })
+    },
+    ,
+    {
+      icon: <GroupIcon className={'text-blue-500'} />,
+      onClick: (row) => {
+        setCurrentUser(row.original);
+        setOpenDecentralize(true);
+      },
+      label: t('decentralize')
+    },
+    {
+      icon: <RotateLeft className={'black-500'} />,
+      onClick: (row) => {
+        setCurrentUser(row.original);
+        dispatch(resetPassStart(row.original.account.id));
+      },
+      label: t('reset-password')
     },
     {
       icon: <DeleteIcon className={'text-red-500'} />,
@@ -66,7 +108,7 @@ const UserPage = () => {
         setCurrentUser(row.original);
         setOpenDelete(true);
       },
-      label: t('delete')
+      label: t('delete', { value: null })
     }
   ];
 
@@ -94,6 +136,16 @@ const UserPage = () => {
     setOpenUpdate(false); // Đóng modal cập nhật
   };
 
+  const handleDecentralize = ({ username, roles }) => {
+    dispatch(
+      assignRolesStart({
+        username,
+        roles
+      })
+    ); // Gửi action cập nhật
+    setOpenDecentralize(false); // Đóng modal cập nhật
+  };
+
   useEffect(() => {
     if (confirmDelete) {
       dispatch(deleteUserStart(currentUser.id));
@@ -104,6 +156,12 @@ const UserPage = () => {
     <>
       <CreateComponent open={openCreate} setOpen={setOpenCreate} onSave={handleSave} />
       <UpdateComponent open={openUpdate} setOpen={setOpenUpdate} onSave={handleUpdate} value={currentUser} />
+      <DecentralizeComponent
+        open={openDecentralize}
+        setOpen={setOpenDecentralize}
+        onSave={handleDecentralize}
+        value={currentUser}
+      />
       <ConfirmModal
         open={openDelete}
         setOpen={setOpenDelete}

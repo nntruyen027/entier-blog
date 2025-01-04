@@ -47,3 +47,25 @@ export const deleteOne = async (id) => {
     }
   });
 };
+
+export const assignRolesToUser = async ({ username, roles }) => {
+  return await axios.post(`${'http://localhost:8080'}/${username}/roles`, JSON.stringify(roles), {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const resetPassword = async (id) => {
+  const form = new FormData();
+  form.append('newPassword', 'Congnghe@2024');
+  form.append('oldPassword', 'Congnghe@2024');
+
+  return await axios.put(`${'http://localhost:8080'}/${id}/password`, form, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+};

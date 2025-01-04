@@ -2,6 +2,7 @@ import React from 'react';
 import { MaterialReactTable, MRT_ColumnDef } from 'material-react-table';
 import { Box, IconButton } from '@mui/material';
 import { RowAction } from '~/types';
+import Tooltip from '@mui/material/Tooltip';
 
 export interface TableProps<T = object> {
   columns: MRT_ColumnDef<T>[]; // Định nghĩa cột cho bảng
@@ -62,9 +63,11 @@ const Table = <T extends object>({
       actions ? (
         <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
           {actions.map((action, index) => (
-            <IconButton key={index} aria-label={action.label} onClick={() => action.onClick(row, table)}>
-              {action.icon}
-            </IconButton>
+            <Tooltip title={action.label}>
+              <IconButton key={index} aria-label={action.label} onClick={() => action.onClick(row, table)}>
+                {action.icon}
+              </IconButton>
+            </Tooltip>
           ))}
         </Box>
       ) : null

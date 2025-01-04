@@ -6,7 +6,8 @@ const initialState = {
   error: null,
   users: [],
   rowCount: 0,
-  pageCount: 1
+  pageCount: 1,
+  resetSuccess: null
 };
 
 const UserSlice = createSlice({
@@ -68,6 +69,36 @@ const UserSlice = createSlice({
     deleteUserFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
+    },
+    assignRolesStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
+    assignRolesSuccess: (state, action) => {
+      state.loading = false;
+    },
+    assignRolesFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    resetPassStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+      state.resetSuccess = null;
+    },
+    resetPassSuccess: (state, action) => {
+      state.loading = false;
+      state.resetSuccess = true;
+    },
+    resetPassFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+      state.resetSuccess = false;
+    },
+    resetStateStart: (state) => {
+      state.loading = false;
+      state.error = null;
+      state.resetSuccess = null;
     }
   }
 });
@@ -84,7 +115,14 @@ export const {
   updateUserSuccess,
   getUsersSuccess,
   getUsersStart,
-  getUsersFailure
+  getUsersFailure,
+  assignRolesStart,
+  assignRolesSuccess,
+  assignRolesFailure,
+  resetPassStart,
+  resetPassSuccess,
+  resetPassFailure,
+  resetStateStart
 } = UserSlice.actions;
 
 export default UserSlice.reducer;

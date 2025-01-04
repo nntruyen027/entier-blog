@@ -67,6 +67,12 @@
   "cancel": "Hủy bỏ",
   "create": "Thêm {{value}}",
   "update": "Cập nhật {{value}}",
+  "edit": "Sửa {{value}}",
   "delete": "Xóa {{value}}",
-  "confirm-delete": "Bạn có chắc chắn muốn xóa {{value}} này?"
+  "confirm-delete": "Bạn có chắc chắn muốn xóa {{value}} này?",
+  "decentralize": "Phân quyền",
+  "success": "{{value}} thành công",
+  "reset-password": "Đặt lại mật khẩu",
+  "management": "Quản lý {{value}}",
+  "user-management": "Quản lý người dùng"
 }

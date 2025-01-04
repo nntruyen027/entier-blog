@@ -15,6 +15,7 @@ import AdminHeader from './AdminHeader';
 import LanguageSwitcher from './LanguageSwitcher';
 import Table from './Table';
 import ConfirmModal from './ConfirmModal';
+import CheckboxesTags from './CheckboxesTags';
 
 export {
   Header,
@@ -33,5 +34,6 @@ export {
   AdminHeader,
   LanguageSwitcher,
   Table,
-  ConfirmModal
+  ConfirmModal,
+  CheckboxesTags
 };

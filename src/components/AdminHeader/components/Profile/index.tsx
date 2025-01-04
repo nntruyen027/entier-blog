@@ -36,7 +36,7 @@ const Profile = () => {
   return (
     <div>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title='Account settings'>
+        <Tooltip title={personal?.fullName}>
           <Button
             onClick={handleClick}
             size='small'
