@@ -1,6 +1,6 @@
 import { MenuItemType } from '~/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartSimple } from '@fortawesome/free-solid-svg-icons';
+import { faBarsProgress, faChartSimple, faIcons } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuid } from 'uuid';
 import { main } from '~/config/routes/admin';
 
@@ -23,7 +23,7 @@ const sidebar: MenuItemType[] = [
   {
     id: `sidebar-${uuid()}`,
     label: 'system-management',
-    icon: <FontAwesomeIcon icon={faChartSimple} />,
+    icon: <FontAwesomeIcon icon={faBarsProgress} />,
     hasChildren: true,
     children: [
       {
@@ -37,6 +37,35 @@ const sidebar: MenuItemType[] = [
         id: `sidebar-${uuid()}`,
         label: 'user',
         route: main.user,
+        icon: <FontAwesomeIcon icon={faChartSimple} />,
+        hasChildren: false
+      }
+    ]
+  },
+  {
+    id: `sidebar-${uuid()}`,
+    label: 'category-management',
+    icon: <FontAwesomeIcon icon={faIcons} />,
+    hasChildren: true,
+    children: [
+      {
+        id: `sidebar-${uuid()}`,
+        label: 'product-type',
+        route: main.productType,
+        icon: <FontAwesomeIcon icon={faChartSimple} />,
+        hasChildren: false
+      },
+      {
+        id: `sidebar-${uuid()}`,
+        label: 'tag',
+        route: main.tag,
+        icon: <FontAwesomeIcon icon={faChartSimple} />,
+        hasChildren: false
+      },
+      {
+        id: `sidebar-${uuid()}`,
+        label: 'brand',
+        route: main.brand,
         icon: <FontAwesomeIcon icon={faChartSimple} />,
         hasChildren: false
       }
