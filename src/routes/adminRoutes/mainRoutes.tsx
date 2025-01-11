@@ -1,7 +1,14 @@
 import { Route } from '~/types';
 import { v4 as uuid4 } from 'uuid';
 import { routes } from '~/config';
-import { AccountSettingPage, DashboardPage, PasswordPage, RolePage, UserManagementPage } from '~/pages';
+import {
+  AccountSettingPage,
+  DashboardPage,
+  PasswordPage,
+  ProductTypeAdminPage,
+  RolePage,
+  UserManagementPage
+} from '~/pages';
 
 const authRoutes: Route[] = [
   {
@@ -33,6 +40,12 @@ const authRoutes: Route[] = [
     path: routes.admin.main.user,
     element: <UserManagementPage />,
     label: 'user-management'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.productType,
+    element: <ProductTypeAdminPage />,
+    label: 'product-type-management'
   }
 ];
 

@@ -26,6 +26,7 @@ const Table = <T extends object>({
   positionActionsColumn = 'last'
 }: TableProps<T>) => (
   <MaterialReactTable
+    layoutMode={'grid'}
     columns={columns}
     data={data}
     enableDensityToggle={false}

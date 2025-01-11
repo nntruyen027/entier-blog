@@ -7,7 +7,6 @@ const Header = () => {
   const { personal } = useSelector((state: RootState) => state.personal);
   const dispatch = useDispatch();
   const handleChangeAvatar = (avatar) => {
-    console.log(avatar);
     dispatch(updateAvatarStart(avatar));
   };
   return (

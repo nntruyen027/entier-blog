@@ -86,7 +86,7 @@ const typeSlice = createSlice({
       state.error = null;
     },
     deleteTypeSuccess: (state, action) => {
-      state.types = state.types.fill((type) => type.id != action.payload.id);
+      state.types = state.types.filter((type) => type.id != action.payload);
       state.loading = false;
       state.success = true;
     },

@@ -2,10 +2,14 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8082/product-types';
 
-export const getAll = async () => {
+export const getAll = async ({ size, page }) => {
   return await axios.get(BASE_URL, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    params: {
+      size,
+      page
     }
   });
 };
