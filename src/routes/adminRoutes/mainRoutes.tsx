@@ -3,6 +3,7 @@ import { v4 as uuid4 } from 'uuid';
 import { routes } from '~/config';
 import {
   AccountSettingPage,
+  BrandPage,
   DashboardPage,
   PasswordPage,
   ProductTypeAdminPage,
@@ -53,6 +54,12 @@ const authRoutes: Route[] = [
     path: routes.admin.main.tag,
     element: <TagPage />,
     label: 'tag'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.brand,
+    element: <BrandPage />,
+    label: 'brand'
   }
 ];
 

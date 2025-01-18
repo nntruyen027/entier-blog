@@ -6,6 +6,7 @@ import roleReducer from './role/slice';
 import userReducer from './user/slice';
 import typeReducer from './productType/slice';
 import tagReducer from './tag/slice';
+import brandReducer from './brand/slice';
 
 const rootReducer = combineReducers({
   location: locationReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   role: roleReducer,
   user: userReducer,
   productType: typeReducer,
-  tag: tagReducer
+  tag: tagReducer,
+  brand: brandReducer
 });
 
 export default rootReducer;

@@ -5,5 +5,15 @@ import RolePage from './RolePage';
 import UserManagementPage from './UserManagementPage';
 import ProductTypeAdminPage from './ProductTypePage';
 import TagPage from './TagPage';
+import BrandPage from './BrandPage';
 
-export { DashboardPage, AccountSettingPage, PasswordPage, RolePage, UserManagementPage, ProductTypeAdminPage, TagPage };
+export {
+  DashboardPage,
+  AccountSettingPage,
+  PasswordPage,
+  RolePage,
+  UserManagementPage,
+  ProductTypeAdminPage,
+  TagPage,
+  BrandPage
+};
