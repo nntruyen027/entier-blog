@@ -23,29 +23,19 @@ export const getOne = async (id) => {
 };
 
 export const createOne = async ({ name, description, icon, image }) => {
-  const form = new FormData();
-  form.append('name', name);
-  form.append('description', description);
-  form.append('icon', icon);
-  form.append('image', image);
-  return await axios.post(`${BASE_URL}`, form, {
+  return await axios.post(`${BASE_URL}`, JSON.stringify({ name, description, icon, image }), {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'application/json'
     }
   });
 };
 
 export const updateOne = async ({ id, name, description, icon, image }) => {
-  const form = new FormData();
-  form.append('name', name);
-  form.append('description', description);
-  form.append('icon', icon);
-  form.append('image', image);
-  return await axios.put(`${BASE_URL}/${id}`, form, {
+  return await axios.put(`${BASE_URL}/${id}`, JSON.stringify({ name, description, icon, image }), {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'application/json'
     }
   });
 };

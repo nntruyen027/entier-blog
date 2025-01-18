@@ -73,5 +73,12 @@
   "decentralize": "decentralize",
   "success": "{{value}} success",
   "management": "{{value}} management",
-  "user-management": "User management"
+  "user-management": "User management",
+  "product-type-management": "Product type management",
+  "product-type": "product type",
+  "description": "Description",
+  "image": "Image",
+  "icon": "Icon",
+  "tag": "Tag",
+  "category": "Category"
 }

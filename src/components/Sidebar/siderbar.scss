@@ -7,6 +7,10 @@
   height: 100vh;
 
   li {
+    :first-letter {
+      text-transform: uppercase;
+    }
+
     li {
       background-color: #ffd400;
     }

@@ -32,8 +32,9 @@ const ProductTypePage = () => {
     image: ''
   });
 
-  let columns: MRT_ColumnDef<object>[];
+  let columns: MRT_ColumnDef<{ name: string }>[];
 
+  // eslint-disable-next-line prefer-const
   columns = [
     {
       header: '#',
@@ -42,13 +43,13 @@ const ProductTypePage = () => {
       enableSorting: false
     },
     {
-      header: t('name'), // Tên vai trò
+      header: t('name'),
       accessorKey: 'name',
       enableColumnOrdering: true,
       enableMultiSort: true
     },
     {
-      header: t('description'), // Tên vai trò
+      header: t('description'),
       accessorKey: 'description'
     },
     {
@@ -58,7 +59,7 @@ const ProductTypePage = () => {
       size: 90,
       Cell: ({ renderedCellValue, row }) => (
         <img
-          src={`${import.meta.env.VITE_PRODUCT_SERVICE}/${renderedCellValue}`}
+          src={`${renderedCellValue}`}
           style={{
             height: '5rem'
           }}
@@ -69,7 +70,7 @@ const ProductTypePage = () => {
     {
       header: t('icon'),
       accessorKey: 'icon',
-      Cell: ({ renderedCellValue }) => <i className={'' + renderedCellValue}></i>,
+      Cell: ({ renderedCellValue }) => <i className={'' + renderedCellValue + ' text-8xl'}></i>,
       size: 70,
       minSize: 5,
       enableResizing: true,
@@ -105,16 +106,14 @@ const ProductTypePage = () => {
     setOpenCreate(false);
   };
 
-  const handleUpdate = ({ id, name, description, icon, image }) => {
+  const handleUpdate = ({ name, description, icon, image }) => {
     dispatch(
       updateTypeStart({
-        id,
-        body: {
-          name,
-          description,
-          icon,
-          image
-        }
+        id: currentUser.id,
+        name,
+        description,
+        icon,
+        image
       })
     );
     setOpenUpdate(false);
@@ -123,6 +122,7 @@ const ProductTypePage = () => {
   useEffect(() => {
     if (confirmDelete) {
       dispatch(deleteTypeStart(currentUser.id));
+      setConfirmDelete(false);
     }
   }, [confirmDelete]);
 

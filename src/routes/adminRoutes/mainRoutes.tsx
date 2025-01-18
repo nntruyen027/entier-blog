@@ -45,7 +45,7 @@ const authRoutes: Route[] = [
     id: `admin-main-${uuid4()}`,
     path: routes.admin.main.productType,
     element: <ProductTypeAdminPage />,
-    label: 'product-type-management'
+    label: 'product-type'
   }
 ];
 

@@ -44,7 +44,7 @@ const sidebar: MenuItemType[] = [
   },
   {
     id: `sidebar-${uuid()}`,
-    label: 'category-management',
+    label: 'category',
     icon: <FontAwesomeIcon icon={faIcons} />,
     hasChildren: true,
     children: [

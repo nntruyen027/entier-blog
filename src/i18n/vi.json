@@ -74,5 +74,11 @@
   "success": "{{value}} thành công",
   "reset-password": "Đặt lại mật khẩu",
   "management": "Quản lý {{value}}",
-  "user-management": "Quản lý người dùng"
+  "user-management": "Quản lý người dùng",
+  "product-type": "Loại sản phẩm",
+  "description": "Mô tả",
+  "image": "Hình ảnh",
+  "icon": "Biểu tượng",
+  "tag": "Thẻ",
+  "category": "Danh mục"
 }
