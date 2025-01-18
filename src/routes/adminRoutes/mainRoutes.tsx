@@ -7,6 +7,7 @@ import {
   PasswordPage,
   ProductTypeAdminPage,
   RolePage,
+  TagPage,
   UserManagementPage
 } from '~/pages';
 
@@ -46,6 +47,12 @@ const authRoutes: Route[] = [
     path: routes.admin.main.productType,
     element: <ProductTypeAdminPage />,
     label: 'product-type'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.tag,
+    element: <TagPage />,
+    label: 'tag'
   }
 ];
 

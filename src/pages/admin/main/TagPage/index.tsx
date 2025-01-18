@@ -8,11 +8,11 @@ import { ConfirmModal, Table } from '~/components';
 import { CreateComponent, UpdateComponent } from './components';
 import { RowAction } from '~/types';
 import { Delete as DeleteIcon, ModeEdit } from '@mui/icons-material';
-import { createTypeStart, deleteTypeStart, getTypesStart, updateTypeStart } from '~/redux/productType/slice';
+import { createTagStart, deleteTagStart, getTagsStart, updateTagStart } from '~/redux/tag/slice';
 
 const ProductTypePage = () => {
   const { t } = useTranslation();
-  const { types, pageCount, rowCount } = useSelector((state: RootState) => state.productType);
+  const { tags, pageCount, rowCount } = useSelector((state: RootState) => state.tag);
   const dispatch = useDispatch();
 
   const [pagination, setPagination] = useState({
@@ -51,30 +51,6 @@ const ProductTypePage = () => {
     {
       header: t('description'),
       accessorKey: 'description'
-    },
-    {
-      enableSorting: false,
-      header: t('image'),
-      accessorKey: 'image',
-      size: 90,
-      Cell: ({ renderedCellValue, row }) => (
-        <img
-          src={`${renderedCellValue}`}
-          style={{
-            height: '5rem'
-          }}
-          alt={'' + row.original?.name}
-        />
-      )
-    },
-    {
-      header: t('icon'),
-      accessorKey: 'icon',
-      Cell: ({ renderedCellValue }) => <i className={'' + renderedCellValue + ' text-8xl'}></i>,
-      size: 70,
-      minSize: 5,
-      enableResizing: true,
-      enableSorting: false
     }
   ];
 
@@ -98,22 +74,20 @@ const ProductTypePage = () => {
   ];
 
   useEffect(() => {
-    dispatch(getTypesStart({ size: pagination.pageSize, page: pagination.pageIndex }));
+    dispatch(getTagsStart({ size: pagination.pageSize, page: pagination.pageIndex }));
   }, [dispatch, pagination]);
 
-  const handleSave = ({ name, description, icon, image }) => {
-    dispatch(createTypeStart({ name, description, icon, image }));
+  const handleSave = ({ name, description }) => {
+    dispatch(createTagStart({ name, description }));
     setOpenCreate(false);
   };
 
-  const handleUpdate = ({ name, description, icon, image }) => {
+  const handleUpdate = ({ name, description }) => {
     dispatch(
-      updateTypeStart({
+      updateTagStart({
         id: currentUser.id,
         name,
-        description,
-        icon,
-        image
+        description
       })
     );
     setOpenUpdate(false);
@@ -121,7 +95,7 @@ const ProductTypePage = () => {
 
   useEffect(() => {
     if (confirmDelete) {
-      dispatch(deleteTypeStart(currentUser.id));
+      dispatch(deleteTagStart(currentUser.id));
       setConfirmDelete(false);
     }
   }, [confirmDelete]);
@@ -136,7 +110,7 @@ const ProductTypePage = () => {
         confirm={confirmDelete}
         setConfirm={setConfirmDelete}
         content={t('confirm-delete', {
-          value: t('type')
+          value: t('tag')
         })}
       />
       <div className={'w-full p-3'}>
@@ -148,7 +122,7 @@ const ProductTypePage = () => {
         <div className={'w-full'}>
           <Table
             columns={columns}
-            data={types.map((value, index) => ({
+            data={tags.map((value, index) => ({
               no: index + 1,
               ...value
             }))}

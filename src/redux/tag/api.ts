@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = `${import.meta.env.VITE_PRODUCT_SERVICE}/product-types`;
+const BASE_URL = `${import.meta.env.VITE_PRODUCT_SERVICE}/tags`;
 
 export const getAll = async ({ size, page }) => {
   return await axios.get(BASE_URL, {
@@ -22,8 +22,8 @@ export const getOne = async (id) => {
   });
 };
 
-export const createOne = async ({ name, description, icon, image }) => {
-  return await axios.post(`${BASE_URL}`, JSON.stringify({ name, description, icon, image }), {
+export const createOne = async ({ name, description }) => {
+  return await axios.post(`${BASE_URL}`, JSON.stringify({ name, description }), {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
       'Content-Type': 'application/json'
@@ -31,8 +31,8 @@ export const createOne = async ({ name, description, icon, image }) => {
   });
 };
 
-export const updateOne = async ({ id, name, description, icon, image }) => {
-  return await axios.put(`${BASE_URL}/${id}`, JSON.stringify({ name, description, icon, image }), {
+export const updateOne = async ({ id, name, description }) => {
+  return await axios.put(`${BASE_URL}/${id}`, JSON.stringify({ name, description }), {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
       'Content-Type': 'application/json'
