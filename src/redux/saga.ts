@@ -7,7 +7,20 @@ import userSaga from '~/redux/user/saga';
 import typeSaga from '~/redux/productType/saga';
 import tagSaga from '~/redux/tag/saga';
 import brandSaga from '~/redux/brand/saga';
+import attributeTypeSaga from '~/redux/attributeType/saga';
+import attributeSaga from '~/redux/attribute/saga';
 
 export default function* rootSaga() {
-  yield all([locationSaga(), authSaga(), personalSaga(), roleSaga(), userSaga(), typeSaga(), tagSaga(), brandSaga()]);
+  yield all([
+    locationSaga(),
+    authSaga(),
+    personalSaga(),
+    roleSaga(),
+    userSaga(),
+    typeSaga(),
+    tagSaga(),
+    brandSaga(),
+    attributeTypeSaga(),
+    attributeSaga()
+  ]);
 }

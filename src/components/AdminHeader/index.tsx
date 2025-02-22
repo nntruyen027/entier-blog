@@ -12,7 +12,7 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ title, className }) => {
 
   return (
     <div className={'w-full p-3 bg-white shadow-lg flex justify-between items-center' + ' ' + className}>
-      <div className={'font-bold text-xl'}>{t(title)}</div>
+      <div className={'font-bold text-xl lowercase first-letter:uppercase'}>{t(title)}</div>
       <div className={'flex gap-2 items-center'}>
         <Profile />
         <LanguageSwitcher />

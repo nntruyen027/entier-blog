@@ -141,7 +141,7 @@ export interface MenuItemType {
   id: string | number;
   label: string;
   route?: string;
-  icon: JSX.Element;
+  icon?: JSX.Element;
   hasChildren: boolean;
   children?: MenuItemType[];
 }

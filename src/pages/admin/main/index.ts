@@ -6,6 +6,8 @@ import UserManagementPage from './UserManagementPage';
 import ProductTypeAdminPage from './ProductTypePage';
 import TagPage from './TagPage';
 import BrandPage from './BrandPage';
+import AttributeTypePage from './AttributeTypePage';
+import AttributePage from './AttributePage';
 
 export {
   DashboardPage,
@@ -15,5 +17,7 @@ export {
   UserManagementPage,
   ProductTypeAdminPage,
   TagPage,
-  BrandPage
+  BrandPage,
+  AttributeTypePage,
+  AttributePage
 };

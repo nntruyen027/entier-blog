@@ -15,7 +15,7 @@ const CustomSidebar: React.FC<SidebarProps> = ({ isFull }) => {
   return (
     <Sidebar collapsed={!isFull} id={'admin-sidebar'}>
       <Menu
-        transitionDuration={500}
+        transitionDuration={300}
         menuItemStyles={{
           label: {
             textAlign: 'left'

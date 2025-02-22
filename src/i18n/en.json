@@ -80,5 +80,7 @@
   "image": "Image",
   "icon": "Icon",
   "tag": "tag",
-  "category": "Category"
+  "category": "Category",
+  "attribute-type": "Attribute type",
+  "attribute": "Attribute"
 }

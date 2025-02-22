@@ -17,7 +17,7 @@
     "billion": "tỷ"
   },
   "price": "giá",
-  "type": "loại",
+  "type": "Loại",
   "usage-needs": "nhu cầu",
   "filter": "lọc",
   "order-by": "Sắp xếp theo",
@@ -80,5 +80,7 @@
   "image": "Hình ảnh",
   "icon": "Biểu tượng",
   "tag": "thẻ",
-  "category": "Danh mục"
+  "category": "Danh mục",
+  "attribute-type": "Loại thuộc tính",
+  "attribute": "Thuộc tính"
 }

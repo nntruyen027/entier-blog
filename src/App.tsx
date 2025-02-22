@@ -7,6 +7,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from '~/i18n';
 import '~/i18n';
 import { SnackbarProvider } from 'notistack';
+import 'react-widgets/styles.css';
 
 function App() {
   return (

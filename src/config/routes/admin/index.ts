@@ -10,7 +10,10 @@ const main = {
   user: '/admin/system/user',
   productType: '/admin/category/product-type',
   brand: '/admin/category/brand',
-  tag: '/admin/category/tag'
+  tag: '/admin/category/tag',
+  attributeType: '/admin/category/attributeType',
+  attribute: '/admin/attribute/attribute',
+  attributeValue: '/admin/attribute/value'
 };
 
 export { auth, main };
