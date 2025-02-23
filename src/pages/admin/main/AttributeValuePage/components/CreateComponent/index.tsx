@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import DropdownList from 'react-widgets/DropdownList';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
-import { getAttributeTypesStart } from '~/redux/attributeType/slice';
+import { getAttributesStart } from '~/redux/attribute/slice';
 
 interface IProps {
   open: boolean;
@@ -13,19 +13,19 @@ interface IProps {
   onSave: ({
     name,
     description,
-    type
+    attribute
   }: {
     name: string | null;
     description: string | null;
-    type: number | null;
+    attribute: number | null;
   }) => void;
 }
 
 const CreateComponent: React.FC<IProps> = ({ open, setOpen, onSave }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const { attributeTypes } = useSelector((state: RootState) => state.attributeType);
-  const [type, setType] = useState<{ id: number; name: string; description: string }>();
+  const { attributes } = useSelector((state: RootState) => state.attribute);
+  const [attribute, setAttribute] = useState<{ id: number; name: string; description: string }>();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -33,9 +33,9 @@ const CreateComponent: React.FC<IProps> = ({ open, setOpen, onSave }) => {
     if (!open) {
       setName('');
       setDescription('');
-      setType(null);
+      setAttribute(null);
     } else {
-      dispatch(getAttributeTypesStart({}));
+      dispatch(getAttributesStart({}));
     }
   }, [open]);
 
@@ -43,7 +43,7 @@ const CreateComponent: React.FC<IProps> = ({ open, setOpen, onSave }) => {
     <Backdrop sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })} open={open}>
       <Paper sx={{ minWidth: '40rem' }}>
         <div className='w-full relative top-0 left-0 text-xl font-bold py-3'>
-          <h3 className='lowercase first-letter:uppercase'>{t('create', { value: t('attribute') })}</h3>
+          <h3 className='lowercase first-letter:uppercase'>{t('create', { value: t('attribute-value') })}</h3>
           <CloseIcon
             className='cursor-pointer absolute top-1/2 -translate-y-1/2 right-3 hover:text-red-600'
             onClick={() => setOpen(false)}
@@ -61,12 +61,12 @@ const CreateComponent: React.FC<IProps> = ({ open, setOpen, onSave }) => {
             />
             <DropdownList
               className={'text-left'}
-              data={attributeTypes}
-              onChange={(value) => setType(value)}
-              value={type}
+              data={attributes}
+              onChange={(value) => setAttribute(value)}
+              value={attribute}
               dataKey='id'
               textField='name'
-              placeholder={t('type')}
+              placeholder={t('attribute-value')}
               defaultValue={1}
             />
           </div>
@@ -82,7 +82,7 @@ const CreateComponent: React.FC<IProps> = ({ open, setOpen, onSave }) => {
         </div>
         <Divider />
         <div className='p-3 w-full flex gap-3 justify-end'>
-          <Button variant='outlined' onClick={() => onSave({ name, description, type: type.id })}>
+          <Button variant='outlined' onClick={() => onSave({ name, description, attribute: attribute.id })}>
             {t('save')}
           </Button>
         </div>

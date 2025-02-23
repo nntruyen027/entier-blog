@@ -8,6 +8,7 @@ import TagPage from './TagPage';
 import BrandPage from './BrandPage';
 import AttributeTypePage from './AttributeTypePage';
 import AttributePage from './AttributePage';
+import AttributeValuePage from './AttributeValuePage';
 
 export {
   DashboardPage,
@@ -19,5 +20,6 @@ export {
   TagPage,
   BrandPage,
   AttributeTypePage,
-  AttributePage
+  AttributePage,
+  AttributeValuePage
 };

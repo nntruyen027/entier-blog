@@ -1,6 +1,6 @@
 import { MenuItemType } from '~/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBarsProgress, faChartSimple, faIcons, faSliders } from '@fortawesome/free-solid-svg-icons';
+import { faBarsProgress, faChartSimple, faIcons, faMemory, faSliders } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuid } from 'uuid';
 import { main } from '~/config/routes/admin';
 
@@ -94,6 +94,32 @@ const sidebar: MenuItemType[] = [
         id: `sidebar-${uuid()}`,
         label: 'attribute-value',
         route: main.attributeValue,
+        hasChildren: false
+      }
+    ]
+  },
+  {
+    id: `sidebar-${uuid()}`,
+    label: 'product',
+    icon: <FontAwesomeIcon icon={faMemory} />,
+    hasChildren: true,
+    children: [
+      {
+        id: `sidebar-${uuid()}`,
+        label: 'hardware',
+        route: main.hardware,
+        hasChildren: false
+      },
+      {
+        id: `sidebar-${uuid()}`,
+        label: 'software',
+        route: main.software,
+        hasChildren: false
+      },
+      {
+        id: `sidebar-${uuid()}`,
+        label: 'service',
+        route: main.service,
         hasChildren: false
       }
     ]

@@ -9,6 +9,7 @@ import tagReducer from './tag/slice';
 import brandReducer from './brand/slice';
 import attributeTypeReducer from './attributeType/slice';
 import attributeReducer from './attribute/slice';
+import attributeValueReducer from './attributeValue/slice';
 
 const rootReducer = combineReducers({
   location: locationReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   tag: tagReducer,
   brand: brandReducer,
   attributeType: attributeTypeReducer,
-  attribute: attributeReducer
+  attribute: attributeReducer,
+  attributeValue: attributeValueReducer
 });
 
 export default rootReducer;

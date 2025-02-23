@@ -82,5 +82,6 @@
   "tag": "tag",
   "category": "Category",
   "attribute-type": "Attribute type",
-  "attribute": "Attribute"
+  "attribute": "Attribute",
+  "attribute-value": "Attribute value"
 }

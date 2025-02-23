@@ -5,6 +5,7 @@ import {
   AccountSettingPage,
   AttributePage,
   AttributeTypePage,
+  AttributeValuePage,
   BrandPage,
   DashboardPage,
   PasswordPage,
@@ -73,6 +74,12 @@ const authRoutes: Route[] = [
     id: `admin-main-${uuid4()}`,
     path: routes.admin.main.attribute,
     element: <AttributePage />,
+    label: 'attribute'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.attributeValue,
+    element: <AttributeValuePage />,
     label: 'attribute'
   }
 ];

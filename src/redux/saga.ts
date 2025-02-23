@@ -9,6 +9,7 @@ import tagSaga from '~/redux/tag/saga';
 import brandSaga from '~/redux/brand/saga';
 import attributeTypeSaga from '~/redux/attributeType/saga';
 import attributeSaga from '~/redux/attribute/saga';
+import attributeValueSaga from '~/redux/attributeValue/saga';
 
 export default function* rootSaga() {
   yield all([
@@ -21,6 +22,7 @@ export default function* rootSaga() {
     tagSaga(),
     brandSaga(),
     attributeTypeSaga(),
-    attributeSaga()
+    attributeSaga(),
+    attributeValueSaga()
   ]);
 }
