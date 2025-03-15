@@ -6,6 +6,8 @@ import { Dropzone, FileMosaic } from '@files-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
 import DropdownList from 'react-widgets/DropdownList';
+import { getTypesStart } from '~/redux/productType/slice';
+import { getBrandsStart } from '~/redux/brand/slice';
 
 interface IProps {
   open: boolean;
@@ -52,7 +54,9 @@ const UpdateComponent: React.FC<IProps> = ({ open, setOpen, onSave, value }) => 
           : []
       );
     }
-  }, [value, open, types, brands]);
+    dispatch(getTypesStart({}));
+    dispatch(getBrandsStart({}));
+  }, [value, open]);
 
   const updateFiles = async (incomingFiles) => {
     if (incomingFiles.length === 0) return;
