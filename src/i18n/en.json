@@ -16,7 +16,7 @@
     "billion": "billion"
   },
   "price": "price",
-  "brand": "brand",
+  "brand": "Brand",
   "type": "type",
   "usage-needs": "usage needs",
   "filter": "filter",
@@ -83,5 +83,6 @@
   "category": "Category",
   "attribute-type": "Attribute type",
   "attribute": "Attribute",
-  "attribute-value": "Attribute value"
+  "attribute-value": "Attribute value",
+  "warehouse": "Warehouse"
 }

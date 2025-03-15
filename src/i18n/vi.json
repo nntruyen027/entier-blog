@@ -7,7 +7,7 @@
   "more": "Xem thêm",
   "news": "Tin tức",
   "close": "đóng",
-  "brand": "hãng",
+  "brand": "Hãng",
   "under": "Dưới {{value}}",
   "from-to": "Từ {{min}} đến {{max}}",
   "above": "Trên {{value}}",
@@ -83,5 +83,6 @@
   "category": "Danh mục",
   "attribute-type": "Loại thuộc tính",
   "attribute": "Thuộc tính",
-  "attribute-value": "Giá trị thuộc tính"
+  "attribute-value": "Giá trị thuộc tính",
+  "warehouse": "Kho"
 }

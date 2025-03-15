@@ -61,17 +61,17 @@ const UserPage = () => {
       size: 1
     },
     {
-      header: t('name'), // Tên vai trò
+      header: t('name'),
       accessorKey: 'fullName',
       enableColumnOrdering: true,
       enableMultiSort: true
     },
     {
-      header: t('phone'), // Tên vai trò
+      header: t('phone'),
       accessorKey: 'phone'
     },
     {
-      header: t('Email'), // Tên vai trò
+      header: t('Email'),
       accessorKey: 'email'
     }
   ];

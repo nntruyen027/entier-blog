@@ -100,26 +100,14 @@ const sidebar: MenuItemType[] = [
   },
   {
     id: `sidebar-${uuid()}`,
-    label: 'product',
+    label: 'warehouse',
     icon: <FontAwesomeIcon icon={faMemory} />,
     hasChildren: true,
     children: [
       {
         id: `sidebar-${uuid()}`,
-        label: 'hardware',
-        route: main.hardware,
-        hasChildren: false
-      },
-      {
-        id: `sidebar-${uuid()}`,
-        label: 'software',
-        route: main.software,
-        hasChildren: false
-      },
-      {
-        id: `sidebar-${uuid()}`,
-        label: 'service',
-        route: main.service,
+        label: 'product',
+        route: main.product,
         hasChildren: false
       }
     ]

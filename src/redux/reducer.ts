@@ -10,6 +10,7 @@ import brandReducer from './brand/slice';
 import attributeTypeReducer from './attributeType/slice';
 import attributeReducer from './attribute/slice';
 import attributeValueReducer from './attributeValue/slice';
+import productReducer from './product/slice';
 
 const rootReducer = combineReducers({
   location: locationReducer,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   brand: brandReducer,
   attributeType: attributeTypeReducer,
   attribute: attributeReducer,
-  attributeValue: attributeValueReducer
+  attributeValue: attributeValueReducer,
+  product: productReducer
 });
 
 export default rootReducer;

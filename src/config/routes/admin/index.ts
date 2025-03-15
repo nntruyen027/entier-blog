@@ -14,9 +14,7 @@ const main = {
   attributeType: '/admin/category/attributeType',
   attribute: '/admin/attribute/attribute',
   attributeValue: '/admin/attribute/value',
-  hardware: '/admin/product/hardware',
-  software: '/admin/product/software',
-  service: '/admin/product/service'
+  product: '/admin/warehouse/product'
 };
 
 export { auth, main };
