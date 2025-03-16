@@ -58,17 +58,21 @@ const UserPage = () => {
     {
       header: '#',
       accessorKey: 'no',
+      enableResizing: true,
       size: 1
     },
     {
       header: t('name'),
       accessorKey: 'fullName',
       enableColumnOrdering: true,
-      enableMultiSort: true
+      enableMultiSort: true,
+      size: 100
     },
     {
       header: t('phone'),
-      accessorKey: 'phone'
+      accessorKey: 'phone',
+      enableResizing: true,
+      size: 50
     },
     {
       header: t('Email'),

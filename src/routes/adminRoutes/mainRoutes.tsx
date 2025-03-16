@@ -8,13 +8,17 @@ import {
   AttributeValuePage,
   BrandPage,
   DashboardPage,
+  InvoicePage,
   PasswordPage,
+  ProductPage,
   ProductTypeAdminPage,
+  ProductVersionPage,
+  ReceiptDetailPage,
+  ReceiptPage,
   RolePage,
   TagPage,
   UserManagementPage
 } from '~/pages';
-import ProductPage from '~/pages/admin/main/ProductPage';
 
 const authRoutes: Route[] = [
   {
@@ -88,6 +92,30 @@ const authRoutes: Route[] = [
     path: routes.admin.main.product,
     element: <ProductPage />,
     label: 'product'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.productVersion,
+    element: <ProductVersionPage />,
+    label: 'product-version'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.receipt,
+    element: <ReceiptPage />,
+    label: 'receipt'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.receiptDetail,
+    element: <ReceiptDetailPage />,
+    label: 'receipt-detail'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.invoice,
+    element: <InvoicePage />,
+    label: 'invoice'
   }
 ];
 

@@ -14,7 +14,12 @@ const main = {
   attributeType: '/admin/category/attributeType',
   attribute: '/admin/attribute/attribute',
   attributeValue: '/admin/attribute/value',
-  product: '/admin/warehouse/product'
+  product: '/admin/warehouse/product',
+  productVersion: '/admin/warehouse/product/:productId/versions',
+  receipt: '/admin/warehouse/receipt',
+  receiptDetail: '/admin/warehouse/receipt/:id',
+  invoice: '/admin/warehouse/invoice',
+  invoiceDetail: '/admin/warehouse/invoice/:id'
 };
 
 export { auth, main };

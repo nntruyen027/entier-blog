@@ -15,7 +15,7 @@
     "million": "million",
     "billion": "billion"
   },
-  "price": "price",
+  "price": "Price",
   "brand": "Brand",
   "type": "type",
   "usage-needs": "usage needs",
@@ -79,10 +79,12 @@
   "description": "Description",
   "image": "Image",
   "icon": "Icon",
-  "tag": "tag",
+  "tag": "Tag",
   "category": "Category",
   "attribute-type": "Attribute type",
   "attribute": "Attribute",
   "attribute-value": "Attribute value",
-  "warehouse": "Warehouse"
+  "warehouse": "Warehouse",
+  "product-version": "Product version",
+  "assign-tag": "Assign tag"
 }

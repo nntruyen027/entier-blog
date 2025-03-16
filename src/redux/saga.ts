@@ -11,6 +11,8 @@ import attributeTypeSaga from '~/redux/attributeType/saga';
 import attributeSaga from '~/redux/attribute/saga';
 import attributeValueSaga from '~/redux/attributeValue/saga';
 import productSaga from '~/redux/product/saga';
+import productVersionSaga from '~/redux/productVersion/saga';
+import receiptSaga from '~/redux/receipt/saga';
 
 export default function* rootSaga() {
   yield all([
@@ -25,6 +27,8 @@ export default function* rootSaga() {
     attributeTypeSaga(),
     attributeSaga(),
     attributeValueSaga(),
-    productSaga()
+    productSaga(),
+    productVersionSaga(),
+    receiptSaga()
   ]);
 }

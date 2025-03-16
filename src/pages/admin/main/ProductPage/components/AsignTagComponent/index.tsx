@@ -5,39 +5,48 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
 import CheckboxesTags from '~/components/CheckboxesTags';
-import { getRolesStart } from '~/redux/role/slice'; // Đường dẫn chính xác của CheckboxesTags
+import { getTagsStart } from '~/redux/tag/slice';
 
 interface IProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  onSave: ({ username, roles }) => void;
-  value: { fullName: string; id: number; email: string; phone: string; isMale: boolean; roles: RoleType[]; account };
+  onSave: ({ id, tags }: { id: number; tags: string }) => void;
+  value: {
+    id: number;
+    name: string;
+    description: string;
+    image: string;
+    type: any;
+    brand: any;
+    tags: any[];
+  };
 }
 
-interface RoleType {
+interface Tag {
   id: number;
-  roleName: string;
+  name: string;
 }
 
 const DecentralizeComponent: React.FC<IProps> = ({ open, setOpen, onSave, value }) => {
-  const [assignedRoles, setAssignedRoles] = useState<RoleType[]>([]);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const { t } = useTranslation();
-  const { roles } = useSelector((state: RootState) => state.role);
+  const { tags } = useSelector((state: RootState) => state.tag);
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (value && Array.isArray(value.account.roles)) {
-      setAssignedRoles(value.account.roles);
-    } else {
-      setAssignedRoles([]);
-    }
-  }, [value, roles]);
 
   useEffect(() => {
-    dispatch(getRolesStart({}));
-  }, []);
+    if (value && Array.isArray(value.tags)) {
+      setSelectedTags(value.tags);
+    } else {
+      setSelectedTags([]);
+    }
+  }, [value]); // ✅ Chỉ chạy lại khi `value` thay đổi
+
+  useEffect(() => {
+    dispatch(getTagsStart({}));
+  }, [dispatch]); // ✅ Chỉ gọi API một lần khi component mount
 
   const handleSave = () => {
-    onSave({ username: value.account?.username, roles: assignedRoles.map((value) => value.roleName) });
+    onSave({ id: value.id, tags: selectedTags.map((i) => i.id).join(', ') });
     setOpen(false);
   };
 
@@ -45,7 +54,7 @@ const DecentralizeComponent: React.FC<IProps> = ({ open, setOpen, onSave, value 
     <Backdrop sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })} open={open}>
       <Paper sx={{ minWidth: '40rem' }}>
         <Box className='relative' sx={{ padding: '6px 0' }}>
-          <h3 className='text-xl font-bold'>{t('decentralize')}</h3>
+          <h3 className='text-xl font-bold'>{t('assign-tag')}</h3>
           <CloseIcon
             className='cursor-pointer absolute top-1/2 right-3 -translate-y-1/2 hover:text-red-600'
             onClick={() => setOpen(false)}
@@ -53,13 +62,13 @@ const DecentralizeComponent: React.FC<IProps> = ({ open, setOpen, onSave, value 
         </Box>
         <Divider />
         <Box p={3}>
-          <CheckboxesTags<RoleType>
-            options={roles}
-            onSelectionChange={setAssignedRoles}
-            getOptionLabel={(option) => option.roleName}
-            label={t('role')}
-            placeholder={t('role')}
-            defaultChecked={value.account.roles}
+          <CheckboxesTags<Tag>
+            options={tags}
+            onSelectionChange={setSelectedTags}
+            getOptionLabel={(option) => option.name}
+            label={t('tag')}
+            placeholder={t('tag')}
+            defaultChecked={selectedTags}
           />
         </Box>
         <Divider />

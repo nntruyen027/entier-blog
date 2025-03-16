@@ -9,6 +9,11 @@ import BrandPage from './BrandPage';
 import AttributeTypePage from './AttributeTypePage';
 import AttributePage from './AttributePage';
 import AttributeValuePage from './AttributeValuePage';
+import ProductVersionPage from './ProductVersionPage';
+import ProductPage from './ProductPage';
+import InvoicePage from './InvoicePage';
+import ReceiptPage from './ReceiptPage';
+import ReceiptDetailPage from './ReceiptDetailPage';
 
 export {
   DashboardPage,
@@ -21,5 +26,10 @@ export {
   BrandPage,
   AttributeTypePage,
   AttributePage,
-  AttributeValuePage
+  AttributeValuePage,
+  ProductVersionPage,
+  ProductPage,
+  InvoicePage,
+  ReceiptPage,
+  ReceiptDetailPage
 };

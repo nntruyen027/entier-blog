@@ -109,6 +109,18 @@ const sidebar: MenuItemType[] = [
         label: 'product',
         route: main.product,
         hasChildren: false
+      },
+      {
+        id: `sidebar-${uuid()}`,
+        label: 'receipt',
+        route: main.receipt,
+        hasChildren: false
+      },
+      {
+        id: `sidebar-${uuid()}`,
+        label: 'invoice',
+        route: main.invoice,
+        hasChildren: false
       }
     ]
   }

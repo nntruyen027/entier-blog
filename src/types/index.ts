@@ -151,3 +151,46 @@ export interface RowAction<T> {
   icon: React.ReactNode;
   onClick: (row, table?) => void;
 }
+
+export interface ReceiptItem {
+  id?: number;
+  versionName?: string;
+  price?: number;
+  quantity?: number;
+  donViTinh?: string;
+  itemTotal?: number;
+}
+
+export interface Receipt {
+  id?: string;
+  nguoiGiao?: string;
+  ngayGiao?: string; // ISO date format (YYYY-MM-DD)
+  bbSoHieu?: string;
+  bbNgay?: string; // ISO date format (YYYY-MM-DD)
+  nhaCungCap?: string;
+  khoTen?: string;
+  khoDiaChi?: string;
+  items?: ReceiptItem[];
+  totalAmount?: number;
+  thoiGianTao?: string; // ISO date-time format
+}
+
+export interface InvoiceItem {
+  id?: number;
+  versionName?: string;
+  price?: number;
+  quantity?: number;
+  itemTotal?: number;
+}
+
+export interface Invoice {
+  id?: string;
+  sdtCuaHang?: string;
+  diaChiCuaHang?: string;
+  tenKh?: string;
+  diaChiKh?: string;
+  sdtKh?: string;
+  items?: InvoiceItem[];
+  totalAmount?: number;
+  thoiGianTao?: string;
+}

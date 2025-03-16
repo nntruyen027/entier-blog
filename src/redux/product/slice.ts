@@ -38,7 +38,6 @@ const productSlice = createSlice({
       state.error = null;
     },
     getProductSuccess: (state, action) => {
-      state.products = action.payload.content;
       state.product = action.payload;
       state.loading = false;
     },
@@ -62,6 +61,12 @@ const productSlice = createSlice({
       state.loading = false;
     },
     updateProductStart: (state, action) => {
+      state.loading = true;
+      state.success = null;
+      state.product = null;
+      state.error = null;
+    },
+    updateProductTagStart: (state, action) => {
       state.loading = true;
       state.success = null;
       state.product = null;
@@ -112,7 +117,8 @@ export const {
   updateProductFailure,
   updateProductStart,
   updateProductSuccess,
-  getProductStart
+  getProductStart,
+  updateProductTagStart
 } = productSlice.actions;
 
 export default productSlice.reducer;

@@ -8,16 +8,20 @@ import i18n from '~/i18n';
 import '~/i18n';
 import { SnackbarProvider } from 'notistack';
 import 'react-widgets/styles.css';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 function App() {
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
-        <SnackbarProvider maxSnack={6}>
-          <AuthProvider>
-            <AppRoutes />
-          </AuthProvider>
-        </SnackbarProvider>
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <SnackbarProvider maxSnack={6}>
+            <AuthProvider>
+              <AppRoutes />
+            </AuthProvider>
+          </SnackbarProvider>
+        </LocalizationProvider>
       </I18nextProvider>
     </Provider>
   );

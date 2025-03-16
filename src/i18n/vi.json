@@ -16,7 +16,7 @@
     "million": "triệu",
     "billion": "tỷ"
   },
-  "price": "giá",
+  "price": "Giá",
   "type": "Loại",
   "usage-needs": "nhu cầu",
   "filter": "lọc",
@@ -79,10 +79,12 @@
   "description": "Mô tả",
   "image": "Hình ảnh",
   "icon": "Biểu tượng",
-  "tag": "thẻ",
+  "tag": "Thẻ",
   "category": "Danh mục",
   "attribute-type": "Loại thuộc tính",
   "attribute": "Thuộc tính",
   "attribute-value": "Giá trị thuộc tính",
-  "warehouse": "Kho"
+  "warehouse": "Kho",
+  "product-version": "Phiên bản sản phẩm",
+  "assign-tag": "Gắn thẻ"
 }
