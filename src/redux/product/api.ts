@@ -40,6 +40,19 @@ export const updateOne = async ({ id, name, description, type, brand, image }) =
   });
 };
 
+export const assignTags = async ({ id, tags }) => {
+  return await axios.put(
+    `${BASE_URL}/${id}/tags`,
+    { tags },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+};
+
 export const deleteOne = async (id) => {
   return await axios.delete(`${BASE_URL}/${id}`, {
     headers: {

@@ -9,12 +9,13 @@ import {
   BrandPage,
   DashboardPage,
   PasswordPage,
+  ProductPage,
   ProductTypeAdminPage,
+  ProductVersionPage,
   RolePage,
   TagPage,
   UserManagementPage
 } from '~/pages';
-import ProductPage from '~/pages/admin/main/ProductPage';
 
 const authRoutes: Route[] = [
   {
@@ -88,6 +89,12 @@ const authRoutes: Route[] = [
     path: routes.admin.main.product,
     element: <ProductPage />,
     label: 'product'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.productVersion,
+    element: <ProductVersionPage />,
+    label: 'product-version'
   }
 ];
 

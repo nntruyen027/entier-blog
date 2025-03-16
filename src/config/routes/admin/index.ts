@@ -14,7 +14,8 @@ const main = {
   attributeType: '/admin/category/attributeType',
   attribute: '/admin/attribute/attribute',
   attributeValue: '/admin/attribute/value',
-  product: '/admin/warehouse/product'
+  product: '/admin/warehouse/product',
+  productVersion: '/admin/warehouse/product/:productId/versions'
 };
 
 export { auth, main };

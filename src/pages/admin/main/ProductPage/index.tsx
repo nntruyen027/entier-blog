@@ -5,15 +5,23 @@ import { RootState } from '~/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmModal, Table } from '~/components';
-import { CreateComponent, UpdateComponent } from './components';
+import { AsignTagComponent, CreateComponent, UpdateComponent } from './components';
 import { RowAction } from '~/types';
-import { Delete as DeleteIcon, ModeEdit } from '@mui/icons-material';
-import { createProductStart, deleteProductStart, getProductsStart, updateProductStart } from '~/redux/product/slice';
+import { Category, Delete as DeleteIcon, ModeEdit, Sell } from '@mui/icons-material';
+import {
+  createProductStart,
+  deleteProductStart,
+  getProductsStart,
+  updateProductStart,
+  updateProductTagStart
+} from '~/redux/product/slice';
+import { useNavigate } from 'react-router-dom';
 
 const ProductPage = () => {
   const { t } = useTranslation();
   const { products, pageCount, rowCount } = useSelector((state: RootState) => state.product);
   const dispatch = useDispatch();
+  const nav = useNavigate();
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -22,6 +30,7 @@ const ProductPage = () => {
 
   const [openCreate, setOpenCreate] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [openAssign, setOpenAsign] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>();
   const [currentProduct, setCurrentUser] = useState({
@@ -29,8 +38,9 @@ const ProductPage = () => {
     name: '',
     description: '',
     image: '',
-    brand: 0,
-    type: 0
+    brand: null,
+    type: null,
+    tags: []
   });
 
   let columns: MRT_ColumnDef<{ name: string }>[];
@@ -47,11 +57,23 @@ const ProductPage = () => {
       header: t('name'),
       accessorKey: 'name',
       enableColumnOrdering: true,
-      enableMultiSort: true
+      enableMultiSort: true,
+      Cell: ({ renderedCellValue }) => (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+          {renderedCellValue}
+        </div>
+      ),
+      size: 90
     },
     {
       header: t('description'),
-      accessorKey: 'description'
+      accessorKey: 'description',
+      Cell: ({ renderedCellValue }) => (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+          {renderedCellValue}
+        </div>
+      ),
+      size: 120
     },
     {
       enableSorting: false,
@@ -72,17 +94,26 @@ const ProductPage = () => {
       header: t('type'),
       accessorKey: 'type.name',
       enableColumnOrdering: true,
-      enableMultiSort: true
+      enableMultiSort: true,
+      size: 90
     },
     {
       header: t('brand'),
       accessorKey: 'brand.name',
       enableColumnOrdering: true,
-      enableMultiSort: true
+      enableMultiSort: true,
+      size: 90
     }
   ];
 
   const actions: RowAction<object>[] = [
+    {
+      icon: <Category className={'text-blue-500'} />,
+      onClick: (row) => {
+        nav(`${row.original.id}/versions`);
+      },
+      label: t('product-version', { value: null })
+    },
     {
       icon: <ModeEdit className={'text-green-500'} />,
       onClick: (row) => {
@@ -90,6 +121,14 @@ const ProductPage = () => {
         setOpenUpdate(true);
       },
       label: t('edit', { value: null })
+    },
+    {
+      icon: <Sell className={'text-yellow-500'} />,
+      onClick: (row) => {
+        setCurrentUser(row.original);
+        setOpenAsign(true);
+      },
+      label: t('tag', { value: null })
     },
     {
       icon: <DeleteIcon className={'text-red-500'} />,
@@ -124,6 +163,16 @@ const ProductPage = () => {
     setOpenUpdate(false);
   };
 
+  const handleAssign = ({ tags }) => {
+    dispatch(
+      updateProductTagStart({
+        id: currentProduct.id,
+        tags
+      })
+    );
+    setOpenAsign(false);
+  };
+
   useEffect(() => {
     if (confirmDelete) {
       dispatch(deleteProductStart(currentProduct.id));
@@ -134,6 +183,7 @@ const ProductPage = () => {
   return (
     <>
       <CreateComponent open={openCreate} setOpen={setOpenCreate} onSave={handleSave} />
+      <AsignTagComponent open={openAssign} setOpen={setOpenAsign} onSave={handleAssign} value={currentProduct} />
       <UpdateComponent open={openUpdate} setOpen={setOpenUpdate} onSave={handleUpdate} value={currentProduct} />
       <ConfirmModal
         open={openDelete}
@@ -153,7 +203,7 @@ const ProductPage = () => {
         <div className={'w-full'}>
           <Table
             columns={columns}
-            data={products.map((value, index) => ({
+            data={products?.map((value, index) => ({
               no: index + 1,
               ...value
             }))}
