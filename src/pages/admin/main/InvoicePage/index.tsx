@@ -5,21 +5,17 @@ import { RootState } from '~/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmModal, Table } from '~/components';
-import { AsignTagComponent, CreateComponent, UpdateComponent } from './components';
-import { RowAction } from '~/types';
-import { Category, Delete as DeleteIcon, ModeEdit, Sell } from '@mui/icons-material';
-import {
-  createProductStart,
-  deleteProductStart,
-  getProductsStart,
-  updateProductStart,
-  updateProductTagStart
-} from '~/redux/product/slice';
+import { CreateComponent, UpdateComponent } from './components';
+import { Invoice, RowAction } from '~/types';
+import { Category, Delete as DeleteIcon, ModeEdit, PictureAsPdf } from '@mui/icons-material';
+import { createInvoiceStart, deleteInvoiceStart, getInvoicesStart, updateInvoiceStart } from '~/redux/invoice/slice';
 import { useNavigate } from 'react-router-dom';
+import { formatCurrency } from '~/utils/currency';
+import { generatePdf } from '~/redux/invoice/api';
 
-const ProductPage = () => {
+const InvoicePage = () => {
   const { t } = useTranslation();
-  const { products, pageCount, rowCount } = useSelector((state: RootState) => state.product);
+  const { invoices, pageCount, rowCount } = useSelector((state: RootState) => state.invoice);
   const dispatch = useDispatch();
   const nav = useNavigate();
 
@@ -30,92 +26,74 @@ const ProductPage = () => {
 
   const [openCreate, setOpenCreate] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
-  const [openAssign, setOpenAsign] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>();
-  const [currentProduct, setCurrentUser] = useState({
-    id: 0,
-    name: '',
-    description: '',
-    image: '',
-    brand: null,
-    type: null,
-    tags: []
-  });
+  const [currentInvoice, setCurrentUser] = useState<Invoice>();
 
-  let columns: MRT_ColumnDef<{ name: string }>[];
-
-  // eslint-disable-next-line prefer-const
-  columns = [
+  const columns: MRT_ColumnDef<object>[] = [
     {
       header: '#',
       accessorKey: 'no',
       size: 1,
-      enableSorting: false
+      enableSorting: false,
+      Cell: ({ renderedCellValue }) => <div className='text-center'>{renderedCellValue}</div>
     },
     {
-      header: t('name'),
-      accessorKey: 'name',
+      header: t('customer'),
+      accessorKey: 'tenKh',
       enableColumnOrdering: true,
       enableMultiSort: true,
+      size: 80,
       Cell: ({ renderedCellValue }) => (
         <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
           {renderedCellValue}
         </div>
-      ),
-      size: 90
-    },
-    {
-      header: t('description'),
-      accessorKey: 'description',
-      Cell: ({ renderedCellValue }) => (
-        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
-          {renderedCellValue}
-        </div>
-      ),
-      size: 120
-    },
-    {
-      enableSorting: false,
-      header: t('image'),
-      accessorKey: 'image',
-      size: 90,
-      Cell: ({ renderedCellValue, row }) => (
-        <img
-          src={`${renderedCellValue}`}
-          style={{
-            height: '5rem'
-          }}
-          alt={'' + row.original?.name}
-        />
       )
     },
     {
-      header: t('type'),
-      accessorKey: 'type.name',
-      enableColumnOrdering: true,
-      enableMultiSort: true,
-      size: 90
+      header: t('customer-address'),
+      accessorKey: 'diaChiKh',
+      size: 80,
+      Cell: ({ renderedCellValue }) => (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+          {renderedCellValue}
+        </div>
+      )
     },
     {
-      header: t('brand'),
-      accessorKey: 'brand.name',
-      enableColumnOrdering: true,
-      enableMultiSort: true,
-      size: 90
+      enableSorting: false,
+      header: t('customer-phone'),
+      accessorKey: 'sdtKh',
+      size: 50,
+      Cell: ({ renderedCellValue }) => (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+          {renderedCellValue}
+        </div>
+      )
+    },
+    {
+      enableSorting: false,
+      header: t('total-amount'),
+      accessorKey: 'totalAmount',
+      size: 50,
+      Cell: ({ renderedCellValue }) => (
+        <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+          {formatCurrency(Number(renderedCellValue))}
+        </div>
+      )
     }
   ];
 
   const actions: RowAction<object>[] = [
     {
-      icon: <Category className={'text-blue-500'} />,
+      icon: <Category className='text-blue-500' />,
       onClick: (row) => {
-        nav(`${row.original.id}/versions`);
+        nav(`${row.original.id}`);
       },
-      label: t('product-version', { value: null })
+      label: t('invoice-detail', { value: null })
     },
     {
-      icon: <ModeEdit className={'text-green-500'} />,
+      icon: <ModeEdit className='text-green-500' />,
       onClick: (row) => {
         setCurrentUser(row.original);
         setOpenUpdate(true);
@@ -123,90 +101,94 @@ const ProductPage = () => {
       label: t('edit', { value: null })
     },
     {
-      icon: <Sell className={'text-yellow-500'} />,
-      onClick: (row) => {
-        setCurrentUser(row.original);
-        setOpenAsign(true);
-      },
-      label: t('tag', { value: null })
-    },
-    {
-      icon: <DeleteIcon className={'text-red-500'} />,
+      icon: <DeleteIcon className='text-red-500' />,
       onClick: (row) => {
         setCurrentUser(row.original);
         setOpenDelete(true);
       },
       label: t('delete', { value: null })
+    },
+    {
+      icon: <PictureAsPdf className='text-orange-500' />,
+      onClick: async (row) => {
+        const response = await generatePdf(row.original.id);
+        const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+
+        window.open(pdfUrl, '_blank'); // Mở trong tab mới
+      },
+      label: t('export-to-pdf', { value: null })
     }
   ];
 
   useEffect(() => {
-    dispatch(getProductsStart({ size: pagination.pageSize, page: pagination.pageIndex }));
+    dispatch(getInvoicesStart({ size: pagination.pageSize, page: pagination.pageIndex }));
   }, [dispatch, pagination]);
 
-  const handleSave = ({ name, description, image, type, brand }) => {
-    dispatch(createProductStart({ name, description, type, brand, image }));
+  const handleSave = ({ items, sdtCuaHang, sdtKh, tenKh, diaChiCuaHang, diaChiKh }: Invoice) => {
+    dispatch(
+      createInvoiceStart({
+        sdtKh,
+        sdtCuaHang,
+        items,
+        tenKh,
+        diaChiCuaHang,
+        diaChiKh
+      })
+    );
     setOpenCreate(false);
   };
 
-  const handleUpdate = ({ name, description, image, type, brand }) => {
-    dispatch(
-      updateProductStart({
-        id: currentProduct.id,
-        name,
-        description,
-        image,
-        type,
-        brand
-      })
-    );
-    setOpenUpdate(false);
-  };
-
-  const handleAssign = ({ tags }) => {
-    dispatch(
-      updateProductTagStart({
-        id: currentProduct.id,
-        tags
-      })
-    );
-    setOpenAsign(false);
+  const handleUpdate = ({ sdtKh, sdtCuaHang, items, tenKh, diaChiCuaHang, diaChiKh }: Invoice) => {
+    if (currentInvoice) {
+      dispatch(
+        updateInvoiceStart({
+          id: currentInvoice.id,
+          sdtKh,
+          sdtCuaHang,
+          items,
+          tenKh,
+          diaChiCuaHang,
+          diaChiKh
+        })
+      );
+      setOpenUpdate(false);
+    }
   };
 
   useEffect(() => {
-    if (confirmDelete) {
-      dispatch(deleteProductStart(currentProduct.id));
+    if (confirmDelete && currentInvoice) {
+      dispatch(deleteInvoiceStart(currentInvoice.id));
       setConfirmDelete(false);
     }
-  }, [confirmDelete]);
+  }, [confirmDelete, currentInvoice, dispatch]);
 
   return (
     <>
       <CreateComponent open={openCreate} setOpen={setOpenCreate} onSave={handleSave} />
-      <AsignTagComponent open={openAssign} setOpen={setOpenAsign} onSave={handleAssign} value={currentProduct} />
-      <UpdateComponent open={openUpdate} setOpen={setOpenUpdate} onSave={handleUpdate} value={currentProduct} />
+      <UpdateComponent open={openUpdate} setOpen={setOpenUpdate} onSave={handleUpdate} value={currentInvoice} />
       <ConfirmModal
         open={openDelete}
         setOpen={setOpenDelete}
         confirm={confirmDelete}
         setConfirm={setConfirmDelete}
-        content={t('confirm-delete', {
-          value: t('type')
-        })}
+        content={t('confirm-delete', { value: t('type') })}
       />
-      <div className={'w-full p-3'}>
+      <div className='w-full p-3'>
         <div className='flex mb-4'>
           <Button variant='contained' style={{ marginLeft: 'auto' }} onClick={() => setOpenCreate(true)}>
             {t('add')}
           </Button>
         </div>
-        <div className={'w-full'}>
+        <div className='w-full'>
           <Table
             columns={columns}
-            data={products?.map((value, index) => ({
-              no: index + 1,
-              ...value
-            }))}
+            data={
+              invoices?.map((value, index) => ({
+                no: index + 1,
+                ...value
+              })) || []
+            }
             setPagination={setPagination}
             pagination={pagination}
             rowCount={rowCount}
@@ -219,4 +201,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default InvoicePage;

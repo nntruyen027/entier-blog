@@ -2,68 +2,55 @@ import { Backdrop, Button, Divider, Paper, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from 'react';
-import { Receipt, ReceiptItem } from '~/types';
+import { ReceiptItem } from '~/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '~/redux/store';
+import DropdownList from 'react-widgets/DropdownList';
+import { getProductVersionsStart } from '~/redux/productVersion/slice';
+import { getProductsStart } from '~/redux/product/slice';
 
 interface IProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  onSave: (data: {
-    bbNgay: string;
-    ngayGiao: string;
-    nguoiGiao: string;
-    items: ReceiptItem[];
-    bbSoHieu: string;
-    khoTen: string;
-    khoDiaChi: string;
-    nhaCungCap: string;
-    thoiGianTao: string;
-    totalAmount: number;
-  }) => void;
-  value?: Receipt;
+  onSave: (data: { id: number; name: string; quantity: number; unit: string; price: number; type: number }) => void;
+  value?: ReceiptItem;
 }
 
 const UpdateComponent: React.FC<IProps> = ({ open, setOpen, onSave, value }) => {
   const { t } = useTranslation();
+  const { productVersions } = useSelector((state: RootState) => state.productVersion);
+  const { products } = useSelector((state: RootState) => state.product);
+  const dispatch = useDispatch();
 
-  // Khai báo state cho các trường của receipt
-  const [nguoiGiao, setNguoiGiao] = useState('');
-  const [ngayGiao, setNgayGiao] = useState('');
-  const [bbSoHieu, setBbSoHieu] = useState('');
-  const [bbNgay, setBbNgay] = useState('');
-  const [nhaCungCap, setNhaCungCap] = useState('');
-  const [khoTen, setKhoTen] = useState('');
-  const [khoDiaChi, setKhoDiaChi] = useState('');
-  const [totalAmount, setTotalAmount] = useState<number>(0);
-  const [thoiGianTao, setThoiGianTao] = useState('');
-  const [items, setItems] = useState<ReceiptItem[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<{ id: number; name: string }>();
+  const [selectedProductVersion, setSelectedProductVersion] = useState<ReceiptItem>();
+  const [quantity, setQuantity] = useState(0);
+  const [unit, setUnit] = useState('');
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     if (open && value) {
-      setNguoiGiao(value.nguoiGiao || '');
-      setNgayGiao(value.ngayGiao || '');
-      setBbSoHieu(value.bbSoHieu || '');
-      setBbNgay(value.bbNgay || '');
-      setNhaCungCap(value.nhaCungCap || '');
-      setKhoTen(value.khoTen || '');
-      setKhoDiaChi(value.khoDiaChi || '');
-      setTotalAmount(value.totalAmount || 0);
-      setThoiGianTao(value.thoiGianTao || '');
-      setItems(value.items || []);
+      setSelectedProduct(products.find((pv) => pv.id === value.type));
+      setSelectedProductVersion(productVersions.find((pv) => pv.id === value.id));
+      setQuantity(value.quantity);
+      setUnit(value.donViTinh);
+      setPrice(value.price);
+      dispatch(getProductsStart({}));
     }
   }, [open, value]);
 
+  useEffect(() => {
+    if (selectedProduct) dispatch(getProductVersionsStart({ productId: selectedProduct.id }));
+  }, [selectedProduct]);
+
   const handleSubmit = () => {
     onSave({
-      bbNgay,
-      ngayGiao,
-      nguoiGiao,
-      items,
-      bbSoHieu,
-      khoTen,
-      khoDiaChi,
-      nhaCungCap,
-      thoiGianTao,
-      totalAmount
+      id: selectedProductVersion.id,
+      name: selectedProductVersion.versionName,
+      quantity: quantity,
+      unit: unit,
+      price: price,
+      type: selectedProduct.id
     });
     setOpen(false);
   };
@@ -80,59 +67,54 @@ const UpdateComponent: React.FC<IProps> = ({ open, setOpen, onSave, value }) => 
         </div>
         <Divider />
         <div className='p-3 w-full flex flex-col gap-3'>
-          <TextField
-            value={nguoiGiao}
-            onChange={(e) => setNguoiGiao(e.target.value)}
-            fullWidth
-            size='small'
-            label={t('nguoi-giao')}
-          />
-          <TextField
-            value={ngayGiao}
-            onChange={(e) => setNgayGiao(e.target.value)}
-            fullWidth
-            size='small'
-            label={t('ngay-giao')}
-            type='date'
-            InputLabelProps={{ shrink: true }}
-          />
-          <TextField
-            value={bbSoHieu}
-            onChange={(e) => setBbSoHieu(e.target.value)}
-            fullWidth
-            size='small'
-            label={t('so-bien-ban')}
-          />
-          <TextField
-            value={bbNgay}
-            onChange={(e) => setBbNgay(e.target.value)}
-            fullWidth
-            size='small'
-            label={t('bien-ban-ngay')}
-            type='date'
-            InputLabelProps={{ shrink: true }}
-          />
-          <TextField
-            value={nhaCungCap}
-            onChange={(e) => setNhaCungCap(e.target.value)}
-            fullWidth
-            size='small'
-            label={t('nha-cung-cap')}
-          />
-          <TextField
-            value={khoTen}
-            onChange={(e) => setKhoTen(e.target.value)}
-            fullWidth
-            size='small'
-            label={t('kho-ten')}
-          />
-          <TextField
-            value={khoDiaChi}
-            onChange={(e) => setKhoDiaChi(e.target.value)}
-            fullWidth
-            size='small'
-            label={t('kho-dia-chi')}
-          />
+          <div className={'flex gap-2'}>
+            <DropdownList
+              className={'text-left'}
+              data={products}
+              onChange={(value) => setSelectedProduct(value)}
+              value={selectedProduct}
+              dataKey='id'
+              textField='name'
+              placeholder={t('brand')}
+              defaultValue={1}
+            />
+            <DropdownList
+              className={'text-left'}
+              data={productVersions}
+              onChange={(value) => setSelectedProductVersion(value)}
+              value={selectedProductVersion}
+              dataKey='id'
+              textField='versionName'
+              placeholder={t('version-name')}
+              defaultValue={1}
+            />
+          </div>
+          <div className={'flex gap-2'}>
+            <TextField
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+              fullWidth
+              size='small'
+              type='number'
+              label={t('quantity')}
+            />
+            <TextField
+              value={unit}
+              onChange={(e) => setUnit(e.target.value)}
+              fullWidth
+              size='small'
+              label={t('unit')}
+            />
+            <TextField
+              value={price}
+              onChange={(e) => setPrice(Number(e.target.value))}
+              fullWidth
+              size='small'
+              label={t('price')}
+              type='number'
+              InputLabelProps={{ shrink: true }}
+            />
+          </div>
         </div>
         <Divider />
         <div className='p-3 w-full flex gap-3 justify-end'>

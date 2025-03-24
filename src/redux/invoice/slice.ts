@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Receipt } from '~/types';
+import { Invoice } from '~/types';
 
-interface ReceiptState {
+interface InvoiceState {
   loading: boolean;
-  receipt: Receipt | null;
-  receipts: Receipt[];
+  invoice: Invoice | null;
+  invoices: Invoice[];
   error: string | null;
   success: boolean | null;
   rowCount: number;
@@ -12,10 +12,10 @@ interface ReceiptState {
   statistics: any;
 }
 
-const initialState: ReceiptState = {
+const initialState: InvoiceState = {
   loading: false,
-  receipt: null,
-  receipts: [],
+  invoice: null,
+  invoices: [],
   error: null,
   success: null,
   rowCount: 0,
@@ -23,86 +23,86 @@ const initialState: ReceiptState = {
   statistics: null
 };
 
-const receiptSlice = createSlice({
-  name: 'receipt',
+const invoiceSlice = createSlice({
+  name: 'invoice',
   initialState,
   reducers: {
-    getReceiptsStart: (state, action) => {
+    getInvoicesStart: (state, action) => {
       state.loading = true;
       state.success = null;
-      state.receipts = [];
+      state.invoices = [];
       state.error = null;
     },
-    getReceiptsSuccess: (state, action) => {
-      state.receipts = action.payload.content;
+    getInvoicesSuccess: (state, action) => {
+      state.invoices = action.payload.content;
       state.rowCount = action.payload?.totalElements || 1;
       state.pageCount = action.payload?.totalPages || 1;
       state.loading = false;
     },
-    getReceiptsFailure: (state, action) => {
+    getInvoicesFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
-    getReceiptStart: (state, action) => {
+    getInvoiceStart: (state, action) => {
       state.loading = true;
       state.success = null;
-      state.receipt = null;
+      state.invoice = null;
       state.error = null;
     },
-    getReceiptSuccess: (state, action) => {
-      state.receipt = action.payload;
+    getInvoiceSuccess: (state, action) => {
+      state.invoice = action.payload;
       state.loading = false;
     },
-    getReceiptFailure: (state, action) => {
+    getInvoiceFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
-    createReceiptStart: (state, action) => {
+    createInvoiceStart: (state, action) => {
       state.loading = true;
       state.success = null;
       state.error = null;
     },
-    createReceiptSuccess: (state, action) => {
-      state.receipts.push(action.payload);
-      state.receipt = action.payload;
+    createInvoiceSuccess: (state, action) => {
+      state.invoices.push(action.payload);
+      state.invoice = action.payload;
       state.loading = false;
       state.success = true;
     },
-    createReceiptFailure: (state, action) => {
+    createInvoiceFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
-    updateReceiptStart: (state, action) => {
+    updateInvoiceStart: (state, action) => {
       state.loading = true;
       state.success = null;
-      state.receipt = null;
+      state.invoice = null;
       state.error = null;
     },
-    updateReceiptSuccess: (state, action) => {
-      const index = state.receipts.findIndex((receipt) => receipt.id === action.payload.id);
+    updateInvoiceSuccess: (state, action) => {
+      const index = state.invoices.findIndex((invoice) => invoice.id === action.payload.id);
       if (index !== -1) {
-        state.receipts[index] = action.payload;
+        state.invoices[index] = action.payload;
       }
-      state.receipt = action.payload;
+      state.invoice = action.payload;
       state.loading = false;
       state.success = true;
     },
-    updateReceiptFailure: (state, action) => {
+    updateInvoiceFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
-    deleteReceiptStart: (state, action) => {
+    deleteInvoiceStart: (state, action) => {
       state.loading = true;
       state.success = null;
-      state.receipt = null;
+      state.invoice = null;
       state.error = null;
     },
-    deleteReceiptSuccess: (state, action) => {
-      state.receipts = state.receipts.filter((receipt) => receipt.id !== action.payload);
+    deleteInvoiceSuccess: (state, action) => {
+      state.invoices = state.invoices.filter((invoice) => invoice.id !== action.payload);
       state.loading = false;
       state.success = true;
     },
-    deleteReceiptFailure: (state, action) => {
+    deleteInvoiceFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
@@ -154,21 +154,21 @@ const receiptSlice = createSlice({
 });
 
 export const {
-  getReceiptsStart,
-  getReceiptsSuccess,
-  getReceiptsFailure,
-  getReceiptStart,
-  getReceiptSuccess,
-  getReceiptFailure,
-  createReceiptStart,
-  createReceiptSuccess,
-  createReceiptFailure,
-  updateReceiptStart,
-  updateReceiptSuccess,
-  updateReceiptFailure,
-  deleteReceiptStart,
-  deleteReceiptSuccess,
-  deleteReceiptFailure,
+  getInvoicesStart,
+  getInvoicesSuccess,
+  getInvoicesFailure,
+  getInvoiceStart,
+  getInvoiceSuccess,
+  getInvoiceFailure,
+  createInvoiceStart,
+  createInvoiceSuccess,
+  createInvoiceFailure,
+  updateInvoiceStart,
+  updateInvoiceSuccess,
+  updateInvoiceFailure,
+  deleteInvoiceStart,
+  deleteInvoiceSuccess,
+  deleteInvoiceFailure,
   generatePdfStart,
   generatePdfSuccess,
   generatePdfFailure,
@@ -181,6 +181,6 @@ export const {
   doMonthlyStatisticsStart,
   doMonthlyStatisticsSuccess,
   doMonthlyStatisticsFailure
-} = receiptSlice.actions;
+} = invoiceSlice.actions;
 
-export default receiptSlice.reducer;
+export default invoiceSlice.reducer;

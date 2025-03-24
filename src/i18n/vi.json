@@ -86,5 +86,18 @@
   "attribute-value": "Giá trị thuộc tính",
   "warehouse": "Kho",
   "product-version": "Phiên bản sản phẩm",
-  "assign-tag": "Gắn thẻ"
+  "assign-tag": "Gắn thẻ",
+  "receipt": "Phiếu nhận",
+  "invoice": "Hóa đơn",
+  "so-bien-ban": "Số biên bản",
+  "date": "Ngày lập biên bản",
+  "total-amount": "Tổng giá",
+  "customer": "Khách hàng",
+  "customer-address": "Địa chỉ khách hàng",
+  "customer-phone": "Số điện thoại",
+  "invoice-detail": "Chi tiết hóa đơn",
+  "receipt-detail": "Chi tiết phiếu nhập",
+  "item-total": "Thành tiền",
+  "nha-cung-cap": "Nhà cung cấp",
+  "ngay-giao": "Ngày giao"
 }

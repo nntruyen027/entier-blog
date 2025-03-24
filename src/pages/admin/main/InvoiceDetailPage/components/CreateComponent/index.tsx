@@ -114,13 +114,6 @@ const CreateComponent: React.FC<IProps> = ({ open, setOpen, onSave }) => {
               label={t('quantity')}
             />
             <TextField
-              value={unit}
-              onChange={(e) => setUnit(e.target.value)}
-              fullWidth
-              size='small'
-              label={t('unit')}
-            />
-            <TextField
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
               fullWidth

@@ -14,6 +14,7 @@ import ProductPage from './ProductPage';
 import InvoicePage from './InvoicePage';
 import ReceiptPage from './ReceiptPage';
 import ReceiptDetailPage from './ReceiptDetailPage';
+import InvoiceDetailPage from './InvoiceDetailPage';
 
 export {
   DashboardPage,
@@ -31,5 +32,6 @@ export {
   ProductPage,
   InvoicePage,
   ReceiptPage,
-  ReceiptDetailPage
+  ReceiptDetailPage,
+  InvoiceDetailPage
 };

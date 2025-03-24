@@ -8,6 +8,7 @@ import {
   AttributeValuePage,
   BrandPage,
   DashboardPage,
+  InvoiceDetailPage,
   InvoicePage,
   PasswordPage,
   ProductPage,
@@ -116,6 +117,12 @@ const authRoutes: Route[] = [
     path: routes.admin.main.invoice,
     element: <InvoicePage />,
     label: 'invoice'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.invoiceDetail,
+    element: <InvoiceDetailPage />,
+    label: 'invoice-detail'
   }
 ];
 

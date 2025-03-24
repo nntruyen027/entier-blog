@@ -6,19 +6,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmModal, Table } from '~/components';
 import { CreateComponent, UpdateComponent } from './components';
-import { Receipt, RowAction } from '~/types';
-import { Delete as DeleteIcon, ModeEdit } from '@mui/icons-material';
-import { createReceiptStart, deleteReceiptStart, getReceiptStart, updateReceiptStart } from '~/redux/receipt/slice';
+import { ReceiptItem, RowAction } from '~/types';
+import { Delete as DeleteIcon, KeyboardArrowLeft, ModeEdit } from '@mui/icons-material';
+import { getReceiptStart, updateReceiptStart } from '~/redux/receipt/slice';
 import { useNavigate, useParams } from 'react-router-dom';
-import { formatDate } from '~/utils/date';
+import { formatCurrency } from '~/utils/currency';
+import { admin } from '~/config/routes';
 
-//TODO: Xây tiếp tục
 const ReceiptDetailPage = () => {
   const { t } = useTranslation();
   const { receipt, pageCount, rowCount } = useSelector((state: RootState) => state.receipt);
   const dispatch = useDispatch();
-  const nav = useNavigate();
   const { id } = useParams();
+
+  const nav = useNavigate();
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -29,7 +30,7 @@ const ReceiptDetailPage = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>();
-  const [currentReceipt, setCurrentUser] = useState<Receipt>();
+  const [currentItem, setCurrentItem] = useState<ReceiptItem>();
 
   const columns: MRT_ColumnDef<object>[] = [
     {
@@ -41,7 +42,7 @@ const ReceiptDetailPage = () => {
     },
     {
       header: t('name'),
-      accessorKey: 'versionName',
+      accessorKey: 'name',
       enableColumnOrdering: true,
       enableMultiSort: true,
       size: 80,
@@ -57,7 +58,7 @@ const ReceiptDetailPage = () => {
       size: 80,
       Cell: ({ renderedCellValue }) => (
         <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
-          {renderedCellValue}
+          {formatCurrency(Number(renderedCellValue))}
         </div>
       )
     },
@@ -68,7 +69,7 @@ const ReceiptDetailPage = () => {
       size: 50,
       Cell: ({ renderedCellValue }) => (
         <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
-          {formatDate(String(renderedCellValue))}
+          {renderedCellValue}
         </div>
       )
     },
@@ -90,7 +91,7 @@ const ReceiptDetailPage = () => {
       size: 90,
       Cell: ({ renderedCellValue }) => (
         <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'break-word' }}>
-          {renderedCellValue}
+          {formatCurrency(Number(renderedCellValue))}
         </div>
       )
     }
@@ -100,7 +101,7 @@ const ReceiptDetailPage = () => {
     {
       icon: <ModeEdit className='text-green-500' />,
       onClick: (row) => {
-        setCurrentUser(row.original);
+        setCurrentItem(row.original);
         setOpenUpdate(true);
       },
       label: t('edit', { value: null })
@@ -108,7 +109,7 @@ const ReceiptDetailPage = () => {
     {
       icon: <DeleteIcon className='text-red-500' />,
       onClick: (row) => {
-        setCurrentUser(row.original);
+        setCurrentItem(row.original);
         setOpenDelete(true);
       },
       label: t('delete', { value: null })
@@ -119,48 +120,36 @@ const ReceiptDetailPage = () => {
     dispatch(getReceiptStart(id));
   }, [dispatch]);
 
-  const handleSave = ({ bbNgay, ngayGiao, nguoiGiao, items, bbSoHieu, khoTen, khoDiaChi, nhaCungCap }: Receipt) => {
+  const handleSave = (item: ReceiptItem) => {
     dispatch(
-      createReceiptStart({
-        bbNgay: `${bbNgay}T00:00:00`,
-        ngayGiao,
-        nguoiGiao,
-        items,
-        bbSoHieu,
-        khoTen,
-        khoDiaChi,
-        nhaCungCap
+      updateReceiptStart({
+        id: id,
+        bbNgay: `${receipt.bbNgay}T00:00:00`,
+        ngayGiao: receipt.ngayGiao,
+        nguoiGiao: receipt.nguoiGiao,
+        items: [...receipt.items, item],
+        bbSoHieu: receipt.bbSoHieu,
+        khoTen: receipt.khoTen,
+        khoDiaChi: receipt.khoDiaChi,
+        nhaCungCap: receipt.nhaCungCap
       })
     );
     setOpenCreate(false);
   };
 
-  const handleUpdate = ({
-    bbNgay,
-    ngayGiao,
-    nguoiGiao,
-    items,
-    bbSoHieu,
-    khoTen,
-    khoDiaChi,
-    nhaCungCap,
-    thoiGianTao,
-    totalAmount
-  }: Receipt) => {
-    if (currentReceipt) {
+  const handleUpdate = (item: ReceiptItem) => {
+    if (currentItem) {
       dispatch(
         updateReceiptStart({
-          id: currentReceipt.id,
-          bbNgay: `${bbNgay}T00:00:00`,
-          ngayGiao,
-          nguoiGiao,
-          items,
-          bbSoHieu,
-          khoTen,
-          khoDiaChi,
-          nhaCungCap,
-          thoiGianTao,
-          totalAmount
+          id: id,
+          bbNgay: `${receipt.bbNgay}T00:00:00`,
+          ngayGiao: receipt.ngayGiao,
+          nguoiGiao: receipt.nguoiGiao,
+          items: receipt.items.map((i) => (i.id === item.id ? { ...i, ...item } : i)),
+          bbSoHieu: receipt.bbSoHieu,
+          khoTen: receipt.khoTen,
+          khoDiaChi: receipt.khoDiaChi,
+          nhaCungCap: receipt.nhaCungCap
         })
       );
       setOpenUpdate(false);
@@ -168,16 +157,28 @@ const ReceiptDetailPage = () => {
   };
 
   useEffect(() => {
-    if (confirmDelete && currentReceipt) {
-      dispatch(deleteReceiptStart(currentReceipt.id));
+    if (confirmDelete && currentItem) {
+      dispatch(
+        updateReceiptStart({
+          id: id,
+          bbNgay: `${receipt.bbNgay}T00:00:00`,
+          ngayGiao: receipt.ngayGiao,
+          nguoiGiao: receipt.nguoiGiao,
+          items: receipt.items.filter((i) => i.id != currentItem.id),
+          bbSoHieu: receipt.bbSoHieu,
+          khoTen: receipt.khoTen,
+          khoDiaChi: receipt.khoDiaChi,
+          nhaCungCap: receipt.nhaCungCap
+        })
+      );
       setConfirmDelete(false);
     }
-  }, [confirmDelete, currentReceipt, dispatch]);
+  }, [confirmDelete, currentItem, dispatch]);
 
   return (
     <>
       <CreateComponent open={openCreate} setOpen={setOpenCreate} onSave={handleSave} />
-      <UpdateComponent open={openUpdate} setOpen={setOpenUpdate} onSave={handleUpdate} value={currentReceipt} />
+      <UpdateComponent open={openUpdate} setOpen={setOpenUpdate} onSave={handleUpdate} value={currentItem} />
       <ConfirmModal
         open={openDelete}
         setOpen={setOpenDelete}
@@ -186,7 +187,18 @@ const ReceiptDetailPage = () => {
         content={t('confirm-delete', { value: t('type') })}
       />
       <div className='w-full p-3'>
-        <div className='flex mb-4'>
+        <div className='flex mb-4 font-bold items-center'>
+          <span className={'flex items-center'}>
+            <KeyboardArrowLeft
+              className={'cursor-pointer'}
+              onClick={() => {
+                nav(admin.main.receipt);
+              }}
+            />
+            <h3>
+              {t('receipt')} {receipt?.id}
+            </h3>
+          </span>
           <Button variant='contained' style={{ marginLeft: 'auto' }} onClick={() => setOpenCreate(true)}>
             {t('add')}
           </Button>

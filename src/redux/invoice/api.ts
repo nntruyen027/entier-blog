@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Receipt } from '~/types';
+import { Invoice } from '~/types';
 
-const BASE_URL = `${import.meta.env.VITE_WAREHOUSE_SERVICE}/receipts`;
+const BASE_URL = `${import.meta.env.VITE_WAREHOUSE_SERVICE}/phieu-xuat`;
 
 export const getAll = async ({ size, page }) => {
   return await axios.get(BASE_URL, {
@@ -23,29 +23,16 @@ export const getOne = async (id) => {
   });
 };
 
-export const createOne = async ({
-  nguoiGiao,
-  ngayGiao,
-  bbSoHieu,
-  bbNgay,
-  nhaCungCap,
-  khoTen,
-  khoDiaChi,
-  items,
-  totalAmount
-}: Receipt) => {
+export const createOne = async ({ sdtKh, sdtCuaHang, items, tenKh, diaChiCuaHang, diaChiKh }: Invoice) => {
   return await axios.post(
     `${BASE_URL}`,
     JSON.stringify({
-      nguoiGiao,
-      ngayGiao,
-      bbSoHieu,
-      bbNgay,
-      nhaCungCap,
-      khoTen,
-      khoDiaChi,
+      sdtKh,
+      sdtCuaHang,
       items,
-      totalAmount
+      tenKh,
+      diaChiCuaHang,
+      diaChiKh
     }),
     {
       headers: {
@@ -56,32 +43,16 @@ export const createOne = async ({
   );
 };
 
-export const updateOne = async ({
-  id,
-  nguoiGiao,
-  ngayGiao,
-  bbSoHieu,
-  bbNgay,
-  nhaCungCap,
-  khoTen,
-  khoDiaChi,
-  items,
-  totalAmount,
-  thoiGianTao
-}: Receipt) => {
+export const updateOne = async ({ id, sdtKh, sdtCuaHang, items, tenKh, diaChiCuaHang, diaChiKh }: Invoice) => {
   return await axios.put(
     `${BASE_URL}/${id}`,
     JSON.stringify({
-      nguoiGiao,
-      ngayGiao,
-      bbSoHieu,
-      bbNgay,
-      nhaCungCap,
-      khoTen,
-      khoDiaChi,
+      sdtKh,
+      sdtCuaHang,
       items,
-      totalAmount,
-      thoiGianTao
+      tenKh,
+      diaChiCuaHang,
+      diaChiKh
     }),
     {
       headers: {

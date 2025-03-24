@@ -13,6 +13,7 @@ import attributeValueReducer from './attributeValue/slice';
 import productReducer from './product/slice';
 import productVersionReducer from './productVersion/slice';
 import ReceiptReducer from './receipt/slice';
+import InvoiceReducer from './invoice/slice';
 
 const rootReducer = combineReducers({
   location: locationReducer,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
   attributeValue: attributeValueReducer,
   product: productReducer,
   productVersion: productVersionReducer,
-  receipt: ReceiptReducer
+  receipt: ReceiptReducer,
+  invoice: InvoiceReducer
 });
 
 export default rootReducer;

@@ -159,6 +159,7 @@ export interface ReceiptItem {
   quantity?: number;
   donViTinh?: string;
   itemTotal?: number;
+  type: number;
 }
 
 export interface Receipt {
@@ -180,7 +181,9 @@ export interface InvoiceItem {
   versionName?: string;
   price?: number;
   quantity?: number;
+  donViTinh?: string;
   itemTotal?: number;
+  type: number;
 }
 
 export interface Invoice {

@@ -86,5 +86,18 @@
   "attribute-value": "Attribute value",
   "warehouse": "Warehouse",
   "product-version": "Product version",
-  "assign-tag": "Assign tag"
+  "assign-tag": "Assign tag",
+  "receipt": "Receipt",
+  "invoice": "Invoice",
+  "so-bien-ban": "Report number",
+  "date": "Report date",
+  "total-amount": "Total amount",
+  "customer": "Customer",
+  "customer-address": "Customer address",
+  "customer-phone": "Customer phone",
+  "invoice-detail": "Invoice detail",
+  "receipt-detail": "Receipt detail",
+  "item-total": "Item total",
+  "nha-cung-cap": "Supplier",
+  "ngay-giao": "Delivery date"
 }
