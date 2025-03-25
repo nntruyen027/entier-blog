@@ -34,7 +34,7 @@
   "address": "địa chỉ",
   "consignee-info": "Thông tin người nhận",
   "confirm": "Xác nhận",
-  "product": "sản phẩm",
+  "product": "Sản phẩm",
   "estimated-cost": "tạm tính",
   "quantity": "Số lượng",
   "delivery-cost": "Phí giao hàng",
@@ -99,5 +99,13 @@
   "receipt-detail": "Chi tiết phiếu nhập",
   "item-total": "Thành tiền",
   "nha-cung-cap": "Nhà cung cấp",
-  "ngay-giao": "Ngày giao"
+  "ngay-giao": "Ngày giao",
+  "unit": "Đơn vị",
+  "ngay-giao": "Ngày giao",
+  "nguoi-giao": "Người giao",
+  "kho-ten": "Tên kho",
+  "bien-ban-ngay": "Ngày lập biên bản",
+  "kho-dia-chi": "Địa chỉ kho",
+  "warehouse-phone": "Số điện thoại cửa hàng",
+  "export-to-pdf": "Xuất PDF"
 }

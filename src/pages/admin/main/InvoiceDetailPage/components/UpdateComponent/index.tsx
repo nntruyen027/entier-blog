@@ -2,7 +2,7 @@ import { Backdrop, Button, Divider, Paper, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from 'react';
-import { ReceiptItem } from '~/types';
+import { ItemType, ReceiptItem } from '~/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
 import DropdownList from 'react-widgets/DropdownList';
@@ -12,7 +12,7 @@ import { getProductsStart } from '~/redux/product/slice';
 interface IProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  onSave: (data: { id: number; name: string; quantity: number; unit: string; price: number; type: number }) => void;
+  onSave: (data: { id: number; name: string; quantity: number; unit: string; price: number; type: ItemType }) => void;
   value?: ReceiptItem;
 }
 
@@ -50,7 +50,7 @@ const UpdateComponent: React.FC<IProps> = ({ open, setOpen, onSave, value }) => 
       quantity: quantity,
       unit: unit,
       price: price,
-      type: selectedProduct.id
+      type: selectedProduct
     });
     setOpen(false);
   };
@@ -75,7 +75,7 @@ const UpdateComponent: React.FC<IProps> = ({ open, setOpen, onSave, value }) => 
               value={selectedProduct}
               dataKey='id'
               textField='name'
-              placeholder={t('brand')}
+              placeholder={t('product')}
               defaultValue={1}
             />
             <DropdownList
@@ -85,7 +85,7 @@ const UpdateComponent: React.FC<IProps> = ({ open, setOpen, onSave, value }) => 
               value={selectedProductVersion}
               dataKey='id'
               textField='versionName'
-              placeholder={t('version-name')}
+              placeholder={t('name')}
               defaultValue={1}
             />
           </div>

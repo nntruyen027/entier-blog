@@ -34,7 +34,7 @@
   "address": "address",
   "consignee-info": "Consignee information",
   "confirm": "confirm",
-  "product": "product",
+  "product": "Product",
   "estimated-cost": "The estimated total cost",
   "quantity": "quantity",
   "delivery-cost": "Delivery cost",
@@ -99,5 +99,11 @@
   "receipt-detail": "Receipt detail",
   "item-total": "Item total",
   "nha-cung-cap": "Supplier",
-  "ngay-giao": "Delivery date"
+  "ngay-giao": "Delivery date",
+  "nguoi-giao": "Delivery man",
+  "kho-ten": "Warehouse",
+  "bien-ban-ngay": "Report date",
+  "kho-dia-chi": "Warehouse address",
+  "warehouse-phone": "Warehouse phone",
+  "export-to-pdf": "Export to PDF"
 }

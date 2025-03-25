@@ -105,7 +105,7 @@ export const doStatistics = async ({
 };
 
 export const doQuarterlyStatistics = async ({ nam }: { nam: number }) => {
-  return await axios.post(`${BASE_URL}/statistics/year/${nam}/quarters`, {
+  return await axios.post(`${BASE_URL}/statistics/year/${nam}/quarters`, null, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     }
@@ -113,7 +113,7 @@ export const doQuarterlyStatistics = async ({ nam }: { nam: number }) => {
 };
 
 export const doMonthlyStatistics = async ({ nam }: { nam: number }) => {
-  return await axios.post(`${BASE_URL}/statistics/year/${nam}/months`, {
+  return await axios.post(`${BASE_URL}/statistics/year/${nam}/months`, null, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     }

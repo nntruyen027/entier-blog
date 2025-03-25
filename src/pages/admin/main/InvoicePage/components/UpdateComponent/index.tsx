@@ -69,35 +69,35 @@ const UpdateComponent: React.FC<IProps> = ({ open, setOpen, onSave, value }) => 
             onChange={(e) => setTenKh(e.target.value)}
             fullWidth
             size='small'
-            label={t('ten-khach-hang')}
+            label={t('customer')}
           />
           <TextField
             value={sdtKh}
             onChange={(e) => setSdtKh(e.target.value)}
             fullWidth
             size='small'
-            label={t('sdt-khach-hang')}
+            label={t('customer-phone')}
           />
           <TextField
             value={diaChiKh}
             onChange={(e) => setDiaChiKh(e.target.value)}
             fullWidth
             size='small'
-            label={t('dia-chi-khach-hang')}
+            label={t('customer-address')}
           />
           <TextField
             value={sdtCuaHang}
             onChange={(e) => setSdtCuaHang(e.target.value)}
             fullWidth
             size='small'
-            label={t('sdt-cua-hang')}
+            label={t('warehouse-phone')}
           />
           <TextField
             value={diaChiCuaHang}
             onChange={(e) => setDiaChiCuaHang(e.target.value)}
             fullWidth
             size='small'
-            label={t('dia-chi-cua-hang')}
+            label={t('kho-dia-chi')}
           />
           {/* Nếu cần, bổ sung giao diện quản lý items của invoice */}
         </div>

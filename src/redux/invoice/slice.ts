@@ -9,7 +9,9 @@ interface InvoiceState {
   success: boolean | null;
   rowCount: number;
   pageCount: number;
-  statistics: any;
+  quarterlyStatistics: any;
+  monthlyStatistics: any;
+  daylyStatistics: any;
 }
 
 const initialState: InvoiceState = {
@@ -20,7 +22,9 @@ const initialState: InvoiceState = {
   success: null,
   rowCount: 0,
   pageCount: 1,
-  statistics: null
+  quarterlyStatistics: null,
+  daylyStatistics: null,
+  monthlyStatistics: null
 };
 
 const invoiceSlice = createSlice({
@@ -117,34 +121,34 @@ const invoiceSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    doStatisticsStart: (state) => {
+    doStatisticsStart: (state, action) => {
       state.loading = true;
     },
     doStatisticsSuccess: (state, action) => {
       state.loading = false;
-      state.statistics = action.payload;
+      state.daylyStatistics = action.payload;
     },
     doStatisticsFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
-    doQuarterlyStatisticsStart: (state) => {
+    doQuarterlyStatisticsStart: (state, action) => {
       state.loading = true;
     },
     doQuarterlyStatisticsSuccess: (state, action) => {
       state.loading = false;
-      state.statistics = action.payload;
+      state.quarterlyStatistics = action.payload;
     },
     doQuarterlyStatisticsFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
-    doMonthlyStatisticsStart: (state) => {
+    doMonthlyStatisticsStart: (state, action) => {
       state.loading = true;
     },
     doMonthlyStatisticsSuccess: (state, action) => {
       state.loading = false;
-      state.statistics = action.payload;
+      state.monthlyStatistics = action.payload;
     },
     doMonthlyStatisticsFailure: (state, action) => {
       state.loading = false;

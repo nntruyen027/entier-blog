@@ -27,11 +27,11 @@ const MainLayout: React.FC<LayoutProps> = ({ children, title }) => {
   }, [dispatch, isLogin]);
 
   const render = () => (
-    <div className='w-full h-full bg-[#f2f4f7] flex'>
+    <div className='w-full h-screen bg-[#f2f4f7] flex overflow-hidden'>
       <Sidebar isFull={isFullSiderbar} />
       <div className={'w-full min-h-screen flex flex-col'}>
         <AdminHeader title={title} className={'flex-none'} />
-        <div className={'w-full flex-1'}>{children}</div>
+        <div className={'w-full flex-1 overflow-auto'}>{children}</div>
       </div>
     </div>
   );

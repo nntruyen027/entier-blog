@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
 import { getProductVersionsStart } from '~/redux/productVersion/slice';
-import { ReceiptItem } from '~/types';
+import { ItemType, ReceiptItem } from '~/types';
 import DropdownList from 'react-widgets/DropdownList';
 import { getProductsStart } from '~/redux/product/slice';
 
@@ -25,7 +25,7 @@ interface IProps {
     quantity: number;
     donViTinh: string;
     price: number;
-    type: number;
+    type: ItemType;
   }) => void;
 }
 
@@ -65,7 +65,7 @@ const CreateComponent: React.FC<IProps> = ({ open, setOpen, onSave }) => {
       quantity: quantity,
       donViTinh: unit,
       price: price,
-      type: selectedProduct.id
+      type: selectedProduct
     });
     setOpen(false);
   };
@@ -90,7 +90,7 @@ const CreateComponent: React.FC<IProps> = ({ open, setOpen, onSave }) => {
               value={selectedProduct}
               dataKey='id'
               textField='name'
-              placeholder={t('brand')}
+              placeholder={t('product')}
               defaultValue={1}
             />
             <DropdownList
@@ -100,7 +100,7 @@ const CreateComponent: React.FC<IProps> = ({ open, setOpen, onSave }) => {
               value={selectedProductVersion}
               dataKey='id'
               textField='versionName'
-              placeholder={t('version-name')}
+              placeholder={t('name')}
               defaultValue={1}
             />
           </div>

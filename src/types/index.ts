@@ -152,6 +152,11 @@ export interface RowAction<T> {
   onClick: (row, table?) => void;
 }
 
+export interface ItemType {
+  id: number;
+  name: string;
+}
+
 export interface ReceiptItem {
   id?: number;
   versionName?: string;
@@ -159,7 +164,7 @@ export interface ReceiptItem {
   quantity?: number;
   donViTinh?: string;
   itemTotal?: number;
-  type: number;
+  type: ItemType;
 }
 
 export interface Receipt {
@@ -183,7 +188,7 @@ export interface InvoiceItem {
   quantity?: number;
   donViTinh?: string;
   itemTotal?: number;
-  type: number;
+  type: ItemType;
 }
 
 export interface Invoice {
