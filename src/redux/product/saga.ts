@@ -15,9 +15,10 @@ import {
   updateProductFailure,
   updateProductStart,
   updateProductSuccess,
-  updateProductTagStart
+  updateProductTagStart,
+  updateProductAttributeSuccess, updateProductAttributeStart, updateProductAttributeFailure
 } from './slice';
-import { assignTags, createOne, deleteOne, getAll, getOne, updateOne } from './api';
+import { assignTags, createOne, deleteOne, getAll, getOne, updateOne, updateAttribute } from './api';
 
 function* getAllRequest(action) {
   try {
@@ -55,6 +56,15 @@ function* updateOneRequest(action) {
   }
 }
 
+function* updateAttributeRequest(action) {
+  try {
+    const { data } = yield call(updateAttribute, action.payload);
+    yield put(updateProductAttributeSuccess(data));
+  } catch (error) {
+    yield put(updateProductAttributeFailure(error));
+  }
+}
+
 function* asigntTagsRequest(action) {
   try {
     const { data } = yield call(assignTags, action.payload);
@@ -80,6 +90,7 @@ function* productSaga() {
   yield takeLatest(updateProductStart.type, updateOneRequest);
   yield takeLatest(updateProductTagStart.type, asigntTagsRequest);
   yield takeLatest(deleteProductStart.type, deleteOneRequest);
+  yield takeLatest(updateProductAttributeStart.type, updateAttributeRequest);
 }
 
 export default productSaga;

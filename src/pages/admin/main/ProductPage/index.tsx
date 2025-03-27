@@ -5,9 +5,9 @@ import { RootState } from '~/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmModal, Table } from '~/components';
-import { AsignTagComponent, CreateComponent, UpdateComponent } from './components';
+import { AssignTagComponent, AttributeComponent, CreateComponent, UpdateComponent } from './components';
 import { RowAction } from '~/types';
-import { Category, Delete as DeleteIcon, ModeEdit, Sell } from '@mui/icons-material';
+import { Attribution, Category, Delete as DeleteIcon, ModeEdit, Sell } from '@mui/icons-material';
 import {
   createProductStart,
   deleteProductStart,
@@ -30,6 +30,7 @@ const ProductPage = () => {
 
   const [openCreate, setOpenCreate] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [openAttribute, setOpenAttribute] = useState(false);
   const [openAssign, setOpenAsign] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>();
@@ -115,6 +116,14 @@ const ProductPage = () => {
       label: t('product-version', { value: null })
     },
     {
+      icon: <Attribution className={'text-orange-500'} />,
+      onClick: (row) => {
+        setCurrentUser(row.original);
+        setOpenAttribute(true);
+      },
+      label: t('attribute', { value: null })
+    },
+    {
       icon: <ModeEdit className={'text-green-500'} />,
       onClick: (row) => {
         setCurrentUser(row.original);
@@ -183,8 +192,9 @@ const ProductPage = () => {
   return (
     <>
       <CreateComponent open={openCreate} setOpen={setOpenCreate} onSave={handleSave} />
-      <AsignTagComponent open={openAssign} setOpen={setOpenAsign} onSave={handleAssign} value={currentProduct} />
+      <AssignTagComponent open={openAssign} setOpen={setOpenAsign} onSave={handleAssign} value={currentProduct} />
       <UpdateComponent open={openUpdate} setOpen={setOpenUpdate} onSave={handleUpdate} value={currentProduct} />
+      <AttributeComponent open={openAttribute} setOpen={setOpenAttribute} value={currentProduct} />
       <ConfirmModal
         open={openDelete}
         setOpen={setOpenDelete}

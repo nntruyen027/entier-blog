@@ -1,5 +1,6 @@
 import CreateComponent from './CreateComponent';
 import UpdateComponent from './UpdateComponent';
-import AsignTagComponent from './AsignTagComponent';
+import AssignTagComponent from './AsignTagComponent';
+import AttributeComponent from './AttributeComponent';
 
-export { CreateComponent, UpdateComponent, AsignTagComponent };
+export { CreateComponent, UpdateComponent, AssignTagComponent, AttributeComponent };

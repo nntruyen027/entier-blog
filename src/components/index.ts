@@ -16,6 +16,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import Table from './Table';
 import ConfirmModal from './ConfirmModal';
 import CheckboxesTags from './CheckboxesTags';
+import TransferList from './TransferList';
 
 export {
   Header,
@@ -35,5 +36,6 @@ export {
   LanguageSwitcher,
   Table,
   ConfirmModal,
-  CheckboxesTags
+  CheckboxesTags,
+  TransferList,
 };
