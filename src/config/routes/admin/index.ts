@@ -19,7 +19,8 @@ const main = {
   receipt: '/admin/warehouse/receipt',
   receiptDetail: '/admin/warehouse/receipt/:id',
   invoice: '/admin/warehouse/invoice',
-  invoiceDetail: '/admin/warehouse/invoice/:id'
+  invoiceDetail: '/admin/warehouse/invoice/:id',
+  post: '/admin/public/post'
 };
 
 export { auth, main };

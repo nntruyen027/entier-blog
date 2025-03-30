@@ -107,5 +107,10 @@
   "bien-ban-ngay": "Ngày lập biên bản",
   "kho-dia-chi": "Địa chỉ kho",
   "warehouse-phone": "Số điện thoại cửa hàng",
-  "export-to-pdf": "Xuất PDF"
+  "export-to-pdf": "Xuất PDF",
+  "title": "Tiêu đề",
+  "Like": "Thích",
+  "content": "Nội dung",
+  "post": "Bài viết",
+  "public": "Công khai"
 }

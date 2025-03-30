@@ -105,5 +105,10 @@
   "bien-ban-ngay": "Report date",
   "kho-dia-chi": "Warehouse address",
   "warehouse-phone": "Warehouse phone",
-  "export-to-pdf": "Export to PDF"
+  "export-to-pdf": "Export to PDF",
+  "title": "Title",
+  "Like": "Like",
+  "content": "Content",
+  "post": "Post",
+  "public": "Public"
 }

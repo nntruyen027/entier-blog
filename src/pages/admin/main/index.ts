@@ -15,6 +15,7 @@ import InvoicePage from './InvoicePage';
 import ReceiptPage from './ReceiptPage';
 import ReceiptDetailPage from './ReceiptDetailPage';
 import InvoiceDetailPage from './InvoiceDetailPage';
+import PostPage from './PostPage';
 
 export {
   DashboardPage,
@@ -33,5 +34,6 @@ export {
   InvoicePage,
   ReceiptPage,
   ReceiptDetailPage,
-  InvoiceDetailPage
+  InvoiceDetailPage,
+  PostPage
 };

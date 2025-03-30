@@ -14,6 +14,7 @@ import productSaga from '~/redux/product/saga';
 import productVersionSaga from '~/redux/productVersion/saga';
 import receiptSaga from '~/redux/receipt/saga';
 import invoiceSaga from '~/redux/invoice/saga';
+import postSaga from '~/redux/post/saga';
 
 export default function* rootSaga() {
   yield all([
@@ -31,6 +32,7 @@ export default function* rootSaga() {
     productSaga(),
     productVersionSaga(),
     receiptSaga(),
-    invoiceSaga()
+    invoiceSaga(),
+    postSaga()
   ]);
 }

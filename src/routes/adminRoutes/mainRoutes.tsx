@@ -11,6 +11,7 @@ import {
   InvoiceDetailPage,
   InvoicePage,
   PasswordPage,
+  PostPage,
   ProductPage,
   ProductTypeAdminPage,
   ProductVersionPage,
@@ -123,6 +124,12 @@ const authRoutes: Route[] = [
     path: routes.admin.main.invoiceDetail,
     element: <InvoiceDetailPage />,
     label: 'invoice-detail'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.post,
+    element: <PostPage />,
+    label: 'post'
   }
 ];
 

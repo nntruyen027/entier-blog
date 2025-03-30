@@ -14,6 +14,7 @@ import productReducer from './product/slice';
 import productVersionReducer from './productVersion/slice';
 import ReceiptReducer from './receipt/slice';
 import InvoiceReducer from './invoice/slice';
+import PostReducer from './post/slice';
 
 const rootReducer = combineReducers({
   location: locationReducer,
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
   product: productReducer,
   productVersion: productVersionReducer,
   receipt: ReceiptReducer,
-  invoice: InvoiceReducer
+  invoice: InvoiceReducer,
+  post: PostReducer
 });
 
 export default rootReducer;

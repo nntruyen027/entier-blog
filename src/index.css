@@ -17,6 +17,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -47,6 +48,20 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
+}
+
+/* Cố định toolbar của Quill */
+.ql-toolbar.ql-snow {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #fff; /* hoặc màu nền bạn muốn */
+}
+
+/* Giới hạn chiều cao phần nội dung editor và bật overflow-y */
+.ql-container.ql-snow {
+  max-height: 30vh; /* hoặc giá trị mong muốn */
+  overflow-y: auto;
 }
 
 

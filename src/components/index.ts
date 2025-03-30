@@ -17,6 +17,7 @@ import Table from './Table';
 import ConfirmModal from './ConfirmModal';
 import CheckboxesTags from './CheckboxesTags';
 import TransferList from './TransferList';
+import Editor from './Editor';
 
 export {
   Header,
@@ -38,4 +39,5 @@ export {
   ConfirmModal,
   CheckboxesTags,
   TransferList,
+  Editor
 };
