@@ -107,7 +107,8 @@
   "warehouse-phone": "Warehouse phone",
   "export-to-pdf": "Export to PDF",
   "title": "Title",
-  "Like": "Like",
+  "like": "Like",
+  "comment": "Comment",
   "content": "Content",
   "post": "Post",
   "public": "Public"

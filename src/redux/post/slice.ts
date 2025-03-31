@@ -112,6 +112,18 @@ const postSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    getFavoritesStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
+    getFavoritesSuccess: (state, action) => {
+      state.favorites = action.payload.content;
+      state.loading = false;
+    },
+    getFavoritesFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
 
     // ✅ Create a comment
     createCommentStart: (state, action) => {
@@ -201,7 +213,10 @@ export const {
   likePostFailure,
   unlikePostStart,
   unlikePostSuccess,
-  unlikePostFailure
+  unlikePostFailure,
+  getFavoritesFailure,
+  getFavoritesStart,
+  getFavoritesSuccess
 } = postSlice.actions;
 
 export default postSlice.reducer;

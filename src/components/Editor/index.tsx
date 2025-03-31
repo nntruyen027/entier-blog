@@ -38,9 +38,8 @@ export function Editor(props: EditorProps) {
 
   // Chỉ dán nội dung HTML ban đầu khi component mount
   useEffect(() => {
-    if (reactQuillRef.current && props.value) {
-      const editor = reactQuillRef.current.getEditor();
-      editor.clipboard.dangerouslyPasteHTML(props.value);
+    if (props.value !== undefined && props.value !== value) {
+      setValue(props.value);
     }
   }, [props.value]);
 
@@ -123,10 +122,7 @@ export function Editor(props: EditorProps) {
   const modules = {
     toolbar: {
       container: [
-        [
-          { header: ['1', '2', '3', '4', '5', '6'] },
-          { font: ['arial', 'times-new-roman', 'courier-new', 'tahoma', 'verdana', 'roboto'] }
-        ],
+        [{ header: ['1', '2', '3', '4', '5', '6'] }, { font: [] }],
         [{ size: [] }],
         ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
         [

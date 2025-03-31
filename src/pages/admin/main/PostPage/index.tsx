@@ -5,9 +5,8 @@ import { RootState } from '~/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmModal, Table } from '~/components';
-import { CreateComponent, UpdateComponent } from './components';
+import { CommentComponent, CreateComponent, FavoriteComponent, UpdateComponent } from './components';
 import { RowAction } from '~/types';
-import { Delete as DeleteIcon, Details, ModeEdit } from '@mui/icons-material';
 import { createPostStart, deletePostStart, getPostsStart, updatePostStart } from '~/redux/post/slice';
 import DetailComponent from '~/pages/admin/main/PostPage/components/DetailComponent';
 
@@ -25,6 +24,8 @@ const PostPage = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
+  const [openFavorite, setOpenFavorite] = useState(false);
+  const [openComment, setOpenComment] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>();
   const [currentPost, setCurrentPost] = useState({
     id: 0,
@@ -82,7 +83,7 @@ const PostPage = () => {
 
   const actions: RowAction<object>[] = [
     {
-      icon: <Details className={'text-red-500'} />,
+      icon: null,
       onClick: (row) => {
         setCurrentPost(row.original);
         setOpenDetail(true);
@@ -90,7 +91,7 @@ const PostPage = () => {
       label: t('post', { value: null })
     },
     {
-      icon: <ModeEdit className={'text-green-500'} />,
+      icon: null,
       onClick: (row) => {
         setCurrentPost(row.original);
         setOpenUpdate(true);
@@ -98,12 +99,28 @@ const PostPage = () => {
       label: t('edit', { value: null })
     },
     {
-      icon: <DeleteIcon className={'text-red-500'} />,
+      icon: null,
       onClick: (row) => {
         setCurrentPost(row.original);
         setOpenDelete(true);
       },
       label: t('delete', { value: null })
+    },
+    {
+      icon: null,
+      onClick: (row) => {
+        setCurrentPost(row.original);
+        setOpenFavorite(true);
+      },
+      label: t('like')
+    },
+    {
+      icon: null,
+      onClick: (row) => {
+        setCurrentPost(row.original);
+        setOpenComment(true);
+      },
+      label: t('comment')
     }
   ];
 
@@ -140,6 +157,8 @@ const PostPage = () => {
       <CreateComponent open={openCreate} setOpen={setOpenCreate} onSave={handleSave} />
       <UpdateComponent open={openUpdate} setOpen={setOpenUpdate} onSave={handleUpdate} value={currentPost} />
       <DetailComponent open={openDetail} setOpen={setOpenDetail} value={currentPost} />
+      <FavoriteComponent open={openFavorite} setOpen={setOpenFavorite} value={currentPost} />
+      <CommentComponent open={openComment} setOpen={setOpenComment} value={currentPost} />
       <ConfirmModal
         open={openDelete}
         setOpen={setOpenDelete}

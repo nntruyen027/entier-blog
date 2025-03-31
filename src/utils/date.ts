@@ -29,3 +29,16 @@ export function conventedToISOString(value, format): string {
 export function getCurrentYear(): number {
   return new Date().getFullYear();
 }
+
+export function formatToFullTime(date: string): string {
+  const formatedDate = new Date(date);
+
+  return formatedDate.toLocaleString('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+}

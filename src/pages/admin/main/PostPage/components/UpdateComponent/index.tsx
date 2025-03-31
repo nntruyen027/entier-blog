@@ -86,7 +86,7 @@ const UpdateComponent: React.FC<IProps> = ({ open, setOpen, onSave, value }) => 
 
   return (
     <Backdrop sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })} open={open}>
-      <Paper sx={{ minWidth: '80rem' }}>
+      <Paper sx={{ minWidth: '80rem', maxWidth: '90%' }}>
         <div className='w-full relative top-0 left-0 text-xl font-bold py-3'>
           <h3 className='lowercase first-letter:uppercase'>{t('create', { value: t('post') })}</h3>
           <CloseIcon

@@ -53,14 +53,10 @@ export const deleteComment = async (id) => {
   });
 };
 
-export const getPostFavorite = async ({ id, size, page }) => {
+export const getPostFavorite = async (id) => {
   return await axios.get(`${BASE_URL}/${id}/favorites`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
-    },
-    params: {
-      size,
-      page
     }
   });
 };

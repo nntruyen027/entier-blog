@@ -15,6 +15,9 @@ import {
   getCommentsFailure,
   getCommentsStart,
   getCommentsSuccess,
+  getFavoritesFailure,
+  getFavoritesStart,
+  getFavoritesSuccess,
   getPostFailure,
   getPostsFailure,
   getPostsStart,
@@ -39,12 +42,12 @@ import {
   getAll,
   getComments,
   getOne,
+  getPostFavorite,
   like,
   unLike,
   updateOne
 } from './api';
 
-// ✅ Fetch all posts
 function* getAllRequest(action) {
   try {
     const { data } = yield call(getAll, action.payload);
@@ -54,7 +57,6 @@ function* getAllRequest(action) {
   }
 }
 
-// ✅ Fetch a single post
 function* getOneRequest(action) {
   try {
     const { data } = yield call(getOne, action.payload);
@@ -64,7 +66,6 @@ function* getOneRequest(action) {
   }
 }
 
-// ✅ Create a post
 function* createOneRequest(action) {
   try {
     const { data } = yield call(createOne, action.payload);
@@ -74,7 +75,6 @@ function* createOneRequest(action) {
   }
 }
 
-// ✅ Update a post
 function* updateOneRequest(action) {
   try {
     const { data } = yield call(updateOne, action.payload);
@@ -84,7 +84,6 @@ function* updateOneRequest(action) {
   }
 }
 
-// ✅ Delete a post
 function* deleteOneRequest(action) {
   try {
     yield call(deleteOne, action.payload);
@@ -94,7 +93,6 @@ function* deleteOneRequest(action) {
   }
 }
 
-// ✅ Fetch comments
 function* getCommentsRequest(action) {
   try {
     const { data } = yield call(getComments, action.payload);
@@ -104,7 +102,15 @@ function* getCommentsRequest(action) {
   }
 }
 
-// ✅ Create a comment
+function* getFavouritesRequest(action) {
+  try {
+    const { data } = yield call(getPostFavorite, action.payload);
+    yield put(getFavoritesSuccess(data));
+  } catch (error) {
+    yield put(getFavoritesFailure(error));
+  }
+}
+
 function* createCommentRequest(action) {
   try {
     const { data } = yield call(createComment, action.payload);
@@ -114,7 +120,6 @@ function* createCommentRequest(action) {
   }
 }
 
-// ✅ Delete a comment
 function* deleteCommentRequest(action) {
   try {
     yield call(deleteComment, action.payload);
@@ -124,7 +129,6 @@ function* deleteCommentRequest(action) {
   }
 }
 
-// ✅ Like a post
 function* likePostRequest(action) {
   try {
     const { data } = yield call(like, action.payload);
@@ -134,7 +138,6 @@ function* likePostRequest(action) {
   }
 }
 
-// ✅ Unlike a post
 function* unlikePostRequest(action) {
   try {
     yield call(unLike, action.payload);
@@ -154,6 +157,7 @@ function* postSaga() {
   yield takeLatest(getCommentsStart.type, getCommentsRequest);
   yield takeLatest(createCommentStart.type, createCommentRequest);
   yield takeLatest(deleteCommentStart.type, deleteCommentRequest);
+  yield takeLatest(getFavoritesStart.type, getFavouritesRequest);
 
   yield takeLatest(likePostStart.type, likePostRequest);
   yield takeLatest(unlikePostStart.type, unlikePostRequest);
