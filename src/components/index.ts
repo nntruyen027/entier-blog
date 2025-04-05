@@ -18,6 +18,7 @@ import ConfirmModal from './ConfirmModal';
 import CheckboxesTags from './CheckboxesTags';
 import TransferList from './TransferList';
 import Editor from './Editor';
+import FileExplorer from './FileExplorer';
 
 export {
   Header,
@@ -39,5 +40,6 @@ export {
   ConfirmModal,
   CheckboxesTags,
   TransferList,
-  Editor
+  Editor,
+  FileExplorer
 };
