@@ -2,9 +2,9 @@ Here's a sample `README.md` for your project:
 
 ---
 
-# Ban Hang Cong Nghe
+# Blog cá nhân
 
-A modern e-commerce web application built with Vite, TypeScript, and React, featuring a robust UI with Material-UI,
+A personal blog web application built with Vite, TypeScript, and React, featuring a robust UI with Material-UI,
 internationalization, state management with Redux Toolkit and Redux Saga, and a fully customizable environment using
 Tailwind CSS.
 
