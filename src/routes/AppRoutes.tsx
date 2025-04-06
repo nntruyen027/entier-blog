@@ -4,8 +4,7 @@ import { LoadingPage, NotFoundPage } from '~/pages';
 
 import homeRoutes from './customerRoutes/homeRoutes';
 
-import { AuthLayout, CartLayout, HomeLayout, MainLayout as AdminMainLayout } from '~/layouts';
-import cartRoutes from '~/routes/customerRoutes/cartRoutes';
+import { AuthLayout, HomeLayout, MainLayout as AdminMainLayout } from '~/layouts';
 import authRoutes from '~/routes/adminRoutes/authRoutes';
 import adminMainRoutes from '~/routes/adminRoutes/mainRoutes';
 
@@ -21,9 +20,6 @@ const Routing = () => (
         ))}
         {homeRoutes.map(({ id, path, element }) => (
           <Route key={id} path={path} element={<HomeLayout>{element}</HomeLayout>} />
-        ))}
-        {cartRoutes.map(({ id, path, element }) => (
-          <Route key={id} path={path} element={<CartLayout>{element}</CartLayout>} />
         ))}
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
