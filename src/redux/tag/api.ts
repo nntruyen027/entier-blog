@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/roles';
+const BASE_URL = 'http://localhost:8084/tags';
 
 export const getAll = async (params) => {
   return await axios.get(`${BASE_URL}`, {

@@ -3,22 +3,18 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Tooltip from '@mui/material/Tooltip';
-import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '~/redux/auth/slice';
-import { Link } from 'react-router-dom';
-import { routes } from '~/config';
 import { useTranslation } from 'react-i18next';
 import { RootState } from '~/redux/store';
 import { Button } from '@mui/material';
-import PasswordIcon from '@mui/icons-material/Password';
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { t } = useTranslation();
-  const { personal } = useSelector((state: RootState) => state.personal);
+  const { account } = useSelector((state: RootState) => state.auth);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -36,7 +32,7 @@ const Profile = () => {
   return (
     <div>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title={personal?.fullName}>
+        <Tooltip title={account?.fullName}>
           <Button
             onClick={handleClick}
             size='small'
@@ -45,7 +41,7 @@ const Profile = () => {
             aria-haspopup='true'
             aria-expanded={open ? 'true' : undefined}
           >
-            <span className={'text-black font-bold'}>{personal?.fullName}</span>
+            <span className={'text-black font-bold'}>{account?.fullName}</span>
           </Button>
         </Tooltip>
       </Box>
@@ -86,22 +82,6 @@ const Profile = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <Link to={routes.admin.main.accountSetting} className={'no-underline text-black hover:text-black'}>
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <Settings fontSize='small' />
-            </ListItemIcon>
-            {t('setting')}
-          </MenuItem>
-        </Link>
-        <Link to={routes.admin.main.passwordSetting} className={'no-underline text-black hover:text-black'}>
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <PasswordIcon />
-            </ListItemIcon>
-            {t('change-password')}
-          </MenuItem>
-        </Link>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize='small' />

@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 import authReducer from './auth/slice';
 import roleReducer from './role/slice';
-import userReducer from './user/slice';
 import NotiReducer from './noti/slice';
+import TagReducer from './tag/slice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   role: roleReducer,
-  user: userReducer,
-  noti: NotiReducer
+  noti: NotiReducer,
+  tag: TagReducer
 });
 
 export default rootReducer;

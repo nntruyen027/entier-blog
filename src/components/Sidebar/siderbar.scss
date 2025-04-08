@@ -1,29 +1,11 @@
-.css-dip3t8 {
-  background-color: #ffd400 !important;
-}
+.custom-sidebar {
+  height: 100%;
+  background: #fff;
+  text-align: left;
+  width: 20rem;
 
-#admin-sidebar {
-  background-color: #ffd400;
-  height: 100vh;
+  .logo-wrapper {
+    padding: 16px;
 
-  li {
-    :first-letter {
-      text-transform: uppercase;
-    }
-
-    a {
-      height: 5;
-    }
-
-    li {
-      background-color: #ffd400;
-    }
   }
-
-  li.ps-active {
-    & > a {
-      font-weight: bold;
-    }
-  }
-
 }

@@ -1,59 +1,72 @@
-import { Menu, MenuItem, Sidebar, SubMenu } from 'react-pro-sidebar';
+import { Menu } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { sidebar } from '~/config';
 import './siderbar.scss';
 import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
 
 interface SidebarProps {
   isFull: boolean;
 }
 
+const { SubMenu } = Menu;
+
 const CustomSidebar: React.FC<SidebarProps> = ({ isFull }) => {
   const location = useLocation();
   const { t } = useTranslation();
 
-  return (
-    <Sidebar collapsed={!isFull} id={'admin-sidebar'}>
-      <Menu
-        transitionDuration={300}
-        menuItemStyles={{
-          label: {
-            textAlign: 'left'
+  // Memo hóa selectedKeys và openKeys
+  const { selectedKeys, openKeys } = useMemo(() => {
+    let selected: string[] = [];
+    let open: string[] = [];
+
+    sidebar.forEach((item) => {
+      if (item.hasChildren) {
+        item.children?.forEach((sub) => {
+          if (sub.route === location.pathname) {
+            selected = [sub.route];
+            open = [item.label];
           }
-        }}
+        });
+      } else {
+        if (item.route === location.pathname) {
+          selected = [item.route];
+        }
+      }
+    });
+
+    return { selectedKeys: selected, openKeys: open };
+  }, [location.pathname]);
+
+  return (
+    <div className={`custom-sidebar ${isFull ? 'expanded' : 'collapsed'}`}>
+      <div className='logo-wrapper'>
+        <img className='logo' src='https://1000logos.net/wp-content/uploads/2020/08/Blogger-Logo-2010.png' alt='logo' />
+      </div>
+      <Menu
+        mode='inline'
+        inlineCollapsed={!isFull}
+        selectedKeys={selectedKeys}
+        defaultOpenKeys={openKeys}
+        style={{ height: '100%', borderRight: 0 }}
       >
-        <div className={'p-6'}>
-          <img src={'https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/noel/2024/tgdd/logo-dt.png'} alt={'logo'} />
-        </div>
-        {sidebar.map((item, index) => {
-          const isSubMenuActive = item.hasChildren && item.children?.some((sub) => sub.route === location.pathname); // Kiểm tra nếu SubMenu có bất kỳ route nào active
-          return item.hasChildren ? (
-            <SubMenu
-              label={t(item.label)}
-              icon={item.icon}
-              key={index}
-              defaultOpen={isSubMenuActive}
-              active={isSubMenuActive}
-            >
-              {item?.children?.map((sub, index) => (
-                <MenuItem component={<Link to={sub.route} />} active={sub.route === location.pathname} key={index}>
-                  {t(sub.label)}
-                </MenuItem>
+        {sidebar.map((item, index) =>
+          item.hasChildren ? (
+            <SubMenu key={item.label} icon={item.icon} title={t(item.label)}>
+              {item.children?.map((sub) => (
+                <Menu.Item key={sub.route} icon={sub.icon}>
+                  <Link to={sub.route}>{t(sub.label)}</Link>
+                </Menu.Item>
               ))}
             </SubMenu>
           ) : (
-            <MenuItem
-              active={item.route === location.pathname}
-              component={<Link to={item.route} />}
-              icon={item.icon}
-              key={index}
-            >
-              {t(item.label)}
-            </MenuItem>
-          );
-        })}
+            <Menu.Item key={item.route} icon={item.icon}>
+              <Link to={item.route}>{t(item.label)}</Link>
+            </Menu.Item>
+          )
+        )}
       </Menu>
-    </Sidebar>
+    </div>
   );
 };
 
