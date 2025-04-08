@@ -17,12 +17,13 @@ const authSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    loginSuccess: (state, action: PayloadAction<string>) => {
+    loginSuccess: (state, action) => {
       state.loading = false;
-      state.token = action.payload;
+      state.token = action.payload.token;
       state.isLogin = true;
+      state.account = action.payload;
     },
-    loginFail: (state, action: PayloadAction<string>) => {
+    loginFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
       state.isLogin = false;
@@ -33,12 +34,12 @@ const authSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    getSelfSuccess: (state, action: PayloadAction<string>) => {
+    getSelfSuccess: (state, action) => {
       state.loading = false;
       state.account = action.payload;
       state.isLogin = true;
     },
-    getSelfFail: (state, action: PayloadAction<string>) => {
+    getSelfFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
       state.isLogin = false;
@@ -51,14 +52,26 @@ const authSlice = createSlice({
       state.token = null;
       localStorage.removeItem('token');
     },
-    updatePassSelfStart: (state, action: PayloadAction<object>) => {
+    updatePassSelfStart: (state, action) => {
       state.loading = true;
       state.error = null;
     },
     updatePassSelfSuccess: (state) => {
       state.loading = false;
     },
-    updatePassSelfFail: (state, action: PayloadAction<string>) => {
+    updatePassSelfFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    updateSelfStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
+    updateSelfSuccess: (state, action) => {
+      state.loading = false;
+      state.account = action.payload;
+    },
+    updateSelfFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     }
@@ -75,6 +88,9 @@ export const {
   logout,
   updatePassSelfStart,
   updatePassSelfSuccess,
-  updatePassSelfFail
+  updatePassSelfFail,
+  updateSelfStart,
+  updateSelfSuccess,
+  updateSelfFailure
 } = authSlice.actions;
 export default authSlice.reducer;

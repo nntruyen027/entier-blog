@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { getSelf, login, updatePassword } from './api';
+import { getSelf, login, updatePassword, updateSelf } from './api';
 import {
   getSelfFail,
   getSelfStart,
@@ -9,10 +9,13 @@ import {
   loginSuccess,
   updatePassSelfFail,
   updatePassSelfStart,
-  updatePassSelfSuccess
+  updatePassSelfSuccess,
+  updateSelfFailure,
+  updateSelfStart,
+  updateSelfSuccess
 } from './slice';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { showNotification } from '~/redux/noti/slice'; // Import showNotification
+import { showNotification } from '~/redux/noti/slice';
 
 interface loginForm {
   username: string;
@@ -23,6 +26,9 @@ function* loginRequest(action: PayloadAction<loginForm>) {
   try {
     const data = yield call(login, action.payload);
     localStorage.setItem('token', data.data.token);
+    localStorage.setItem('tokenExpiry', data.data.tokenExpiry);
+    localStorage.setItem('username', data.data.username);
+    localStorage.setItem('userId', data.data.userId);
     yield put(loginSuccess(data.data.token));
     yield put(showNotification({ message: 'Đăng nhập thành công!', variant: 'success' }));
   } catch (error) {
@@ -54,10 +60,22 @@ function* updatePassSelfRequest(action: PayloadAction<object>) {
   }
 }
 
+function* updateSelfRequest(action) {
+  try {
+    const { data } = yield call(updateSelf, action.payload);
+    yield put(updateSelfSuccess(data));
+    yield put(showNotification({ message: 'Cập nhật thông tin cá nhân thành công!', variant: 'success' }));
+  } catch (error) {
+    yield put(updateSelfFailure(error));
+    yield put(showNotification({ message: 'Cập nhật thông tin cá nhân thất bại!', variant: 'error' }));
+  }
+}
+
 function* authSaga() {
   yield takeLatest(loginStart.type, loginRequest);
   yield takeLatest(getSelfStart.type, getSelfRequest);
   yield takeLatest(updatePassSelfStart.type, updatePassSelfRequest);
+  yield takeLatest(updateSelfStart.type, updateSelfRequest);
 }
 
 export default authSaga;

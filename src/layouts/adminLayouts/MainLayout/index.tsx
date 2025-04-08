@@ -4,7 +4,6 @@ import { RootState } from '~/redux/store';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getSelfStart } from '~/redux/auth/slice';
-import { getStart } from '~/redux/personal/slice';
 import { routes } from '~/config';
 import { Sidebar } from '~/components';
 import AdminHeader from '~/components/AdminHeader';
@@ -17,7 +16,6 @@ const MainLayout: React.FC<LayoutProps> = ({ children, title }) => {
 
   useEffect(() => {
     dispatch(getSelfStart());
-    dispatch(getStart());
   }, [dispatch, token]);
 
   useEffect(() => {

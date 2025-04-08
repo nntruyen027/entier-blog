@@ -9,7 +9,7 @@ export const login = async ({ username, password }) => {
 
   return await axios.post(`${BASE_URL}/login`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data' // Xác định kiểu dữ liệu là FormData
+      'Content-Type': 'multipart/form-data'
     }
   });
 };
@@ -30,6 +30,15 @@ export const updatePassword = async ({ oldpass, newpass }) => {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
       'Content-Type': 'multipart/form-data'
+    }
+  });
+};
+
+export const updateSelf = async (body) => {
+  return await axios.put(`${BASE_URL}/self`, JSON.stringify(body), {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json'
     }
   });
 };

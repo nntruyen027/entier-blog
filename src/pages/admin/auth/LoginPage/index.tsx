@@ -20,7 +20,7 @@ const LoginPage = () => {
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleLogin(); // Gọi hàm handleLogin khi người dùng nhấn Enter
+      handleLogin();
     }
   };
 
