@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { sidebar } from '~/config';
 import './siderbar.scss';
 import { useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import useParamValue from '~/hooks/useParamValue';
 
 interface SidebarProps {
   isFull: boolean;
@@ -14,6 +15,14 @@ const { SubMenu } = Menu;
 const CustomSidebar: React.FC<SidebarProps> = ({ isFull }) => {
   const location = useLocation();
   const { t } = useTranslation();
+  const [logo, setLogo] = useState('');
+  const { value } = useParamValue('logo');
+
+  useEffect(() => {
+    if (value) {
+      setLogo(value);
+    }
+  }, [value]);
 
   // Memo hóa selectedKeys và openKeys
   const { selectedKeys, openKeys } = useMemo(() => {
@@ -41,7 +50,7 @@ const CustomSidebar: React.FC<SidebarProps> = ({ isFull }) => {
   return (
     <div className={`custom-sidebar ${isFull ? 'expanded' : 'collapsed'}`}>
       <div className='logo-wrapper'>
-        <img className='logo' src='https://1000logos.net/wp-content/uploads/2020/08/Blogger-Logo-2010.png' alt='logo' />
+        <img className='logo' src={logo} alt='logo' />
       </div>
       <Menu
         mode='inline'

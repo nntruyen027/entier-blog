@@ -1,4 +1,4 @@
-import { Table } from '~/components';
+import { Table, Tag } from '~/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
 import { useEffect, useState } from 'react';
@@ -69,18 +69,28 @@ const Page = () => {
       title: 'STT',
       key: 'index',
       align: 'center',
-      width: 50,
+      width: 100,
       render: (_: any, __: any, index: number) => pagination.pageIndex * pagination.pageSize + index + 1
     },
     {
       title: 'Tên thẻ',
       dataIndex: 'name',
-      key: 'name'
+      key: 'name',
+      width: 250
     },
     {
       title: 'Mô tả',
       dataIndex: 'description',
       key: 'description'
+    },
+    {
+      title: 'Xem trước',
+      key: 'preview',
+      dataIndex: 'color',
+      width: 200,
+      render: (color: string, record) => {
+        return <Tag name={record.name} key={record.id} color={record.color} />;
+      }
     },
     {
       title: 'Hành động',
@@ -108,7 +118,13 @@ const Page = () => {
 
   return (
     <div>
-      <SaveModal isModalOpen={isModalOpen} onCancel={handleCancel} form={form} onSave={handleSave} />
+      <SaveModal
+        isModalOpen={isModalOpen}
+        onCancel={handleCancel}
+        form={form}
+        onSave={handleSave}
+        editingTag={editingTag}
+      />
 
       <div className='flex justify-between mb-4'>
         <Input
@@ -123,6 +139,7 @@ const Page = () => {
           type='primary'
           onClick={() => {
             form.resetFields();
+            form.setFieldsValue({ color: '#000000' });
             setEditingTag(null);
             setIsModalOpen(true);
           }}

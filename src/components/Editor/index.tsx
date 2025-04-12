@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import 'quill-emoji/dist/quill-emoji.css';
 import { htmlToMarkdown } from '~/utils/parser';
 import quillEmoji from 'quill-emoji';
+import './index.css';
 
 const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
 
@@ -38,9 +39,7 @@ export function Editor(props: EditorProps) {
 
   // Chỉ dán nội dung HTML ban đầu khi component mount
   useEffect(() => {
-    if (props.value !== undefined && props.value !== value) {
-      setValue(props.value);
-    }
+    setValue(props.value || '');
   }, [props.value]);
 
   const extractImageUrls = (html: string): string[] => {
@@ -125,6 +124,7 @@ export function Editor(props: EditorProps) {
         [{ header: ['1', '2', '3', '4', '5', '6'] }, { font: [] }],
         [{ size: [] }],
         ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
+        [{ color: [] }, { background: [] }],
         [
           { list: 'ordered' },
           { list: 'bullet' },
@@ -166,6 +166,8 @@ export function Editor(props: EditorProps) {
     'image',
     'video',
     'code-block',
+    'color',
+    'background',
     'emoji'
   ];
 

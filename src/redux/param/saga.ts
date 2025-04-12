@@ -1,69 +1,69 @@
 import { createOne, deleteOne, getAll, updateOne } from './api';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
-  createRoleFailure,
-  createRoleStart,
-  createRoleSuccess,
-  deleteRoleFailure,
-  deleteRoleStart,
-  deleteRoleSuccess,
-  getRolesFailure,
-  getRolesStart,
-  getRolesSuccess,
-  updateRoleFailure,
-  updateRoleStart,
-  updateRoleSuccess
-} from '~/redux/role/slice';
+  createParamFailure,
+  createParamStart,
+  createParamSuccess,
+  deleteParamFailure,
+  deleteParamStart,
+  deleteParamSuccess,
+  getParamsFailure,
+  getParamsStart,
+  getParamsSuccess,
+  updateParamFailure,
+  updateParamStart,
+  updateParamSuccess
+} from '~/redux/param/slice';
 import { showNotification } from '~/redux/noti/slice'; // Giả sử bạn có slice thông báo
 
-function* getRolesRequest(action) {
+function* getParamsRequest(action) {
   try {
     const { data } = yield call(getAll, action.payload);
-    yield put(getRolesSuccess(data));
+    yield put(getParamsSuccess(data));
   } catch (error) {
-    yield put(getRolesFailure(error));
-    yield put(showNotification({ message: 'Lấy danh sách vai trò thất bại!', variant: 'error' }));
+    yield put(getParamsFailure(error));
+    yield put(showNotification({ message: 'Lấy danh sách tham số thất bại!', variant: 'error' }));
   }
 }
 
-function* createRoleRequest(action) {
+function* createParamRequest(action) {
   try {
     const { data } = yield call(createOne, action.payload);
-    yield put(createRoleSuccess(data));
-    yield put(showNotification({ message: 'Tạo vai trò thành công!', variant: 'success' }));
+    yield put(createParamSuccess(data));
+    yield put(showNotification({ message: 'Tạo tham số thành công!', variant: 'success' }));
   } catch (error) {
-    yield put(createRoleFailure(error));
-    yield put(showNotification({ message: 'Tạo vai trò thất bại!', variant: 'error' }));
+    yield put(createParamFailure(error));
+    yield put(showNotification({ message: 'Tạo tham số thất bại!', variant: 'error' }));
   }
 }
 
-function* updateRoleRequest(action) {
+function* updateParamRequest(action) {
   try {
     const { data } = yield call(updateOne, action.payload);
-    yield put(updateRoleSuccess(data));
-    yield put(showNotification({ message: 'Cập nhật vai trò thành công!', variant: 'success' }));
+    yield put(updateParamSuccess(data));
+    yield put(showNotification({ message: 'Cập nhật tham số thành công!', variant: 'success' }));
   } catch (error) {
-    yield put(updateRoleFailure(error));
-    yield put(showNotification({ message: 'Cập nhật vai trò thất bại!', variant: 'error' }));
+    yield put(updateParamFailure(error));
+    yield put(showNotification({ message: 'Cập nhật tham số thất bại!', variant: 'error' }));
   }
 }
 
-function* deleteRoleRequest(action) {
+function* deleteParamRequest(action) {
   try {
     yield call(deleteOne, action.payload);
-    yield put(deleteRoleSuccess(action.payload));
-    yield put(showNotification({ message: 'Xóa vai trò thành công!', variant: 'success' }));
+    yield put(deleteParamSuccess(action.payload));
+    yield put(showNotification({ message: 'Xóa tham số thành công!', variant: 'success' }));
   } catch (error) {
-    yield put(deleteRoleFailure(error));
-    yield put(showNotification({ message: 'Xóa vai trò thất bại!', variant: 'error' }));
+    yield put(deleteParamFailure(error));
+    yield put(showNotification({ message: 'Xóa tham số thất bại!', variant: 'error' }));
   }
 }
 
-function* RoleSaga() {
-  yield takeLatest(getRolesStart.type, getRolesRequest);
-  yield takeLatest(createRoleStart.type, createRoleRequest);
-  yield takeLatest(updateRoleStart.type, updateRoleRequest);
-  yield takeLatest(deleteRoleStart.type, deleteRoleRequest);
+function* ParamSaga() {
+  yield takeLatest(getParamsStart.type, getParamsRequest);
+  yield takeLatest(createParamStart.type, createParamRequest);
+  yield takeLatest(updateParamStart.type, updateParamRequest);
+  yield takeLatest(deleteParamStart.type, deleteParamRequest);
 }
 
-export default RoleSaga;
+export default ParamSaga;

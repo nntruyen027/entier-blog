@@ -2,20 +2,19 @@ import { Table } from '~/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
 import { useEffect, useState } from 'react';
-import { createParamStart, deleteParamStart, getParamsStart, updateParamStart } from '~/redux/param/slice';
+import { createRoleStart, deleteRoleStart, getRolesStart, updateRoleStart } from '~/redux/role/slice';
 import { ColumnsType } from 'antd/es/table';
 import { SaveModal } from './components';
-import { Button, Form, Input, Popconfirm, Space, Tag } from 'antd';
+import { Button, Form, Input, Popconfirm, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { JsonEditor } from 'json-edit-react';
 
 const Page = () => {
   const dispatch = useDispatch();
-  const { params, pageCount, rowCount, loading } = useSelector((state: RootState) => state.param);
+  const { roles, pageCount, rowCount, loading } = useSelector((state: RootState) => state.role);
 
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingParam, setEditingParam] = useState<any>(null);
+  const [editingRole, setEditingRole] = useState<any | null>(null);
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const [pagination, setPagination] = useState({
@@ -26,7 +25,7 @@ const Page = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       dispatch(
-        getParamsStart({
+        getRolesStart({
           page: pagination.pageIndex,
           size: pagination.pageSize,
           keyword: searchKeyword
@@ -37,31 +36,31 @@ const Page = () => {
     return () => clearTimeout(timeout);
   }, [searchKeyword, pagination]);
 
-  const handleSave = (values: { key: string; dataType: string; value: any }) => {
-    if (editingParam) {
-      dispatch(updateParamStart({ _id: editingParam._id, body: { ...values } }));
+  const handleSave = (values: any) => {
+    if (editingRole) {
+      dispatch(updateRoleStart({ id: editingRole.id, body: { ...values } }));
     } else {
-      dispatch(createParamStart(values));
+      dispatch(createRoleStart(values));
     }
 
     form.resetFields();
-    setEditingParam(null);
+    setEditingRole(null);
     setIsModalOpen(false);
   };
 
-  const handleEdit = (param: any) => {
-    setEditingParam(param);
-    form.setFieldsValue(param);
+  const handleEdit = (role: any) => {
+    setEditingRole(role);
+    form.setFieldsValue(role);
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id: string) => {
-    dispatch(deleteParamStart(id));
+  const handleDelete = (id: number) => {
+    dispatch(deleteRoleStart(id));
   };
 
   const handleCancel = () => {
     form.resetFields();
-    setEditingParam(null);
+    setEditingRole(null);
     setIsModalOpen(false);
   };
 
@@ -71,43 +70,18 @@ const Page = () => {
       key: 'index',
       align: 'center',
       width: 100,
-      render: (_, __, index: number) => pagination.pageIndex * pagination.pageSize + index + 1
+      render: (_: any, __: any, index: number) => pagination.pageIndex * pagination.pageSize + index + 1
     },
     {
-      title: 'Khóa',
-      dataIndex: 'key',
-      key: 'key',
+      title: 'Tên quyền',
+      dataIndex: 'roleName',
+      key: 'roleName',
       width: 250
     },
     {
-      title: 'Kiểu dữ liệu',
-      dataIndex: 'dataType',
-      key: 'dataType',
-      width: 200
-    },
-    {
-      title: 'Giá trị',
-      key: 'value',
-      dataIndex: 'value',
-      render: (value, record) => {
-        if (record.dataType === 'boolean') {
-          return <Tag color={value ? 'green' : 'red'}>{value ? 'True' : 'False'}</Tag>;
-        }
-        if (record.dataType === 'json') {
-          let jsonData;
-          try {
-            jsonData = typeof value === 'object' ? value : JSON.parse(value);
-          } catch {
-            jsonData = {};
-          }
-          return (
-            <div style={{ maxWidth: 300, overflow: 'auto' }}>
-              <JsonEditor data={jsonData} viewOnly />
-            </div>
-          );
-        }
-        return value?.toString();
-      }
+      title: 'Mô tả',
+      dataIndex: 'description',
+      key: 'description'
     },
     {
       title: 'Hành động',
@@ -119,10 +93,10 @@ const Page = () => {
             Sửa
           </Button>
           <Popconfirm
-            title='Bạn có chắc muốn xóa thẻ này?'
+            title='Bạn có chắc muốn xóa quyền này?'
             okText='Xóa'
             cancelText='Hủy'
-            onConfirm={() => handleDelete(record._id)}
+            onConfirm={() => handleDelete(record.id)}
           >
             <Button type='link' danger>
               Xoá
@@ -140,12 +114,12 @@ const Page = () => {
         onCancel={handleCancel}
         form={form}
         onSave={handleSave}
-        editingParam={editingParam}
+        editingRole={editingRole}
       />
 
       <div className='flex justify-between mb-4'>
         <Input
-          placeholder='Tìm theo tên thẻ...'
+          placeholder='Tìm theo tên quyền...'
           prefix={<SearchOutlined />}
           value={searchKeyword}
           onChange={(e) => setSearchKeyword(e.target.value)}
@@ -156,18 +130,19 @@ const Page = () => {
           type='primary'
           onClick={() => {
             form.resetFields();
-            setEditingParam(null);
+            form.setFieldsValue({ color: '#000000' });
+            setEditingRole(null);
             setIsModalOpen(true);
           }}
         >
-          + Thêm thẻ
+          + Thêm quyền
         </Button>
       </div>
 
       <Table
         isLoading={loading}
         columns={columns}
-        data={params}
+        data={roles}
         setPagination={setPagination}
         pagination={pagination}
         rowCount={rowCount}

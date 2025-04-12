@@ -34,6 +34,7 @@ const RoleSlice = createSlice({
     createRoleSuccess: (state, action) => {
       state.roles.push(action.payload);
       state.rowCount = state.rowCount + 1;
+      state.loading = false;
     },
     createRoleFailure: (state, action) => {
       state.error = action.payload;

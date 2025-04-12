@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3001/params';
+const BASE_URL = 'http://localhost:8084/posts';
 
 export const getAll = async (params) => {
-  return await axios.get(`${BASE_URL}`, {
+  return await axios.get(`${BASE_URL}/admin`, {
     params: params,
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -11,14 +11,12 @@ export const getAll = async (params) => {
   });
 };
 
-export const getParamByKey = async (key) => {
-  const { data } = await axios.get(`${BASE_URL}/key/${key}`, {
+export const getOne = async (id) => {
+  return await axios.get(`${BASE_URL}/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     }
   });
-
-  return data;
 };
 
 export const createOne = async (body) => {
@@ -30,8 +28,8 @@ export const createOne = async (body) => {
   });
 };
 
-export const updateOne = async ({ _id, body }) => {
-  return await axios.put(`${BASE_URL}/${_id}`, JSON.stringify(body), {
+export const updateOne = async ({ id, body }) => {
+  return await axios.put(`${BASE_URL}/admin/${id}`, JSON.stringify(body), {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
       'Content-Type': 'application/json'
@@ -39,8 +37,17 @@ export const updateOne = async ({ _id, body }) => {
   });
 };
 
-export const deleteOne = async (_id) => {
-  return await axios.delete(`${BASE_URL}/${_id}`, {
+export const asignTag = async ({ id, body }) => {
+  return await axios.post(`${BASE_URL}/admin/${id}/tags`, body, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const deleteOne = async (id) => {
+  return await axios.delete(`${BASE_URL}/admin/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     }

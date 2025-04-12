@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Dropdown, Menu, Table as AntTable } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { RowAction } from '~/types';
 import { EllipsisOutlined } from '@ant-design/icons';
+import { getParamByKey } from '~/redux/param/api';
 
 export interface TableProps<T = object> {
   columns: ColumnsType<T>;
@@ -26,6 +27,41 @@ const Table = <T extends object>({
   positionActionsColumn = 'last',
   isLoading
 }: TableProps<T>) => {
+  const [pageSizeOptions, setPageSizeOptions] = useState<string[]>([]);
+  const [defaultPageSize, setDefaultPageSize] = useState<number | null>(null);
+
+  // Lấy pageSizeOptions từ server
+  const getPageSizeOptions = async () => {
+    try {
+      const { value } = await getParamByKey('pageSizeOptions');
+      setPageSizeOptions(value);
+    } catch (err) {
+      setPageSizeOptions(['5', '10', '20', '50', '100']);
+    }
+  };
+
+  // Lấy defaultPageSize từ server
+  const fetchDefaultPageSize = async () => {
+    try {
+      const { value } = await getParamByKey('defaultPageSize');
+      setDefaultPageSize(value);
+    } catch (err) {
+      setDefaultPageSize(10);
+    }
+  };
+
+  useEffect(() => {
+    getPageSizeOptions();
+    fetchDefaultPageSize();
+  }, []);
+
+  // Nếu có defaultPageSize mà pagination chưa có, thì cập nhật pagination
+  useEffect(() => {
+    if (defaultPageSize !== null && pagination.pageSize !== defaultPageSize) {
+      setPagination({ pageIndex: 0, pageSize: defaultPageSize });
+    }
+  }, [defaultPageSize]);
+
   const getMenu = (record: T) => (
     <Menu>
       {actions?.map((action, index) => (
@@ -66,8 +102,7 @@ const Table = <T extends object>({
         pageSize: pagination.pageSize,
         total: rowCount,
         showSizeChanger: true,
-        pageSizeOptions: ['5', '10', '20', '50', '100'],
-        defaultPageSize: 10,
+        pageSizeOptions: pageSizeOptions,
         onChange: (page, pageSize) => setPagination({ pageIndex: page - 1, pageSize })
       }}
       scroll={{ x: 'max-content' }}

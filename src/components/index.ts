@@ -11,6 +11,8 @@ import ConfirmModal from './ConfirmModal';
 import CheckboxesTags from './CheckboxesTags';
 import TransferList from './TransferList';
 import Editor from './Editor';
+import Tag from './Tag';
+import EditorField from './EditorCompatible';
 
 export {
   Header,
@@ -25,5 +27,7 @@ export {
   ConfirmModal,
   CheckboxesTags,
   TransferList,
-  Editor
+  Editor,
+  Tag,
+  EditorField
 };

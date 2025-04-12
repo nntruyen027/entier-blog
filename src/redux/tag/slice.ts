@@ -33,6 +33,7 @@ const TagSlice = createSlice({
     },
     createTagSuccess: (state, action) => {
       state.tags.push(action.payload);
+      state.loading = false;
       state.rowCount = state.rowCount + 1;
     },
     createTagFailure: (state, action) => {

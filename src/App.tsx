@@ -10,14 +10,15 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 import 'react-widgets/styles.css';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { clearNotification } from '~/redux/noti/slice';
+import { getParamByKey } from '~/redux/param/api';
+import 'quill-emoji/dist/quill-emoji.css';
 
 const NotificationListener = () => {
   const { enqueueSnackbar } = useSnackbar();
   const notification = useSelector((state: RootState) => state.noti);
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (notification) {
       enqueueSnackbar(notification.message, { variant: notification.variant });
@@ -29,6 +30,28 @@ const NotificationListener = () => {
 };
 
 function App() {
+  const [fav, setFav] = useState<string>('');
+
+  useEffect(() => {
+    const fetchName = async () => {
+      try {
+        const { value } = await getParamByKey('favicon');
+        setFav(value);
+      } catch (err) {
+        console.error('Lỗi khi lấy fav:', err);
+      }
+    };
+    fetchName();
+  }, []);
+
+  useEffect(() => {
+    const favicon = document.getElementById('favicon') as HTMLLinkElement;
+    if (favicon) {
+      favicon.href = fav;
+    }
+    console.log(1, favicon, fav);
+  }, [fav]);
+
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>

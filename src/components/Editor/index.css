@@ -1,0 +1,8 @@
+.ql-editor img {
+  max-width: 100%; /* Đảm bảo ảnh không tràn ra ngoài */
+  height: auto; /* Giữ tỷ lệ ảnh */
+  display: block;
+  margin: 12px auto; /* Căn giữa ảnh và có khoảng cách */
+  border-radius: 6px;
+  object-fit: contain;
+}

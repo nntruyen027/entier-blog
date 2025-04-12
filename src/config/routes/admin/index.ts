@@ -3,8 +3,12 @@ const auth = {
 };
 
 const main = {
-  index: '/admin/category/tag',
-  tag: '/admin/category/tag'
+  index: '/admin/system/user',
+  user: '/admin/system/user',
+  role: '/admin/system/role',
+  tag: '/admin/category/tag',
+  param: '/admin/system/param',
+  post: '/admin/public/post'
 };
 
 export { auth, main };
