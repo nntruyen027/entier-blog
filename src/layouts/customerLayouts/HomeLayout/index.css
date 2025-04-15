@@ -1,0 +1,17 @@
+/* Đảm bảo header dính vào khi cuộn */
+.top-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Ẩn header khi cuộn xuống */
+.header-hidden {
+  transform: translateY(-100%); /* Ẩn header */
+}
+
+/* Bóng của header khi sticky */
+.sticky-header {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

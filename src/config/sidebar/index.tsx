@@ -42,6 +42,13 @@ const sidebar: MenuItemType[] = [
         label: 'Thẻ',
         hasChildren: false,
         route: admin.main.tag
+      },
+      {
+        id: `sidebar-${uuid4()}`,
+        icon: null,
+        label: 'Loại liên hệ',
+        hasChildren: false,
+        route: admin.main.contactType
       }
     ],
     hasChildren: true,
@@ -57,6 +64,13 @@ const sidebar: MenuItemType[] = [
         label: 'Bài viết',
         hasChildren: false,
         route: admin.main.post
+      },
+      {
+        id: `sidebar-${uuid4()}`,
+        icon: null,
+        label: 'Liên hệ',
+        hasChildren: false,
+        route: admin.main.contact
       }
     ],
     hasChildren: true,

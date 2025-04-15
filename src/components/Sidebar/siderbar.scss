@@ -1,11 +1,37 @@
 .custom-sidebar {
-  height: 100%;
-  background: #fff;
+  height: 100vh;
   text-align: left;
-  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-right: 1px solid #f0f0f0;
 
   .logo-wrapper {
-    padding: 16px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 
+    .logo {
+      max-height: 32rem;
+      transition: all 0.3s;
+    }
+
+    .span {
+      color: #000000d9;
+      font-weight: bold;
+      font-size: 16px;
+    }
+  }
+
+  .ant-menu {
+    flex: 1;
+    overflow: auto;
+    background-color: transparent;
+  }
+
+  .ant-menu-item-selected {
+    background-color: #e6f7ff !important;
+    color: #1890ff !important;
   }
 }

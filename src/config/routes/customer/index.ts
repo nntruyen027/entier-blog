@@ -1,11 +1,10 @@
 const home = {
   index: '/',
   home: '/',
-  productType: '/:type'
+  aboutMe: '/about-me',
+  news: '/news',
+  products: '/products',
+  service: '/service'
 };
 
-const cart = {
-  index: '/cart'
-};
-
-export { home, cart };
+export { home };

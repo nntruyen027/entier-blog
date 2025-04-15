@@ -18,8 +18,8 @@ const Routing = () => (
         {adminMainRoutes.map(({ id, path, element, label }) => (
           <Route key={id} path={path} element={<AdminMainLayout title={label}>{element}</AdminMainLayout>} />
         ))}
-        {homeRoutes.map(({ id, path, element }) => (
-          <Route key={id} path={path} element={<HomeLayout>{element}</HomeLayout>} />
+        {homeRoutes.map(({ id, path, element, label }) => (
+          <Route key={id} path={path} element={<HomeLayout title={label}>{element}</HomeLayout>} />
         ))}
         <Route path='*' element={<NotFoundPage />} />
       </Routes>

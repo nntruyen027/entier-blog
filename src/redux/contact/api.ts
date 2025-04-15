@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8085/contact-types';
+const BASE_URL = 'http://localhost:8085/contacts';
 
 export const getAll = async (params) => {
   return await axios.get(`${BASE_URL}`, {

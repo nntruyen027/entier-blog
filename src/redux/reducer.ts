@@ -6,6 +6,8 @@ import TagReducer from './tag/slice';
 import ParamReducer from './param/slice';
 import userReducer from './user/slice';
 import postReducer from './post/slice';
+import contactTypeReducer from './contactType/slice';
+import contactReducer from './contact/slice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,7 +16,9 @@ const rootReducer = combineReducers({
   tag: TagReducer,
   param: ParamReducer,
   user: userReducer,
-  post: postReducer
+  post: postReducer,
+  contactType: contactTypeReducer,
+  contact: contactReducer
 });
 
 export default rootReducer;

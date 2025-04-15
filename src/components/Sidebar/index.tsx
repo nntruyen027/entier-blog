@@ -16,15 +16,15 @@ const CustomSidebar: React.FC<SidebarProps> = ({ isFull }) => {
   const location = useLocation();
   const { t } = useTranslation();
   const [logo, setLogo] = useState('');
-  const { value } = useParamValue('logo');
+  const [name, setName] = useState('');
+  const { value: logoParam } = useParamValue('logo');
+  const { value: nameParam } = useParamValue('name');
 
   useEffect(() => {
-    if (value) {
-      setLogo(value);
-    }
-  }, [value]);
+    if (logoParam) setLogo(logoParam);
+    if (nameParam) setName(nameParam);
+  }, [logoParam, nameParam]);
 
-  // Memo hóa selectedKeys và openKeys
   const { selectedKeys, openKeys } = useMemo(() => {
     let selected: string[] = [];
     let open: string[] = [];
@@ -49,17 +49,18 @@ const CustomSidebar: React.FC<SidebarProps> = ({ isFull }) => {
 
   return (
     <div className={`custom-sidebar ${isFull ? 'expanded' : 'collapsed'}`}>
-      <div className='logo-wrapper'>
+      <div className='logo-wrapper  demo-logo-vertical'>
         <img className='logo' src={logo} alt='logo' />
       </div>
       <Menu
         mode='inline'
+        theme='light'
         inlineCollapsed={!isFull}
         selectedKeys={selectedKeys}
-        defaultOpenKeys={openKeys}
-        style={{ height: '100%', borderRight: 0 }}
+        defaultOpenKeys={isFull ? openKeys : []}
+        style={{ borderRight: 0 }}
       >
-        {sidebar.map((item, index) =>
+        {sidebar.map((item) =>
           item.hasChildren ? (
             <SubMenu key={item.label} icon={item.icon} title={t(item.label)}>
               {item.children?.map((sub) => (

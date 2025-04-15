@@ -5,7 +5,9 @@ import tagSaga from '~/redux/tag/saga';
 import paramSaga from '~/redux/param/saga';
 import userSaga from '~/redux/user/saga';
 import postSaga from '~/redux/post/saga';
+import contactTypeSaga from '~/redux/contactType/saga';
+import contactSaga from '~/redux/contact/saga';
 
 export default function* rootSaga() {
-  yield all([authSaga(), roleSaga(), tagSaga(), paramSaga(), userSaga(), postSaga()]);
+  yield all([authSaga(), roleSaga(), tagSaga(), paramSaga(), userSaga(), postSaga(), contactTypeSaga(), contactSaga()]);
 }

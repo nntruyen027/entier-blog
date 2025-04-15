@@ -2,71 +2,71 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   loading: false,
-  tag: null,
+  contactType: null,
   error: null,
-  tags: [],
+  contactTypes: [],
   rowCount: 0,
   pageCount: 1
 };
 
-const TagSlice = createSlice({
-  name: 'tag',
+const ContactTypeSlice = createSlice({
+  name: 'contactType',
   initialState: initialState,
   reducers: {
-    getTagsStart: (state, action) => {
+    getContactTypesStart: (state, action) => {
       state.loading = true;
       state.error = null;
     },
-    getTagsSuccess: (state, action) => {
+    getContactTypesSuccess: (state, action) => {
       state.loading = false;
-      state.tags = action.payload.content;
+      state.contactTypes = action.payload.content;
       state.rowCount = action.payload?.totalElements || 1;
       state.pageCount = action.payload?.totalPages || 1;
     },
-    getTagsFailure: (state, action) => {
+    getContactTypesFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
-    createTagStart: (state, action) => {
+    createContactTypeStart: (state, action) => {
       state.loading = true;
       state.error = null;
     },
-    createTagSuccess: (state, action) => {
-      state.tags.push(action.payload);
+    createContactTypeSuccess: (state, action) => {
+      state.contactTypes.push(action.payload);
       state.loading = false;
       state.rowCount = state.rowCount + 1;
     },
-    createTagFailure: (state, action) => {
+    createContactTypeFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
-    updateTagStart: (state, action) => {
+    updateContactTypeStart: (state, action) => {
       state.loading = true;
       state.error = null;
     },
-    updateTagSuccess: (state, action) => {
-      const index = state.tags.findIndex((tag) => tag.id === action.payload.id);
+    updateContactTypeSuccess: (state, action) => {
+      const index = state.contactTypes.findIndex((contactType) => contactType.id === action.payload.id);
       if (index !== -1) {
-        state.tags[index] = action.payload; // Cập nhật tag tại vị trí tìm thấy
+        state.contactTypes[index] = action.payload; // Cập nhật contactType tại vị trí tìm thấy
       }
       state.loading = false;
     },
-    updateTagFailure: (state, action) => {
+    updateContactTypeFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
-    deleteTagStart: (state, action) => {
+    deleteContactTypeStart: (state, action) => {
       state.loading = true;
       state.error = null;
     },
-    deleteTagSuccess: (state, action) => {
-      state.tags = state.tags.filter((tag) => {
-        return tag.id != action.payload;
-      }); // Xóa tag dựa vào id
+    deleteContactTypeSuccess: (state, action) => {
+      state.contactTypes = state.contactTypes.filter((contactType) => {
+        return contactType.id != action.payload;
+      }); // Xóa contactType dựa vào id
       state.loading = false;
       state.rowCount = state.rowCount - 1;
     },
-    deleteTagFailure: (state, action) => {
+    deleteContactTypeFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     }
@@ -74,18 +74,18 @@ const TagSlice = createSlice({
 });
 
 export const {
-  createTagStart,
-  createTagSuccess,
-  createTagFailure,
-  deleteTagStart,
-  deleteTagSuccess,
-  deleteTagFailure,
-  updateTagFailure,
-  updateTagStart,
-  updateTagSuccess,
-  getTagsSuccess,
-  getTagsStart,
-  getTagsFailure
-} = TagSlice.actions;
+  createContactTypeStart,
+  createContactTypeSuccess,
+  createContactTypeFailure,
+  deleteContactTypeStart,
+  deleteContactTypeSuccess,
+  deleteContactTypeFailure,
+  updateContactTypeFailure,
+  updateContactTypeStart,
+  updateContactTypeSuccess,
+  getContactTypesSuccess,
+  getContactTypesStart,
+  getContactTypesFailure
+} = ContactTypeSlice.actions;
 
-export default TagSlice.reducer;
+export default ContactTypeSlice.reducer;
