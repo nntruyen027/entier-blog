@@ -3,23 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
 import { useEffect, useState } from 'react';
 import {
-  createContactTypeStart,
-  deleteContactTypeStart,
-  getContactTypesStart,
-  updateContactTypeStart
-} from '~/redux/contactType/slice';
+  createProductTypeStart,
+  deleteProductTypeStart,
+  getProductTypesStart,
+  updateProductTypeStart
+} from '~/redux/productType/slice';
 import { ColumnsType } from 'antd/es/table';
 import { SaveModal } from './components';
 import { Button, Form, Input, Popconfirm, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import { truncate } from '~/utils/string';
 
 const Page = () => {
   const dispatch = useDispatch();
-  const { contactTypes, pageCount, rowCount, loading } = useSelector((state: RootState) => state.contactType);
+  const { productTypes, pageCount, rowCount, loading } = useSelector((state: RootState) => state.productType);
 
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingContactType, setEditingContactType] = useState<any | null>(null);
+  const [editingProductType, setEditingProductType] = useState<any | null>(null);
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const [pagination, setPagination] = useState({
@@ -30,7 +31,7 @@ const Page = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       dispatch(
-        getContactTypesStart({
+        getProductTypesStart({
           page: pagination.pageIndex,
           size: pagination.pageSize,
           keyword: searchKeyword
@@ -42,30 +43,39 @@ const Page = () => {
   }, [searchKeyword, pagination]);
 
   const handleSave = (values: any) => {
-    if (editingContactType) {
-      dispatch(updateContactTypeStart({ id: editingContactType.id, body: { ...values } }));
+    const preservedFields = editingProductType
+      ? {
+          viewCount: editingProductType.view,
+          createdAt: editingProductType.createdAt
+        }
+      : {};
+
+    const fullProductTypeData = { ...preservedFields, ...values };
+
+    if (editingProductType) {
+      dispatch(updateProductTypeStart({ id: editingProductType.id, body: { ...editingProductType, ...values } }));
     } else {
-      dispatch(createContactTypeStart(values));
+      dispatch(createProductTypeStart(fullProductTypeData));
     }
 
     form.resetFields();
-    setEditingContactType(null);
+    setEditingProductType(null);
     setIsModalOpen(false);
   };
 
-  const handleEdit = (contactType: any) => {
-    setEditingContactType(contactType);
-    form.setFieldsValue(contactType);
+  const handleEdit = (productType: any) => {
+    setEditingProductType(productType);
+    form.setFieldsValue(productType);
     setIsModalOpen(true);
   };
 
   const handleDelete = (id: number) => {
-    dispatch(deleteContactTypeStart(id));
+    dispatch(deleteProductTypeStart(id));
   };
 
   const handleCancel = () => {
     form.resetFields();
-    setEditingContactType(null);
+    setEditingProductType(null);
     setIsModalOpen(false);
   };
 
@@ -78,16 +88,19 @@ const Page = () => {
       render: (_: any, __: any, index: number) => pagination.pageIndex * pagination.pageSize + index + 1
     },
     {
-      title: 'Tên loại liên hệ',
+      title: 'Tên loại sản phẩm',
       dataIndex: 'name',
       key: 'name',
-      width: 250
+      width: 150
     },
     {
       title: 'Mô tả',
       dataIndex: 'description',
-      key: 'description'
+      key: 'description',
+      width: 300,
+      render: (description: string) => <span>{truncate(description)}</span>
     },
+
     {
       title: 'Hành động',
       width: 150,
@@ -98,7 +111,7 @@ const Page = () => {
             Sửa
           </Button>
           <Popconfirm
-            title='Bạn có chắc muốn xóa loại liên hệ này?'
+            title='Bạn có chắc muốn xóa loại sản phẩm này?'
             okText='Xóa'
             cancelText='Hủy'
             onConfirm={() => handleDelete(record.id)}
@@ -119,12 +132,11 @@ const Page = () => {
         onCancel={handleCancel}
         form={form}
         onSave={handleSave}
-        editingContactType={editingContactType}
+        editingProductType={editingProductType}
       />
-
       <div className='flex justify-between mb-4'>
         <Input
-          placeholder='Tìm theo tên loại liên hệ...'
+          placeholder='Tìm theo tên loại sản phẩm...'
           prefix={<SearchOutlined />}
           value={searchKeyword}
           onChange={(e) => setSearchKeyword(e.target.value)}
@@ -136,18 +148,18 @@ const Page = () => {
           onClick={() => {
             form.resetFields();
             form.setFieldsValue({ color: '#000000' });
-            setEditingContactType(null);
+            setEditingProductType(null);
             setIsModalOpen(true);
           }}
         >
-          + Thêm loại liên hệ
+          + Thêm loại sản phẩm
         </Button>
       </div>
 
       <Table
         isLoading={loading}
         columns={columns}
-        data={contactTypes}
+        data={productTypes}
         setPagination={setPagination}
         pagination={pagination}
         rowCount={rowCount}

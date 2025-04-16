@@ -13,6 +13,8 @@ import { Layout } from 'antd';
 
 const { Content, Footer, Sider } = Layout;
 
+const HEADER_HEIGHT = 64;
+
 const MainLayout: React.FC<LayoutProps> = ({ children, title }) => {
   const dispatch = useDispatch();
   const { token, isLogin } = useSelector((state: RootState) => state.auth);
@@ -51,17 +53,36 @@ const MainLayout: React.FC<LayoutProps> = ({ children, title }) => {
       </Helmet>
       <Layout style={{ minHeight: '100vh' }}>
         <Sider
-          theme={'light'}
+          theme='light'
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
           width={240}
+          style={{ position: 'fixed', height: '100vh', zIndex: 1000, left: 0 }}
         >
           <Sidebar isFull={!collapsed} />
         </Sider>
-        <Layout>
-          <AdminHeader title={title} className='flex-none' />
-          <Content style={{ margin: '16px', overflow: 'auto' }}>{children}</Content>
+        <Layout
+          style={{
+            marginLeft: collapsed ? 80 : 240,
+            transition: 'margin-left 0.2s',
+            minHeight: '100vh'
+          }}
+        >
+          <AdminHeader title={title} />
+
+          <Content
+            style={{
+              padding: '24px',
+              marginTop: 0,
+              overflow: 'auto',
+              flex: 1,
+              background: '#f9f9f9'
+            }}
+          >
+            {children}
+          </Content>
+
           <Footer style={{ textAlign: 'center', background: 'transparent' }}>
             © {new Date().getFullYear()} {name}
           </Footer>

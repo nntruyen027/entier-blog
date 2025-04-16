@@ -8,6 +8,8 @@ import userReducer from './user/slice';
 import postReducer from './post/slice';
 import contactTypeReducer from './contactType/slice';
 import contactReducer from './contact/slice';
+import productReducer from './product/slice';
+import productTypeReducer from './productType/slice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -18,7 +20,9 @@ const rootReducer = combineReducers({
   user: userReducer,
   post: postReducer,
   contactType: contactTypeReducer,
-  contact: contactReducer
+  contact: contactReducer,
+  product: productReducer,
+  productType: productTypeReducer
 });
 
 export default rootReducer;

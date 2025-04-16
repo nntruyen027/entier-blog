@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Form, Input, Modal, Switch } from 'antd';
 import 'react-quill/dist/quill.snow.css';
 import { EditorField } from '~/components';
+import AvatarUploader from '../AvatarUploader';
 
 const SaveModal = ({ isModalOpen, onCancel, form, onSave, editingPost }) => {
   const isEditing = !!editingPost;
@@ -36,6 +37,9 @@ const SaveModal = ({ isModalOpen, onCancel, form, onSave, editingPost }) => {
 
         <Form.Item label='Mô tả' name='description'>
           <Input.TextArea placeholder='Mô tả ngắn gọn nội dung bài viết...' rows={3} />
+        </Form.Item>
+        <Form.Item label='Hình ảnh' name='image' valuePropName='value' getValueFromEvent={(e) => e}>
+          <AvatarUploader form={form} />
         </Form.Item>
 
         {editorReady && (

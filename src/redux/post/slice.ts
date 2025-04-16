@@ -17,6 +17,10 @@ const PostSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
+    getPostsByNoAdminStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
     getPostsSuccess: (state, action) => {
       state.loading = false;
       state.posts = action.payload.content;
@@ -33,7 +37,7 @@ const PostSlice = createSlice({
     },
     getPostSuccess: (state, action) => {
       state.loading = false;
-      state.post = action.payload.content;
+      state.post = action.payload;
     },
     getPostsFailure: (state, action) => {
       state.error = action.payload;
@@ -105,7 +109,8 @@ export const {
   getPostStart,
   getPostSuccess,
   getPostFailure,
-  asignTagToPostStart
+  asignTagToPostStart,
+  getPostsByNoAdminStart
 } = PostSlice.actions;
 
 export default PostSlice.reducer;

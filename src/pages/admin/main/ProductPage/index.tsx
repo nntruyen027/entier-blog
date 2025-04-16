@@ -3,23 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
 import { useEffect, useState } from 'react';
 import {
-  createContactTypeStart,
-  deleteContactTypeStart,
-  getContactTypesStart,
-  updateContactTypeStart
-} from '~/redux/contactType/slice';
+  createProductStart,
+  deleteProductStart,
+  getProductsByAdminStart,
+  updateProductStart
+} from '~/redux/product/slice';
 import { ColumnsType } from 'antd/es/table';
 import { SaveModal } from './components';
-import { Button, Form, Input, Popconfirm, Space } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Popconfirm, Space, Tag } from 'antd';
+import { EyeOutlined, SearchOutlined } from '@ant-design/icons';
+import { truncate } from '~/utils/string';
 
 const Page = () => {
   const dispatch = useDispatch();
-  const { contactTypes, pageCount, rowCount, loading } = useSelector((state: RootState) => state.contactType);
+  const { products, pageCount, rowCount, loading } = useSelector((state: RootState) => state.product);
 
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingContactType, setEditingContactType] = useState<any | null>(null);
+  const [editingProduct, setEditingProduct] = useState<any | null>(null);
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const [pagination, setPagination] = useState({
@@ -30,7 +31,7 @@ const Page = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       dispatch(
-        getContactTypesStart({
+        getProductsByAdminStart({
           page: pagination.pageIndex,
           size: pagination.pageSize,
           keyword: searchKeyword
@@ -42,30 +43,39 @@ const Page = () => {
   }, [searchKeyword, pagination]);
 
   const handleSave = (values: any) => {
-    if (editingContactType) {
-      dispatch(updateContactTypeStart({ id: editingContactType.id, body: { ...values } }));
+    const preservedFields = editingProduct
+      ? {
+          viewCount: editingProduct.view,
+          createdAt: editingProduct.createdAt
+        }
+      : {};
+
+    const fullProductData = { ...preservedFields, ...values };
+
+    if (editingProduct) {
+      dispatch(updateProductStart({ id: editingProduct.id, body: { ...editingProduct, ...values } }));
     } else {
-      dispatch(createContactTypeStart(values));
+      dispatch(createProductStart(fullProductData));
     }
 
     form.resetFields();
-    setEditingContactType(null);
+    setEditingProduct(null);
     setIsModalOpen(false);
   };
 
-  const handleEdit = (contactType: any) => {
-    setEditingContactType(contactType);
-    form.setFieldsValue(contactType);
+  const handleEdit = (product: any) => {
+    setEditingProduct(product);
+    form.setFieldsValue(product);
     setIsModalOpen(true);
   };
 
   const handleDelete = (id: number) => {
-    dispatch(deleteContactTypeStart(id));
+    dispatch(deleteProductStart(id));
   };
 
   const handleCancel = () => {
     form.resetFields();
-    setEditingContactType(null);
+    setEditingProduct(null);
     setIsModalOpen(false);
   };
 
@@ -78,15 +88,47 @@ const Page = () => {
       render: (_: any, __: any, index: number) => pagination.pageIndex * pagination.pageSize + index + 1
     },
     {
-      title: 'Tên loại liên hệ',
+      title: 'Tên sản phẩm',
       dataIndex: 'name',
       key: 'name',
-      width: 250
+      width: 150
     },
     {
       title: 'Mô tả',
       dataIndex: 'description',
-      key: 'description'
+      key: 'description',
+      width: 300,
+      render: (description: string) => <span>{truncate(description)}</span>
+    },
+    {
+      title: 'Giá tiền',
+      dataIndex: 'price',
+      key: 'price',
+      align: 'right',
+      width: 100,
+      render: (price: number) => price?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+    },
+    {
+      title: 'Lượt xem',
+      dataIndex: 'view',
+      key: 'view',
+      align: 'center',
+      width: 100,
+      render: (count: number) => (
+        <span>
+          <EyeOutlined className='text-green-500 mr-1' />
+          {count}
+        </span>
+      )
+    },
+
+    {
+      title: 'Trạng thái',
+      dataIndex: 'isPublic',
+      key: 'isPublic',
+      align: 'center',
+      width: 100,
+      render: (isPublic: boolean) => (isPublic ? <Tag color='green'>Công khai</Tag> : <Tag color='orange'>Cá nhân</Tag>)
     },
     {
       title: 'Hành động',
@@ -98,7 +140,7 @@ const Page = () => {
             Sửa
           </Button>
           <Popconfirm
-            title='Bạn có chắc muốn xóa loại liên hệ này?'
+            title='Bạn có chắc muốn xóa sản phẩm này?'
             okText='Xóa'
             cancelText='Hủy'
             onConfirm={() => handleDelete(record.id)}
@@ -119,12 +161,11 @@ const Page = () => {
         onCancel={handleCancel}
         form={form}
         onSave={handleSave}
-        editingContactType={editingContactType}
+        editingProduct={editingProduct}
       />
-
       <div className='flex justify-between mb-4'>
         <Input
-          placeholder='Tìm theo tên loại liên hệ...'
+          placeholder='Tìm theo tên bài viết...'
           prefix={<SearchOutlined />}
           value={searchKeyword}
           onChange={(e) => setSearchKeyword(e.target.value)}
@@ -136,18 +177,18 @@ const Page = () => {
           onClick={() => {
             form.resetFields();
             form.setFieldsValue({ color: '#000000' });
-            setEditingContactType(null);
+            setEditingProduct(null);
             setIsModalOpen(true);
           }}
         >
-          + Thêm loại liên hệ
+          + Thêm sản phẩm
         </Button>
       </div>
 
       <Table
         isLoading={loading}
         columns={columns}
-        data={contactTypes}
+        data={products}
         setPagination={setPagination}
         pagination={pagination}
         rowCount={rowCount}

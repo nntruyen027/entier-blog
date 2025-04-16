@@ -1,6 +1,16 @@
 import { Route } from '~/types';
 import { v4 as uuid4 } from 'uuid';
-import { ContactPage, ContactTypePage, ParamPage, PostPage, RolePage, TagPage, UserPage } from '~/pages';
+import {
+  ContactPage,
+  ContactTypePage,
+  ParamPage,
+  PostPage,
+  ProductPage,
+  ProductTypePage,
+  RolePage,
+  TagPage,
+  UserPage
+} from '~/pages';
 import { routes } from '~/config';
 
 const mainRoutes: Route[] = [
@@ -30,6 +40,12 @@ const mainRoutes: Route[] = [
   },
   {
     id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.index,
+    element: <UserPage />,
+    label: 'Người dùng'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
     path: routes.admin.main.role,
     element: <RolePage />,
     label: 'Quyền'
@@ -45,6 +61,18 @@ const mainRoutes: Route[] = [
     path: routes.admin.main.contact,
     element: <ContactPage />,
     label: 'Liên hệ'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.product,
+    element: <ProductPage />,
+    label: 'Sản phẩm'
+  },
+  {
+    id: `admin-main-${uuid4()}`,
+    path: routes.admin.main.productType,
+    element: <ProductTypePage />,
+    label: 'Loại sản phẩm'
   }
 ];
 

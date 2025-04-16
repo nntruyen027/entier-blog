@@ -174,7 +174,7 @@ const Page = () => {
             Sửa
           </Button>
           <Popconfirm
-            title='Bạn có chắc muốn xóa quyền này?'
+            title='Bạn có chắc muốn xóa bài viết này?'
             okText='Xóa'
             cancelText='Hủy'
             onConfirm={() => handleDelete(record.id)}

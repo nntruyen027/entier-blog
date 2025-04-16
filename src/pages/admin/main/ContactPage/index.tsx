@@ -46,7 +46,7 @@ const Page = () => {
       render: (_: any, __: any, index: number) => pagination.pageIndex * pagination.pageSize + index + 1
     },
     {
-      title: 'Tên thẻ',
+      title: 'Tên liên hệ',
       dataIndex: 'name',
       key: 'name',
       width: 250
@@ -63,7 +63,7 @@ const Page = () => {
       render: (_, record) => (
         <Space>
           <Popconfirm
-            title='Bạn có chắc muốn xóa thẻ này?'
+            title='Bạn có chắc muốn xóa liên hệ này?'
             okText='Xóa'
             cancelText='Hủy'
             onConfirm={() => handleDelete(record.id)}

@@ -32,7 +32,8 @@ const Tag: React.FC<TagProps> = ({ name, color = '#000000' }) => {
       color: '#333',
       display: 'inline-block',
       padding: '4px 12px',
-      borderRadius: '16px'
+      borderRadius: '16px',
+      marginRight: '1px'
     };
   }, [color]);
 

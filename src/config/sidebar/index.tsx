@@ -1,7 +1,7 @@
 import { MenuItemType } from '~/types';
 import { v4 as uuid4 } from 'uuid';
 import { admin } from '~/config/routes';
-import { AppstoreOutlined, GlobalOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, GlobalOutlined, ProductOutlined, SettingOutlined } from '@ant-design/icons';
 
 const sidebar: MenuItemType[] = [
   {
@@ -49,6 +49,13 @@ const sidebar: MenuItemType[] = [
         label: 'Loại liên hệ',
         hasChildren: false,
         route: admin.main.contactType
+      },
+      {
+        id: `sidebar-${uuid4()}`,
+        icon: null,
+        label: 'Loại sản phẩm',
+        hasChildren: false,
+        route: admin.main.productType
       }
     ],
     hasChildren: true,
@@ -75,6 +82,21 @@ const sidebar: MenuItemType[] = [
     ],
     hasChildren: true,
     label: 'Công khai',
+    id: `sidebar-${uuid4()}`
+  },
+  {
+    icon: <ProductOutlined />,
+    children: [
+      {
+        id: `sidebar-${uuid4()}`,
+        icon: null,
+        label: 'Sản phẩm',
+        hasChildren: false,
+        route: admin.main.product
+      }
+    ],
+    hasChildren: true,
+    label: 'Dịch vụ',
     id: `sidebar-${uuid4()}`
   }
 ];

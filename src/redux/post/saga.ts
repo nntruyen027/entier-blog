@@ -1,4 +1,4 @@
-import { asignTag, createOne, deleteOne, getAll, getOne, updateOne } from './api';
+import { asignTag, createOne, deleteOne, getAll, getAllNoAdmin, getOne, updateOne } from './api';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   asignTagToPostStart,
@@ -9,6 +9,7 @@ import {
   deletePostStart,
   deletePostSuccess,
   getPostFailure,
+  getPostsByNoAdminStart,
   getPostsFailure,
   getPostsStart,
   getPostsSuccess,
@@ -23,6 +24,16 @@ import { showNotification } from '~/redux/noti/slice'; // Giả sử bạn có s
 function* getPostsRequest(action) {
   try {
     const { data } = yield call(getAll, action.payload);
+    yield put(getPostsSuccess(data));
+  } catch (error) {
+    yield put(getPostsFailure(error));
+    yield put(showNotification({ message: 'Lấy danh sách bài viết thất bại!', variant: 'error' }));
+  }
+}
+
+function* getPostsByNotAdminRequest(action) {
+  try {
+    const { data } = yield call(getAllNoAdmin, action.payload);
     yield put(getPostsSuccess(data));
   } catch (error) {
     yield put(getPostsFailure(error));
@@ -86,6 +97,7 @@ function* deletePostRequest(action) {
 
 function* PostSaga() {
   yield takeLatest(getPostsStart.type, getPostsRequest);
+  yield takeLatest(getPostsByNoAdminStart.type, getPostsByNotAdminRequest);
   yield takeLatest(getPostStart.type, getPostRequest);
   yield takeLatest(createPostStart.type, createPostRequest);
   yield takeLatest(updatePostStart.type, updatePostRequest);

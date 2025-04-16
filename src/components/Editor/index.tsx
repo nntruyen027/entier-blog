@@ -5,6 +5,7 @@ import 'quill-emoji/dist/quill-emoji.css';
 import { htmlToMarkdown } from '~/utils/parser';
 import quillEmoji from 'quill-emoji';
 import './index.css';
+import ImageResize from 'quill-image-resize-module-react';
 
 const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
 
@@ -13,7 +14,8 @@ Quill.register(
     'formats/emoji': EmojiBlot,
     'modules/emoji-shortname': ShortNameEmoji,
     'modules/emoji-toolbar': ToolbarEmoji,
-    'modules/emoji-textarea': TextAreaEmoji
+    'modules/emoji-textarea': TextAreaEmoji,
+    'modules/imageResize': ImageResize
   },
   true
 );
@@ -37,10 +39,23 @@ export function Editor(props: EditorProps) {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const reactQuillRef = useRef<ReactQuill>(null);
 
-  // Chỉ dán nội dung HTML ban đầu khi component mount
   useEffect(() => {
     setValue(props.value || '');
   }, [props.value]);
+
+  // Khi render xong giá trị value, patch lại style ảnh nếu thiếu
+  useEffect(() => {
+    if (reactQuillRef.current) {
+      const editor = reactQuillRef.current.getEditor();
+      const imgs = editor.root.querySelectorAll('img');
+      imgs.forEach((img) => {
+        if (!img.style.width) {
+          img.style.width = '300px';
+          img.style.height = 'auto';
+        }
+      });
+    }
+  }, [value]);
 
   const extractImageUrls = (html: string): string[] => {
     const div = document.createElement('div');
@@ -66,7 +81,6 @@ export function Editor(props: EditorProps) {
   };
 
   const uploadToCloudinary = async (file: File): Promise<string | undefined> => {
-    console.log('Uploading file:', file);
     const formData = new FormData();
     formData.append('files', file);
     try {
@@ -147,7 +161,10 @@ export function Editor(props: EditorProps) {
     },
     'emoji-toolbar': true,
     'emoji-textarea': true,
-    'emoji-shortname': true
+    'emoji-shortname': true,
+    imageResize: {
+      modules: ['Resize', 'DisplaySize', 'Toolbar']
+    }
   };
 
   const formats = [

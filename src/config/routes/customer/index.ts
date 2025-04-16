@@ -3,6 +3,7 @@ const home = {
   home: '/',
   aboutMe: '/about-me',
   news: '/news',
+  newsDetail: '/news/:id',
   products: '/products',
   service: '/service'
 };

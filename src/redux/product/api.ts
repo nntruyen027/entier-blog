@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8084/posts';
+const BASE_URL = 'http://localhost:8085/products';
 
-export const getAllNoAdmin = async (params) => {
+export const getAll = async (params) => {
   return await axios.get(`${BASE_URL}`, {
     params: params,
     headers: {
@@ -11,7 +11,7 @@ export const getAllNoAdmin = async (params) => {
   });
 };
 
-export const getAll = async (params) => {
+export const getAllByAdmin = async (params) => {
   return await axios.get(`${BASE_URL}/admin`, {
     params: params,
     headers: {
@@ -29,7 +29,7 @@ export const getOne = async (id) => {
 };
 
 export const createOne = async (body) => {
-  return await axios.post(`${BASE_URL}`, JSON.stringify(body), {
+  return await axios.post(`${BASE_URL}/admin`, JSON.stringify(body), {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
       'Content-Type': 'application/json'
@@ -39,15 +39,6 @@ export const createOne = async (body) => {
 
 export const updateOne = async ({ id, body }) => {
   return await axios.put(`${BASE_URL}/admin/${id}`, JSON.stringify(body), {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      'Content-Type': 'application/json'
-    }
-  });
-};
-
-export const asignTag = async ({ id, body }) => {
-  return await axios.post(`${BASE_URL}/admin/${id}/tags`, body, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
       'Content-Type': 'application/json'
