@@ -38,7 +38,7 @@ const Page = ({ open, onClose, onSubmit, selectedRoles, setSelectedRoles }) => {
         mode='multiple'
         showSearch
         allowClear
-        placeholder='Chọn các vai trò...'
+        placeholder='Chọn các thẻ...'
         value={selectedRoles.map((r) => r.id)}
         onChange={(roleNames) => {
           const selected = tags.filter((r) => roleNames.includes(r.id));
@@ -49,7 +49,7 @@ const Page = ({ open, onClose, onSubmit, selectedRoles, setSelectedRoles }) => {
           setSearchKeyword(val);
           setPagination({ pageIndex: 0, pageSize: 20 });
         }}
-        notFoundContent={loading ? <Spin size='small' /> : 'Không có vai trò nào'}
+        notFoundContent={loading ? <Spin size='small' /> : 'Không có thẻ nào'}
         filterOption={false}
         onPopupScroll={handleScroll}
         options={tags.map((r) => ({ label: r.name, value: r.id }))}

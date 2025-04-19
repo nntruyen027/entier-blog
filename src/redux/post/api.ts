@@ -3,7 +3,7 @@ import axios from 'axios';
 const BASE_URL = 'http://localhost:8084/posts';
 
 export const getAllNoAdmin = async (params) => {
-  return await axios.get(`${BASE_URL}`, {
+  return await axios.get(`${BASE_URL}/public`, {
     params: params,
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`

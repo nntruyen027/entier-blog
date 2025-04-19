@@ -4,15 +4,17 @@ import { RootState } from '~/redux/store';
 import { useEffect, useState } from 'react';
 import { deleteContactStart, getContactsStart } from '~/redux/contact/slice';
 import { ColumnsType } from 'antd/es/table';
-import { Button, Form, Input, Popconfirm, Space } from 'antd';
+import { Button, Input, Popconfirm, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import ContactDetailModal from '~/pages/admin/main/ContactPage/components/ContactDetail';
 
 const Page = () => {
   const dispatch = useDispatch();
   const { contacts, pageCount, rowCount, loading } = useSelector((state: RootState) => state.contact);
 
-  const [form] = Form.useForm();
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [selectedContact, setSelectedContact] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -36,6 +38,10 @@ const Page = () => {
   const handleDelete = (id: number) => {
     dispatch(deleteContactStart(id));
   };
+  const onViewDetail = (record: any) => {
+    setSelectedContact(record);
+    setOpenModal(true);
+  };
 
   const columns: ColumnsType<any> = [
     {
@@ -47,14 +53,25 @@ const Page = () => {
     },
     {
       title: 'Tên liên hệ',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'author',
+      key: 'author',
       width: 250
     },
     {
-      title: 'Mô tả',
-      dataIndex: 'description',
-      key: 'description'
+      title: 'Tiêu đề',
+      dataIndex: 'title',
+      key: 'title'
+    },
+    {
+      title: 'Loại liên hệ',
+      dataIndex: 'type',
+      key: 'type',
+      render: (value) => value.name
+    },
+    {
+      title: 'Số điện thoại',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber'
     },
     {
       title: 'Hành động',
@@ -62,6 +79,9 @@ const Page = () => {
       key: 'action',
       render: (_, record) => (
         <Space>
+          <Button type='link' onClick={() => onViewDetail(record)}>
+            Xem
+          </Button>
           <Popconfirm
             title='Bạn có chắc muốn xóa liên hệ này?'
             okText='Xóa'
@@ -78,28 +98,31 @@ const Page = () => {
   ];
 
   return (
-    <div>
-      <div className='flex justify-between mb-4'>
-        <Input
-          placeholder='Tìm theo tên tên...'
-          prefix={<SearchOutlined />}
-          value={searchKeyword}
-          onChange={(e) => setSearchKeyword(e.target.value)}
-          allowClear
-          className='max-w-sm'
+    <>
+      <ContactDetailModal open={openModal} onClose={() => setOpenModal(false)} contact={selectedContact} />
+      <div>
+        <div className='flex justify-between mb-4'>
+          <Input
+            placeholder='Tìm theo tên tên...'
+            prefix={<SearchOutlined />}
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+            allowClear
+            className='max-w-sm'
+          />
+        </div>
+
+        <Table
+          isLoading={loading}
+          columns={columns}
+          data={contacts}
+          setPagination={setPagination}
+          pagination={pagination}
+          rowCount={rowCount}
+          pageCount={pageCount}
         />
       </div>
-
-      <Table
-        isLoading={loading}
-        columns={columns}
-        data={contacts}
-        setPagination={setPagination}
-        pagination={pagination}
-        rowCount={rowCount}
-        pageCount={pageCount}
-      />
-    </div>
+    </>
   );
 };
 

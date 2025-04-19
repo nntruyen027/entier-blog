@@ -1,16 +1,7 @@
 import { Route } from '~/types';
 import { v4 as uuid4 } from 'uuid';
-import {
-  ContactPage,
-  ContactTypePage,
-  ParamPage,
-  PostPage,
-  ProductPage,
-  ProductTypePage,
-  RolePage,
-  TagPage,
-  UserPage
-} from '~/pages';
+import { ContactTypePage, ParamPage, PostPage, ProductTypePage, RolePage, TagPage, UserPage } from '~/pages';
+import { ContactPage, ProductPage } from '~/pages/admin';
 import { routes } from '~/config';
 
 const mainRoutes: Route[] = [

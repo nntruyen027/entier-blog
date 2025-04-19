@@ -5,6 +5,7 @@ const home = {
   news: '/news',
   newsDetail: '/news/:id',
   products: '/products',
+  productDetail: '/products/:id',
   service: '/service'
 };
 

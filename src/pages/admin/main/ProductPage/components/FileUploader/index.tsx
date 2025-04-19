@@ -24,9 +24,18 @@ interface FileUploaderProps {
   onChange?: (url?: string) => void;
   folder?: string;
   form?: FormInstance;
+  fieldName?: string;
+  fileType?: 'any' | 'image'; // Mới thêm fileType để phân biệt loại file
 }
 
-const FileUploader: React.FC<FileUploaderProps> = ({ value, onChange, folder = 'uploads', form }) => {
+const FileUploader: React.FC<FileUploaderProps> = ({
+  value,
+  onChange,
+  folder = 'uploads',
+  form,
+  fieldName,
+  fileType = 'any'
+}) => {
   const [loading, setLoading] = useState(false);
   const [fileUrl, setFileUrl] = useState<string | undefined>(value);
 
@@ -46,18 +55,33 @@ const FileUploader: React.FC<FileUploaderProps> = ({ value, onChange, folder = '
   };
 
   const beforeUpload = (file: RcFile) => {
-    const allowedTypes = [
-      'image/',
+    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/webp'];
+    const allowedFileTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/bmp',
+      'image/webp',
       'application/pdf',
       'application/msword',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     ];
-    const isAllowed = allowedTypes.some((type) => file.type.startsWith(type));
+
+    if (fileType === 'image') {
+      // Nếu fileType là 'image', chỉ cho phép ảnh
+      const isImage = allowedImageTypes.includes(file.type);
+      const isLt10M = file.size / 1024 / 1024 < 10;
+      if (!isImage) message.error('Chỉ cho phép các định dạng ảnh!');
+      if (!isLt10M) message.error('File phải nhỏ hơn 10MB!');
+      return isImage && isLt10M;
+    }
+
+    // Nếu fileType là 'any', cho phép tất cả loại tệp đã liệt kê
+    const isAllowed = allowedFileTypes.some((type) => file.type.startsWith(type));
     const isLt10M = file.size / 1024 / 1024 < 10;
 
-    if (!isAllowed) message.error('Chỉ cho phép ảnh, PDF, hoặc file Word!');
+    if (!isAllowed) message.error('Tệp không hợp lệ!');
     if (!isLt10M) message.error('File phải nhỏ hơn 10MB!');
-
     return isAllowed && isLt10M;
   };
 
@@ -73,7 +97,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ value, onChange, folder = '
         await deleteFileFromServer(fileUrl);
         setFileUrl(uploadedUrl);
         onChange?.(uploadedUrl);
-        form?.setFieldsValue({ file: uploadedUrl });
+        form?.setFieldsValue({ [fieldName!]: uploadedUrl }); // Dùng fieldName cho trường này
       }
       setLoading(false);
     }
@@ -88,7 +112,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ value, onChange, folder = '
         await deleteFileFromServer(fileUrl);
         setFileUrl(undefined);
         onChange?.(undefined);
-        form?.setFieldsValue({ file: undefined });
+        form?.setFieldsValue({ [fieldName!]: undefined }); // Xóa file khỏi field
         message.success('Đã xoá file');
       }
     });
