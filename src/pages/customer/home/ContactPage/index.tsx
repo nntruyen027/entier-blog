@@ -21,8 +21,8 @@ const Page = () => {
   };
 
   return (
-    <div>
-      <Card>
+    <div className={'flex w-full justify-center'}>
+      <Card className={'w-1/2'}>
         <Form
           form={form}
           layout='vertical'
@@ -34,7 +34,7 @@ const Page = () => {
             });
           }}
         >
-          <Form.Item label='Tiêu đề' name='title'>
+          <Form.Item label='Tiêu đề' name='title' required>
             <Input placeholder='Tiêu đề' autoFocus />
           </Form.Item>
 
@@ -55,21 +55,24 @@ const Page = () => {
             />
           </Form.Item>
 
-          <Form.Item label='Họ và tên người gửi' name='author'>
-            <Input placeholder='Họ và tên người gửi' />
-          </Form.Item>
+          <div className={'flex gap-3'}>
+            <Form.Item className={'w-full'} label='Họ và tên người gửi' name='author' required>
+              <Input placeholder='Họ và tên người gửi' />
+            </Form.Item>
+            <Form.Item className={'w-full'} label='Nghề nghiệp' name='career'>
+              <Input placeholder='Nghề nghiệp' />
+            </Form.Item>
+          </div>
 
-          <Form.Item label='Số điện thoại liên hệ' name='phoneNumber'>
-            <Input placeholder='Số điện thoại liên hệ' />
-          </Form.Item>
+          <div className={'flex gap-3'}>
+            <Form.Item className={'w-full'} label='Số điện thoại liên hệ' name='phoneNumber' required>
+              <Input placeholder='Số điện thoại liên hệ' />
+            </Form.Item>
 
-          <Form.Item label='Email' name='email'>
-            <Input placeholder='Email' />
-          </Form.Item>
-
-          <Form.Item label='Nghề nghiệp' name='career'>
-            <Input placeholder='Nghề nghiệp' />
-          </Form.Item>
+            <Form.Item className={'w-full'} label='Email' name='email' required>
+              <Input placeholder='Email' />
+            </Form.Item>
+          </div>
 
           <Form.Item label='Nội dung' name='content' rules={[{ required: true, message: 'Vui lòng nhập nội dung!' }]}>
             <EditorField />

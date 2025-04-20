@@ -55,19 +55,22 @@ const Page = () => {
   };
 
   return (
-    <div className={'relative min-h-screen'}>
-      <main className='relative z-1'>
-        <div className={'flex gap-3 mb-3'}>
-          {products?.length > 0 ? (
-            products.map((product) => <ProductComponent product={product} />)
-          ) : (
-            <div className={'w-full justify-center'}>
-              <Empty />
-            </div>
-          )}
-        </div>
+    <div className='min-h-screen bg-gray-100 p-4'>
+      <main className='max-w-7xl mx-auto'>
+        {products?.length > 0 ? (
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5'>
+            {products.map((product) => (
+              <ProductComponent key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <div className='flex items-center justify-center h-64'>
+            <Empty description='Không có sản phẩm' />
+          </div>
+        )}
+
         {products?.length > 0 && (
-          <div className={'flex w-full text-center justify-center'}>
+          <div className='flex justify-center mt-6'>
             <Pagination
               current={pagination.pageIndex + 1}
               pageSize={pagination.pageSize}

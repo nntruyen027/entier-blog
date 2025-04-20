@@ -3,6 +3,12 @@ import moment from 'moment';
 export function formatDate(date: string, format: string = 'YYYY-MM-DD'): string {
   const d = new Date(date);
 
+  // Kiểm tra tính hợp lệ của ngày
+  if (isNaN(d.getTime())) {
+    console.error('Invalid date:', date);
+    return 'Invalid Date';
+  }
+
   const options: Intl.DateTimeFormatOptions = {};
 
   if (format === 'YYYY-MM-DD') {

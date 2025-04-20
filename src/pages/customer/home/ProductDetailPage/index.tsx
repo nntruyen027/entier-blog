@@ -1,16 +1,16 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { RootState } from '~/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '~/redux/store';
 import { getProductStart } from '~/redux/product/slice';
-import { Button, Collapse, Empty, Menu, MenuProps, Typography } from 'antd';
+import { Button, Collapse, Empty, Menu, Tooltip, Typography } from 'antd';
+import { ArrowUpOutlined, EyeOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { formatDate } from '~/utils/date';
-import { ArrowUpOutlined } from '@ant-design/icons';
 import { Tag } from '~/components';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
-const Component = () => {
+const ProductDetail = () => {
   const { id } = useParams();
   const { product } = useSelector((state: RootState) => state.product);
   const dispatch = useDispatch();
@@ -28,18 +28,17 @@ const Component = () => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(product.content, 'text/html');
     const headings = Array.from(doc.querySelectorAll('h1, h2, h3, h4, h5, h6'));
-    const newToc: { id: string; text: string; level: number }[] = [];
-
-    headings.forEach((heading, index) => {
-      const level = Number(heading.tagName.slice(1));
+    const newToc = headings.map((heading, index) => {
       const id = `heading-${index}`;
       heading.setAttribute('id', id);
-      newToc.push({ id, text: heading.textContent || '', level });
+      return {
+        id,
+        text: heading.textContent || '',
+        level: Number(heading.tagName.slice(1))
+      };
     });
 
     setToc(newToc);
-
-    const serializedContent = doc.body.innerHTML;
 
     const contentWithScript = `
       <html>
@@ -50,23 +49,17 @@ const Component = () => {
               line-height: 1.6;
               padding: 24px;
               color: #333;
-              margin: 0 auto;
               background-color: white;
             }
-            a { color: #1a0dab; text-decoration: none; }
-            a:hover { text-decoration: underline; }
-            strong { font-weight: bold; }
-            em { font-style: italic; }
-            p { margin-bottom: 1em; }
             h1, h2, h3, h4, h5, h6 { scroll-margin-top: 80px; }
           </style>
         </head>
         <body>
-          ${serializedContent}
+          ${doc.body.innerHTML}
           <script>
             function sendHeight() {
               const height = document.body.scrollHeight;
-              window.parent.productMessage({ iframeHeight: height }, '*');
+              window.parent.postMessage({ iframeHeight: height }, '*');
             }
             window.onload = sendHeight;
             window.onresize = sendHeight;
@@ -77,17 +70,16 @@ const Component = () => {
     `;
 
     const iframeDoc = iframeRef.current.contentDocument || iframeRef.current.contentWindow?.document;
-    if (!iframeDoc) return;
-    iframeDoc.open();
-    iframeDoc.write(contentWithScript);
-    iframeDoc.close();
+    if (iframeDoc) {
+      iframeDoc.open();
+      iframeDoc.write(contentWithScript);
+      iframeDoc.close();
+    }
   }, [product?.content]);
 
   useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data?.iframeHeight) {
-        setHeight(event.data.iframeHeight);
-      }
+    const handleMessage = (e: MessageEvent) => {
+      if (e.data?.iframeHeight) setHeight(e.data.iframeHeight);
     };
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
@@ -95,72 +87,106 @@ const Component = () => {
 
   const scrollToHeading = (id: string) => {
     const iframeDoc = iframeRef.current?.contentDocument || iframeRef.current?.contentWindow?.document;
-    if (!iframeDoc) return;
-    const target = iframeDoc.getElementById(id);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
+    const target = iframeDoc?.getElementById(id);
+    target?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const menuItems: MenuProps['items'] = toc.map((item) => ({
+  const menuItems = toc.map((item) => ({
     key: item.id,
     label: <span style={{ marginLeft: `${(item.level - 1) * 12}px` }}>{item.text}</span>,
-    onClick: () => {
-      scrollToHeading(item.id);
-    }
+    onClick: () => scrollToHeading(item.id)
   }));
 
   return (
-    <div className='flex justify-center text-center'>
-      <div className='w-[80%] bg-white '>
-        {product?.image ? <img src={product?.image} className={'w-full'} alt={product.name} /> : <Empty />}
-        <Title className={'my-3 '} level={2}>
-          {product?.name}
-        </Title>
-        <div className={'w-full flex justify-center text-left p-3 italic'}>{product?.description}</div>
-        <div className={'w-full flex justify-between'}>
-          <div className={'flex justify-end gap-1 p-3 items-center'}>
-            {product?.tags.map((tag) => <Tag name={tag.name} color={tag.color} />)}
+    <div className='flex justify-center px-4 sm:px-6 lg:px-10 py-8 bg-gray-50 min-h-screen'>
+      <div className='w-full max-w-6xl bg-white rounded-xl shadow-md overflow-hidden'>
+        {/* Header với ảnh và overlay tên */}
+        {product?.image ? (
+          <div className='relative h-60 sm:h-72'>
+            <img src={product.image} alt={product.name} className='w-full h-full object-cover' />
+            <div className='absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center'>
+              <Title level={2} className='!text-white text-center'>
+                {product?.name}
+              </Title>
+            </div>
           </div>
-          <div className={'w-full flex justify-end text-left p-3 italic'}>
-            {product?.createAt && formatDate(product?.createAt, 'DD/MM/YYYY')}
-          </div>
-        </div>
+        ) : (
+          <Empty />
+        )}
 
-        <div className='w-full flex justify-center'>
-          <Collapse
-            className={'text-left mb-3 w-[98%]'}
-            items={[{ key: '1', label: 'Mục lục', children: <Menu mode='vertical' items={menuItems} /> }]}
+        {/* Info Section */}
+        <div className='px-6 py-4'>
+          <div className='flex flex-wrap gap-3 justify-between items-center mb-4'>
+            <div className='text-gray-600 italic'>{product?.description}</div>
+            <div className='flex gap-4 text-sm text-gray-500'>
+              <span>
+                <EyeOutlined className='mr-1' />
+                {product?.view || 0} lượt xem
+              </span>
+              <span>{formatDate(product?.createAt, 'DD/MM/YYYY')}</span>
+            </div>
+          </div>
+
+          <div className='flex flex-wrap gap-2 mb-4'>
+            {product?.tags.map((tag) => (
+              <Tooltip key={tag.name} title={tag.name.length > 12 ? tag.name : ''}>
+                <Tag name={tag.name} color={tag.color} />
+              </Tooltip>
+            ))}
+          </div>
+
+          <div className='mb-4 text-xl font-semibold text-blue-600'>Giá: {product?.price?.toLocaleString()}đ</div>
+
+          {product?.file && (
+            <Button
+              type='default'
+              icon={<FilePdfOutlined />}
+              href={product.file}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='mb-6'
+            >
+              Xem tài liệu đính kèm
+            </Button>
+          )}
+
+          {toc.length > 0 && (
+            <Collapse
+              className='text-left mb-6'
+              items={[
+                {
+                  key: 'toc',
+                  label: <span className='font-semibold'>Mục lục nội dung</span>,
+                  children: <Menu mode='vertical' items={menuItems} />
+                }
+              ]}
+            />
+          )}
+
+          <iframe
+            ref={iframeRef}
+            title='Product content'
+            style={{
+              width: '100%',
+              height,
+              border: 'none',
+              transition: 'height 0.2s ease',
+              borderRadius: 8
+            }}
           />
         </div>
 
-        <iframe
-          ref={iframeRef}
-          title={product?.name}
-          style={{
-            width: '100%',
-            height,
-            border: 'none',
-            transition: 'height 0.2s ease'
-          }}
+        <Button
+          type='primary'
+          shape='circle'
+          icon={<ArrowUpOutlined />}
+          size='large'
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className='fixed bottom-10 right-10 z-50 shadow-lg'
         />
       </div>
-      <Button
-        type='primary'
-        shape='circle'
-        icon={<ArrowUpOutlined />}
-        size='large'
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        style={{
-          position: 'fixed',
-          bottom: 40,
-          right: 40,
-          zIndex: 1000,
-          boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
-        }}
-      />
     </div>
   );
 };
 
-export default Component;
+export default ProductDetail;

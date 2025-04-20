@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Component = ({ post }) => {
   const nav = useNavigate();
+
   return (
     <Card
-      className='w-1/5 text-left'
+      className='w-full text-left cursor-pointer shadow-sm hover:shadow-md transition-all'
       onClick={() => nav(`${post.id}`)}
       hoverable
       cover={
-        <div className='w-full aspect-[2/1] bg-gray-100 relative top-0 left-0'>
+        <div className='w-full aspect-video bg-gray-100 relative'>
           {post.image ? (
             <img src={post.image} alt={post.title} className='absolute top-0 left-0 w-full h-full object-cover' />
           ) : (
@@ -22,7 +23,10 @@ const Component = ({ post }) => {
         </div>
       }
     >
-      <Meta title={post.title} description={truncate(post.description, 120)} />
+      <Meta
+        title={<div className='font-semibold text-base'>{post.title}</div>}
+        description={<div className='text-gray-600 text-sm line-clamp-3'>{truncate(post.description, 120)}</div>}
+      />
     </Card>
   );
 };

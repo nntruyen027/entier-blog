@@ -6,7 +6,6 @@ const main = {
   index: '/admin',
   user: '/admin/system/user',
   role: '/admin/system/role',
-  tag: '/admin/category/tag',
   productType: '/admin/category/product-types',
   contactType: '/admin/category/contact-types',
   param: '/admin/system/param',

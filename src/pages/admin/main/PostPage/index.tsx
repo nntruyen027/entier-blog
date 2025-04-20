@@ -2,15 +2,9 @@ import { Table } from '~/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '~/redux/store';
 import { useEffect, useState } from 'react';
-import {
-  asignTagToPostStart,
-  createPostStart,
-  deletePostStart,
-  getPostsStart,
-  updatePostStart
-} from '~/redux/post/slice';
+import { createPostStart, deletePostStart, getPostsStart, updatePostStart } from '~/redux/post/slice';
 import { ColumnsType } from 'antd/es/table';
-import { AssignTagModal, SaveModal } from './components';
+import { SaveModal } from './components';
 import { Button, Form, Input, Popconfirm, Space, Tag } from 'antd';
 import { EyeOutlined, LikeOutlined, SearchOutlined } from '@ant-design/icons';
 
@@ -20,11 +14,8 @@ const Page = () => {
 
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<any | null>(null);
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [selectedPost, setSelectedPost] = useState(null);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -74,12 +65,6 @@ const Page = () => {
     setIsModalOpen(true);
   };
 
-  const handleAssign = (post: any) => {
-    setSelectedPost(post);
-    setSelectedTags(post.tags || []);
-    setIsTagModalOpen(true);
-  };
-
   const handleDelete = (id: number) => {
     dispatch(deletePostStart(id));
   };
@@ -88,13 +73,6 @@ const Page = () => {
     form.resetFields();
     setEditingPost(null);
     setIsModalOpen(false);
-  };
-
-  const handleSubmitAssign = (tags: any[]) => {
-    if (selectedPost) {
-      dispatch(asignTagToPostStart({ id: selectedPost?.id, body: tags.map((e) => e.id) }));
-    }
-    setIsTagModalOpen(false);
   };
 
   const columns: ColumnsType<any> = [
@@ -183,9 +161,6 @@ const Page = () => {
               Xoá
             </Button>
           </Popconfirm>
-          <Button type='link' onClick={() => handleAssign(record)}>
-            Gán thẻ
-          </Button>
         </Space>
       )
     }
@@ -199,13 +174,6 @@ const Page = () => {
         form={form}
         onSave={handleSave}
         editingPost={editingPost}
-      />
-      <AssignTagModal
-        open={isTagModalOpen}
-        onClose={() => setIsTagModalOpen(false)}
-        onSubmit={handleSubmitAssign}
-        selectedRoles={selectedTags}
-        setSelectedRoles={setSelectedTags}
       />
       <div className='flex justify-between mb-4'>
         <Input

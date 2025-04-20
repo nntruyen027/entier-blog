@@ -39,13 +39,6 @@ const sidebar: MenuItemType[] = [
       {
         id: `sidebar-${uuid4()}`,
         icon: null,
-        label: 'Thẻ',
-        hasChildren: false,
-        route: admin.main.tag
-      },
-      {
-        id: `sidebar-${uuid4()}`,
-        icon: null,
         label: 'Loại liên hệ',
         hasChildren: false,
         route: admin.main.contactType

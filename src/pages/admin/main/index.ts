@@ -1,4 +1,3 @@
-import TagPage from './TagPage';
 import ParamPage from './ParamPage';
 import UserPage from './UserPage';
 import RolePage from './RolePage';
@@ -8,4 +7,4 @@ import ContactPage from './ContactPage';
 import ProductPage from './ProductPage';
 import ProductTypePage from './ProductTypePage';
 
-export { TagPage, ParamPage, UserPage, RolePage, PostPage, ContactTypePage, ContactPage, ProductPage, ProductTypePage };
+export { ParamPage, UserPage, RolePage, PostPage, ContactTypePage, ContactPage, ProductPage, ProductTypePage };

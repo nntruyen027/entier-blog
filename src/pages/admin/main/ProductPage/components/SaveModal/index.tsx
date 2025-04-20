@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Form, Input, InputNumber, Modal, Select, Spin, Switch } from 'antd';
+import { Form, Input, InputNumber, Modal, Select, Switch } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { EditorField } from '~/components';
 import FileUploader from '../FileUploader';
 import { getProductTypesStart } from '~/redux/productType/slice';
-import { getTagsStart } from '~/redux/tag/slice';
 import { RootState } from '~/redux/store';
 
 import 'react-quill/dist/quill.snow.css';
@@ -31,41 +30,19 @@ const SaveModal = ({ isModalOpen, onCancel, form, onSave, editingProduct }: Save
   const isEditing = !!editingProduct;
 
   const [editorReady, setEditorReady] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
-  const [selectedTags, setSelectedTags] = useState<any[]>([]);
 
   const { productTypes } = useSelector((state: RootState) => state.productType);
-  const { tags, loading, pageCount } = useSelector((state: RootState) => state.tag);
 
   // Fetch product types and tags
   useEffect(() => {
     if (isModalOpen) {
       dispatch(getProductTypesStart({}));
-      dispatch(
-        getTagsStart({
-          page: 0,
-          size: pagination.pageSize,
-          keyword: ''
-        })
-      );
       const timer = setTimeout(() => setEditorReady(true), 100);
       return () => clearTimeout(timer);
     } else {
       setEditorReady(false);
     }
   }, [isModalOpen]);
-
-  // Fetch tags on search or pagination
-  useEffect(() => {
-    dispatch(
-      getTagsStart({
-        page: pagination.pageIndex,
-        size: pagination.pageSize,
-        keyword: searchKeyword
-      })
-    );
-  }, [pagination.pageIndex, searchKeyword]);
 
   // Set form values when editing
   useEffect(() => {
@@ -80,9 +57,6 @@ const SaveModal = ({ isModalOpen, onCancel, form, onSave, editingProduct }: Save
         isPublic: editingProduct.isPublic,
         price: editingProduct.price
       });
-      if (editingProduct.tags) {
-        setSelectedTags(editingProduct.tags);
-      }
     }
   }, [isEditing, editingProduct, form]);
 
@@ -91,21 +65,12 @@ const SaveModal = ({ isModalOpen, onCancel, form, onSave, editingProduct }: Save
     value: type.id
   }));
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-    if (scrollTop + clientHeight >= scrollHeight - 50 && !loading && pagination.pageIndex + 1 < pageCount) {
-      setPagination((prev) => ({ ...prev, pageIndex: prev.pageIndex + 1 }));
-    }
-  };
-
   const handleSave = (values: any) => {
     const finalValues = {
       ...values,
       type: values.type,
       file: values.file,
-      image: values.image,
-      tags: selectedTags,
-      tagIds: selectedTags.map((item) => item.id).join(',')
+      image: values.image
     };
     onSave(finalValues);
   };
@@ -157,29 +122,6 @@ const SaveModal = ({ isModalOpen, onCancel, form, onSave, editingProduct }: Save
             />
           </Form.Item>
         </div>
-
-        <Form.Item label='Gắn thẻ'>
-          <Select
-            mode='multiple'
-            showSearch
-            allowClear
-            placeholder='Chọn các thẻ...'
-            value={selectedTags.map((r) => r.id)}
-            onChange={(tagIds) => {
-              const selected = tags.filter((r) => tagIds.includes(r.id));
-              setSelectedTags(selected);
-            }}
-            style={{ width: '100%' }}
-            onSearch={(val) => {
-              setSearchKeyword(val);
-              setPagination({ pageIndex: 0, pageSize: 20 });
-            }}
-            notFoundContent={loading ? <Spin size='small' /> : 'Không có thẻ nào'}
-            filterOption={false}
-            onPopupScroll={handleScroll}
-            options={tags.map((r) => ({ label: r.name, value: r.id }))}
-          />
-        </Form.Item>
 
         <div className='flex gap-6'>
           <Form.Item label='Tệp đính kèm' name='file' valuePropName='value' getValueFromEvent={(e) => e}>

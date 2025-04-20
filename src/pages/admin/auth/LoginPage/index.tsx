@@ -1,4 +1,4 @@
-import { Paper, TextField } from '@mui/material';
+import { Button, Card, Input } from 'antd'; // Thay vì Paper và TextField từ MUI
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,27 +27,29 @@ const LoginPage = () => {
   return (
     <div className={'flex justify-center'}>
       <div className={'w-1/3'} onKeyDown={handleKeyPress}>
-        <Paper>
-          <div className={'flex flex-col gap-10 p-10 text-[24px] font-bold '}>
+        {/* Thay Paper thành Card của Ant Design */}
+        <Card>
+          <div className={'flex flex-col gap-10 p-10 text-[24px] font-bold'}>
             <div>{t('login')}</div>
-            <TextField
+            {/* Thay TextField thành Input từ Ant Design */}
+            <Input
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              label={t('username')}
-              size={'small'}
+              placeholder={t('username')}
+              size='large'
             />
-            <TextField
+            <Input.Password
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              label={t('password')}
-              size={'small'}
-              type={'password'}
+              placeholder={t('password')}
+              size='large'
             />
-            <button onClick={handleLogin} className={'bg-[#F96F3A] uppercase text-white text-[16px] font-light'}>
+            {/* Thay button HTML bằng Button của Ant Design */}
+            <Button onClick={handleLogin} type='primary' style={{ backgroundColor: '#F96F3A', width: '100%' }}>
               {t('login')}
-            </button>
+            </Button>
           </div>
-        </Paper>
+        </Card>
         <div className={'flex justify-end mt-5'}>
           <span>{t('get-password-again')}</span>
         </div>
