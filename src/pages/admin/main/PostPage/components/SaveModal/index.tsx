@@ -28,19 +28,20 @@ const SaveModal = ({ isModalOpen, onCancel, form, onSave, editingPost }) => {
       onOk={() => form.submit()}
       okText={isEditing ? 'Cập nhật' : 'Tạo'}
       cancelText='Hủy'
-      width={800}
+      width={'80%'}
     >
       <Form form={form} layout='vertical' onFinish={onSave}>
         <Form.Item label='Tiêu đề' name='title' rules={[{ required: true, message: 'Vui lòng nhập tiêu đề!' }]}>
           <Input placeholder='VD: Làm quen với React, DevOps cơ bản...' autoFocus />
         </Form.Item>
-
-        <Form.Item label='Mô tả' name='description'>
-          <Input.TextArea placeholder='Mô tả ngắn gọn nội dung bài viết...' rows={3} />
-        </Form.Item>
-        <Form.Item label='Hình ảnh' name='image' valuePropName='value' getValueFromEvent={(e) => e}>
-          <AvatarUploader form={form} />
-        </Form.Item>
+        <div className={'flex gap-3'}>
+          <Form.Item label='Mô tả' name='description' className={'w-full'}>
+            <Input.TextArea placeholder='Mô tả ngắn gọn nội dung bài viết...' rows={4} />
+          </Form.Item>
+          <Form.Item label='Hình ảnh' name='image' valuePropName='value' getValueFromEvent={(e) => e}>
+            <AvatarUploader form={form} />
+          </Form.Item>
+        </div>
 
         {editorReady && (
           <Form.Item

@@ -1,4 +1,4 @@
-import Profile from './components/Profile';
+import Profile from '../Profile';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '~/components';
 

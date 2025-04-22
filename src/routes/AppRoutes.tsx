@@ -4,8 +4,9 @@ import { LoadingPage, NotFoundPage } from '~/pages';
 
 import homeRoutes from './customerRoutes/homeRoutes';
 
-import { AuthLayout, HomeLayout, MainLayout as AdminMainLayout } from '~/layouts';
+import { AuthCustomerLayout, AuthLayout, HomeLayout, MainLayout as AdminMainLayout } from '~/layouts';
 import authRoutes from '~/routes/adminRoutes/authRoutes';
+import authCustomerRoutes from '~/routes/customerRoutes/authRoutes';
 import adminMainRoutes from '~/routes/adminRoutes/mainRoutes';
 
 const Routing = () => (
@@ -14,6 +15,9 @@ const Routing = () => (
       <Routes>
         {authRoutes.map(({ id, path, element }) => (
           <Route key={id} path={path} element={<AuthLayout>{element}</AuthLayout>} />
+        ))}
+        {authCustomerRoutes.map(({ id, path, element }) => (
+          <Route key={id} path={path} element={<AuthCustomerLayout>{element}</AuthCustomerLayout>} />
         ))}
         {adminMainRoutes.map(({ id, path, element, label }) => (
           <Route key={id} path={path} element={<AdminMainLayout title={label}>{element}</AdminMainLayout>} />

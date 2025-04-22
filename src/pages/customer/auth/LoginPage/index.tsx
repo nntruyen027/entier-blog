@@ -24,11 +24,9 @@ const LoginPage = () => {
   return (
     <div className={'flex justify-center'}>
       <div className={'w-1/3'} onKeyDown={handleKeyPress}>
-        {/* Thay Paper thành Card của Ant Design */}
         <Card>
           <div className={'flex flex-col gap-10 p-10 text-[24px]'}>
             <div className={'font-bold'}>Đăng nhập</div>
-            {/* Thay TextField thành Input từ Ant Design */}
             <Input
               value={username}
               onChange={(e) => setUsername(e.target.value)}

@@ -90,6 +90,13 @@ const Page = () => {
       width: 350
     },
     {
+      title: 'Tác giả',
+      dataIndex: 'author',
+      key: 'author',
+      width: 200,
+      render: (value) => value.fullName
+    },
+    {
       title: 'Hashtag',
       dataIndex: 'hashtags',
       key: 'hashtags',

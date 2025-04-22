@@ -5,10 +5,11 @@ import { RootState } from '~/redux/store';
 import { PostComponent } from './components';
 import { Empty, Pagination } from 'antd';
 import { getParamByKey } from '~/redux/param/api';
+import LoadingPage from '../../../others/LoadingPage';
 
 const Page = () => {
   const dispatch = useDispatch();
-  const { posts, rowCount } = useSelector((state: RootState) => state.post);
+  const { posts, rowCount, loading } = useSelector((state: RootState) => state.post);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10
@@ -53,6 +54,10 @@ const Page = () => {
       setDefaultPageSize(10);
     }
   };
+
+  if (loading) {
+    return <LoadingPage />;
+  }
 
   return (
     <div className='min-h-screen bg-white p-4'>

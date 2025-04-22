@@ -13,8 +13,6 @@ import { Layout } from 'antd';
 
 const { Content, Footer, Sider } = Layout;
 
-const HEADER_HEIGHT = 64;
-
 const MainLayout: React.FC<LayoutProps> = ({ children, title }) => {
   const dispatch = useDispatch();
   const { token, isLogin } = useSelector((state: RootState) => state.auth);

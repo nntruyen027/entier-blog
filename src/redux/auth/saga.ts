@@ -43,7 +43,6 @@ function* getSelfRequest() {
     yield put(getSelfSuccess(data));
   } catch (error) {
     yield put(getSelfFail(error));
-    yield put(showNotification({ message: 'Lấy thông tin người dùng thất bại!', variant: 'error' }));
   }
 }
 

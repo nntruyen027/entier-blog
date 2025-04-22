@@ -9,4 +9,8 @@ const home = {
   service: '/service'
 };
 
-export { home };
+const auth = {
+  login: '/login'
+};
+
+export { home, auth };

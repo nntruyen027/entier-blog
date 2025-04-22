@@ -4,10 +4,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { menu } from '~/config';
 import { Helmet } from 'react-helmet';
 import { getParamByKey } from '~/redux/param/api';
-import { Layout, Menu } from 'antd';
+import { Button, Layout, Menu } from 'antd';
 import { useTranslation } from 'react-i18next';
 import useParamValue from '~/hooks/useParamValue';
 import './index.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '~/redux/store';
+import { getSelfStart } from '~/redux/auth/slice';
+import Profile from '../../../components/Profile';
+import { LoginOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
 const { SubMenu, Item } = Menu;
@@ -19,7 +24,9 @@ const HomeLayout = ({ children, title }) => {
   const { value: logoParam } = useParamValue('logo');
   const [name, setName] = useState('');
   const [isSticky, setIsSticky] = useState(false);
-  const [isHeaderHidden, setIsHeaderHidden] = useState(false); // Trạng thái ẩn header khi cuộn
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const dispatch = useDispatch();
+  const { token, isLogin, account } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (logoParam) setLogo(logoParam);
@@ -37,22 +44,23 @@ const HomeLayout = ({ children, title }) => {
     fetchName();
   }, []);
 
+  useEffect(() => {
+    dispatch(getSelfStart());
+  }, [dispatch, token]);
+
   const selectedKeys = useMemo(() => {
     const flatRoutes = menu.flatMap((item) => (item.hasChildren ? item.children || [] : [item]));
     const match = flatRoutes.find((i) => i.route === location.pathname);
     return match ? [match.route] : [];
   }, [location.pathname]);
 
-  // Lắng nghe sự kiện cuộn
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
-        // Cuộn xuống - ẩn header
         setIsHeaderHidden(true);
       } else {
-        // Cuộn lên - hiện header
         setIsHeaderHidden(false);
       }
       lastScrollY = window.scrollY <= 0 ? 0 : window.scrollY; // Đảm bảo không vượt quá 0
@@ -94,7 +102,7 @@ const HomeLayout = ({ children, title }) => {
             background: '#fff',
             padding: '0 24px',
             zIndex: 1,
-            transition: 'all 0.3s ease' // Hiệu ứng cuộn mượt mà
+            transition: 'all 0.3s ease'
           }}
         >
           <div
@@ -110,9 +118,21 @@ const HomeLayout = ({ children, title }) => {
             <img className='w-9 h-9' src={logo} alt='logo' />
             <span>{name}</span>
           </div>
-          <Menu theme='light' mode='horizontal' selectedKeys={selectedKeys} style={{ flex: 1 }}>
+          <Menu className={'border-0'} theme='light' mode='horizontal' selectedKeys={selectedKeys} style={{ flex: 1 }}>
             {menu.map((item) => renderMenuItem(item))}
           </Menu>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 16 }}>
+            {!isLogin ? (
+              <Link to='/login' className='font-medium'>
+                <Button className={'p-3 rounded-3xl'}>
+                  <LoginOutlined />
+                  Đăng nhập
+                </Button>
+              </Link>
+            ) : (
+              <Profile />
+            )}
+          </div>
         </Header>
         <Content style={{ margin: '16px', overflow: 'auto' }}>{children}</Content>
         <Footer style={{ textAlign: 'center', background: 'transparent' }}>
