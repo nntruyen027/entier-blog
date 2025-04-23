@@ -6,7 +6,8 @@ const home = {
   newsDetail: '/news/:id',
   products: '/products',
   productDetail: '/products/:id',
-  service: '/service'
+  service: '/service',
+  profile: '/profile'
 };
 
 const auth = {

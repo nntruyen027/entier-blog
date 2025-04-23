@@ -1,4 +1,4 @@
-import { asignTag, createOne, deleteOne, getAll, getAllNoAdmin, getOne, updateOne } from './api';
+import { asignTag, createOne, deleteOne, getAll, getAllNoAdmin, getOne, likeOne, unlikeOne, updateOne } from './api';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   asignTagToPostStart,
@@ -15,6 +15,10 @@ import {
   getPostsSuccess,
   getPostStart,
   getPostSuccess,
+  likeAndUnlikePostFailure,
+  likeAndUnlikePostSuccess,
+  likePostStart,
+  unlikePostStart,
   updatePostFailure,
   updatePostStart,
   updatePostSuccess
@@ -95,6 +99,24 @@ function* deletePostRequest(action) {
   }
 }
 
+function* likePostRequest(action) {
+  try {
+    yield call(likeOne, action.payload);
+    yield put(likeAndUnlikePostSuccess(action.payload));
+  } catch (error) {
+    yield put(likeAndUnlikePostFailure(error));
+  }
+}
+
+function* unlikePostRequest(action) {
+  try {
+    yield call(unlikeOne, action.payload);
+    yield put(likeAndUnlikePostSuccess(action.payload));
+  } catch (error) {
+    yield put(likeAndUnlikePostFailure(error));
+  }
+}
+
 function* PostSaga() {
   yield takeLatest(getPostsStart.type, getPostsRequest);
   yield takeLatest(getPostsByNoAdminStart.type, getPostsByNotAdminRequest);
@@ -103,6 +125,8 @@ function* PostSaga() {
   yield takeLatest(updatePostStart.type, updatePostRequest);
   yield takeLatest(asignTagToPostStart.type, asignTagToPostRequest);
   yield takeLatest(deletePostStart.type, deletePostRequest);
+  yield takeLatest(likePostStart.type, likePostRequest);
+  yield takeLatest(unlikePostStart.type, unlikePostRequest);
 }
 
 export default PostSaga;

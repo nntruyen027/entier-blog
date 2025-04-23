@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Avatar, Button, Dropdown, Menu } from 'antd';
-import { LogoutOutlined, UserSwitchOutlined } from '@ant-design/icons';
+import React from 'react';
+import type { MenuProps } from 'antd';
+import { Avatar, Button, Dropdown } from 'antd';
+import { UserSwitchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '~/redux/auth/slice';
 import { RootState } from '~/redux/store';
@@ -8,7 +9,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { routes } from '~/config';
 
 const Profile: React.FC = () => {
-  const [visible, setVisible] = useState(false);
   const { account } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -17,32 +17,45 @@ const Profile: React.FC = () => {
   const handleMenuClick = (e) => {
     if (e.key === 'logout') {
       dispatch(logout());
-      setVisible(false);
-    }
-    if (location.pathname.includes('admin')) {
-      nav(routes.customer.home.index);
+    } else if (e.key === 'profile') {
+      if (account?.roles?.some((role) => role?.roleName?.includes('admin'))) {
+        if (location.pathname.includes('admin')) nav(routes.admin.main.profile);
+        else nav(routes.customer.home.profile);
+      } else {
+        nav(routes.customer.home.profile);
+      }
     } else {
-      nav(routes.admin.main.index);
+      if (location?.pathname?.includes('admin')) {
+        nav(routes.customer.home.index);
+      } else {
+        nav(routes.admin.main.index);
+      }
     }
   };
 
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      {account.roles.some((role) => role.roleName.includes('admin')) && (
-        <Menu.Item key='switch' icon={<UserSwitchOutlined />}>
-          {location.pathname.includes('admin') ? 'Quản trị viên' : 'Blog'}
-        </Menu.Item>
-      )}
-      <Menu.Item key='logout' icon={<LogoutOutlined />}>
-        Đăng xuất
-      </Menu.Item>
-    </Menu>
-  );
-
+  const items: MenuProps['items'] = [
+    {
+      key: 'profile',
+      label: 'Trang cá nhân'
+    },
+    ...(account?.roles?.some((role) => role?.roleName?.includes('admin'))
+      ? [
+          {
+            key: 'switch',
+            label: !location.pathname.includes('admin') ? 'Quản trị viên' : 'Blog',
+            icon: <UserSwitchOutlined />
+          }
+        ]
+      : []),
+    {
+      key: 'logout',
+      label: 'Đăng xuất'
+    }
+  ];
   return (
-    <Dropdown overlay={menu} visible={visible} onVisibleChange={setVisible} trigger={['click']} placement='bottomRight'>
+    <Dropdown menu={{ items, onClick: handleMenuClick }}>
       <Button size='small' style={{ marginLeft: '8px' }} type='link'>
-        <Avatar src={account.avatar} />
+        <Avatar src={account?.avatar} />
         <span style={{ fontWeight: 'bold' }}>{account?.fullName}</span>
       </Button>
     </Dropdown>

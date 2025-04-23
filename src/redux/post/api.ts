@@ -59,3 +59,15 @@ export const deleteOne = async (id) => {
     headers: getAuthHeaders()
   });
 };
+
+export const likeOne = async (id) => {
+  return await axios.post(`${BASE_URL}/${id}/like`, null, {
+    headers: getAuthHeaders()
+  });
+};
+
+export const unlikeOne = async (id) => {
+  return await axios.delete(`${BASE_URL}/${id}/unlike`, {
+    headers: getAuthHeaders()
+  });
+};

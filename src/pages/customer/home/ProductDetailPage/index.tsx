@@ -8,7 +8,7 @@ import { ArrowUpOutlined, EyeOutlined, FilePdfOutlined } from '@ant-design/icons
 import { formatDate } from '~/utils/date';
 import { Tag } from '~/components';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const ProductDetail = () => {
   const { id } = useParams();

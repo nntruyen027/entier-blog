@@ -60,6 +60,14 @@ const PostSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
+    likePostStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
+    unlikePostStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
     asignTagToPostStart: (state, action) => {
       state.loading = true;
       state.error = null;
@@ -72,6 +80,14 @@ const PostSlice = createSlice({
       state.loading = false;
     },
     updatePostFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    likeAndUnlikePostSuccess: (state, action) => {
+      state.post.liked = !state.post.liked;
+      state.loading = false;
+    },
+    likeAndUnlikePostFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     },
@@ -110,7 +126,11 @@ export const {
   getPostSuccess,
   getPostFailure,
   asignTagToPostStart,
-  getPostsByNoAdminStart
+  getPostsByNoAdminStart,
+  likePostStart,
+  unlikePostStart,
+  likeAndUnlikePostFailure,
+  likeAndUnlikePostSuccess
 } = PostSlice.actions;
 
 export default PostSlice.reducer;

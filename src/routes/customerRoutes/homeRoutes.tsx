@@ -1,6 +1,6 @@
 import { Route } from '~/types';
 import { v4 as uuid4 } from 'uuid';
-import { ContentPage, HomePage, PostDetailPage, ProductDetailPage } from '~/pages';
+import { AboutMePage, ContentPage, HomePage, PostDetailPage, ProductDetailPage, ProfileCustomerPage } from '~/pages';
 import { ContactPage, ProductPage } from '~/pages/customer';
 import { routes } from '~/config';
 
@@ -40,6 +40,18 @@ const routesConfig: Route[] = [
     path: routes.customer.home.service,
     element: <ContactPage />,
     label: 'Dịch vụ'
+  },
+  {
+    id: `home-main-${uuid4()}`,
+    path: routes.customer.home.aboutMe,
+    element: <AboutMePage />,
+    label: 'About Me'
+  },
+  {
+    id: `home-main-${uuid4()}`,
+    path: routes.customer.home.profile,
+    element: <ProfileCustomerPage />,
+    label: 'Trang cá nhân'
   }
 ];
 

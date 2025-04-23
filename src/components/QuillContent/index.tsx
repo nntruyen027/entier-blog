@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 
 interface QuillContentProps {
   content: string | undefined;
+  showToc?: boolean; // Thêm tùy chọn có hiển thị TOC hay không
 }
 
-const QuillContent: React.FC<QuillContentProps> = ({ content }) => {
+const QuillContent: React.FC<QuillContentProps> = ({ content, showToc = true }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [height, setHeight] = useState(500); // Default height
   const [headings, setHeadings] = useState<{ id: string; text: string; level: number }[]>([]);
@@ -96,10 +97,37 @@ const QuillContent: React.FC<QuillContentProps> = ({ content }) => {
               }
             }
 
+            function waitForImagesToLoad() {
+              const images = Array.from(document.images);
+              if (images.length === 0) {
+                sendHeight();
+                return;
+              }
+
+              let loadedCount = 0;
+              images.forEach((img) => {
+                if (img.complete) {
+                  loadedCount++;
+                } else {
+                  img.onload = img.onerror = () => {
+                    loadedCount++;
+                    if (loadedCount === images.length) {
+                      sendHeight();
+                    }
+                  };
+                }
+              });
+
+              if (loadedCount === images.length) {
+                sendHeight();
+              }
+            }
+
             window.onload = () => {
-              sendHeight();
+              setTimeout(() => {
+                waitForImagesToLoad();
+              }, 100);
               window.onresize = sendHeight;
-              setTimeout(sendHeight, 200);
             };
 
             window.addEventListener('message', (event) => {
@@ -127,7 +155,6 @@ const QuillContent: React.FC<QuillContentProps> = ({ content }) => {
     };
 
     window.addEventListener('message', handleMessage);
-
     return () => {
       window.removeEventListener('message', handleMessage);
     };
@@ -140,42 +167,40 @@ const QuillContent: React.FC<QuillContentProps> = ({ content }) => {
   return (
     <div style={{ display: 'flex' }}>
       {/* TOC */}
-      <div
-        style={{
-          width: '250px',
-          padding: '16px',
-          background: '#f9fafb',
-          borderRadius: 8,
-          marginRight: '20px'
-        }}
-      >
-        {headings.length > 0 && (
-          <div>
-            <h3 style={{ fontSize: 18, marginBottom: 12 }}>📖 Mục lục</h3>
-            <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0 }}>
-              {headings.map((heading) => (
-                <li
-                  key={heading.id}
-                  onClick={() => handleTocClick(heading.id)}
-                  style={{
-                    marginLeft: (heading.level - 1) * 16,
-                    marginBottom: 8,
-                    cursor: 'pointer',
-                    color: '#007bff',
-                    textDecoration: 'none',
-                    fontSize: 14,
-                    transition: 'color 0.2s'
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = '#0056b3')}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = '#007bff')}
-                >
-                  {heading.text}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+      {showToc && headings.length > 0 && (
+        <div
+          style={{
+            width: '250px',
+            padding: '16px',
+            background: '#f9fafb',
+            borderRadius: 8,
+            marginRight: '20px'
+          }}
+        >
+          <h3 style={{ fontSize: 18, marginBottom: 12 }}>📖 Mục lục</h3>
+          <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0 }}>
+            {headings.map((heading) => (
+              <li
+                key={heading.id}
+                onClick={() => handleTocClick(heading.id)}
+                style={{
+                  marginLeft: (heading.level - 1) * 16,
+                  marginBottom: 8,
+                  cursor: 'pointer',
+                  color: '#007bff',
+                  textDecoration: 'none',
+                  fontSize: 14,
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#0056b3')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = '#007bff')}
+              >
+                {heading.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <iframe
         ref={iframeRef}

@@ -11,12 +11,6 @@ const menu: MenuItemType[] = [
   },
   {
     hasChildren: false,
-    label: 'Về chúng tôi',
-    id: `menu-${uuid4()}`,
-    route: routes.customer.home.aboutMe
-  },
-  {
-    hasChildren: false,
     label: 'Bài viết',
     id: `menu-${uuid4()}`,
     route: routes.customer.home.news
@@ -39,6 +33,12 @@ const menu: MenuItemType[] = [
         route: routes.customer.home.service
       }
     ]
+  },
+  {
+    hasChildren: false,
+    label: 'Về chúng tôi',
+    id: `menu-${uuid4()}`,
+    route: routes.customer.home.aboutMe
   }
 ];
 

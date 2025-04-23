@@ -11,7 +11,8 @@ const main = {
   param: '/admin/system/param',
   post: '/admin/public/post',
   contact: '/admin/public/contact',
-  product: '/admin/service/product'
+  product: '/admin/service/product',
+  profile: '/admin/profile'
 };
 
 export { auth, main };
