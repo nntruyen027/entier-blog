@@ -1,10 +1,29 @@
-import { asignTag, createOne, deleteOne, getAll, getAllNoAdmin, getOne, likeOne, unlikeOne, updateOne } from './api';
+import {
+  asignTag,
+  createComment,
+  createOne,
+  deleteComment,
+  deleteOne,
+  getAll,
+  getAllNoAdmin,
+  getOne,
+  likeOne,
+  unlikeOne,
+  updateComment,
+  updateOne
+} from './api';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
   asignTagToPostStart,
+  createCommentFailure,
+  createCommentStart,
+  createCommentSuccess,
   createPostFailure,
   createPostStart,
   createPostSuccess,
+  deleteCommentFailure,
+  deleteCommentStart,
+  deleteCommentSuccess,
   deletePostFailure,
   deletePostStart,
   deletePostSuccess,
@@ -19,6 +38,9 @@ import {
   likeAndUnlikePostSuccess,
   likePostStart,
   unlikePostStart,
+  updateCommentFailure,
+  updateCommentStart,
+  updateCommentSuccess,
   updatePostFailure,
   updatePostStart,
   updatePostSuccess
@@ -69,7 +91,7 @@ function* createPostRequest(action) {
 function* updatePostRequest(action) {
   try {
     const { data } = yield call(updateOne, action.payload);
-    yield put(updatePostSuccess(data));
+    yield put(updateCommentSuccess(data));
     yield put(showNotification({ message: 'Cập nhật bài viết thành công!', variant: 'success' }));
   } catch (error) {
     yield put(updatePostFailure(error));
@@ -117,6 +139,36 @@ function* unlikePostRequest(action) {
   }
 }
 
+function* createCommentRequest(action) {
+  try {
+    const { data } = yield call(createComment, action.payload);
+    yield put(createCommentSuccess(data));
+  } catch (error) {
+    yield put(createCommentFailure(error));
+    yield put(showNotification({ message: 'Bình luận bài viết thất bại!', variant: 'error' }));
+  }
+}
+
+function* updateCommentRequest(action) {
+  try {
+    const { data } = yield call(updateComment, action.payload);
+    yield put(updateCommentSuccess(data));
+  } catch (error) {
+    yield put(updateCommentFailure(error));
+    yield put(showNotification({ message: 'Bình luận bài viết thất bại!', variant: 'error' }));
+  }
+}
+
+function* deleteCommentRequest(action) {
+  try {
+    yield call(deleteComment, action.payload);
+    yield put(deleteCommentSuccess(action.payload));
+  } catch (error) {
+    yield put(deleteCommentFailure(error));
+    yield put(showNotification({ message: 'Xoá bình luận bài viết thất bại!', variant: 'error' }));
+  }
+}
+
 function* PostSaga() {
   yield takeLatest(getPostsStart.type, getPostsRequest);
   yield takeLatest(getPostsByNoAdminStart.type, getPostsByNotAdminRequest);
@@ -126,6 +178,9 @@ function* PostSaga() {
   yield takeLatest(asignTagToPostStart.type, asignTagToPostRequest);
   yield takeLatest(deletePostStart.type, deletePostRequest);
   yield takeLatest(likePostStart.type, likePostRequest);
+  yield takeLatest(createCommentStart.type, createCommentRequest);
+  yield takeLatest(updateCommentStart.type, updateCommentRequest);
+  yield takeLatest(deleteCommentStart.type, deleteCommentRequest);
   yield takeLatest(unlikePostStart.type, unlikePostRequest);
 }
 

@@ -1,12 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { RootState } from '~/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostStart, likePostStart, unlikePostStart } from '~/redux/post/slice';
-import { Empty, FloatButton, Typography } from 'antd';
-import { QuillContent } from '~/components'; // Import the new component
-import { formatDate } from '~/utils/date';
-import { CommentOutlined, DislikeOutlined, EllipsisOutlined, LikeOutlined } from '@ant-design/icons';
+import { FloatButton, Typography } from 'antd';
+import { CommentOutlined, EllipsisOutlined, HeartFilled } from '@ant-design/icons';
+import { CommentComponent, PostComponent } from './components';
 
 const { Title } = Typography;
 
@@ -44,21 +43,8 @@ const Component = () => {
     <div className='grid grid-cols-12'>
       <div className={'col-span-2 '} />
       <div className={'col-span-8'}>
-        <div className='w-full grid col-span-8 max-w-screen-lg bg-white'>
-          {post?.image ? <img src={post?.image} className='w-full' alt={post.title} /> : <Empty />}
-          <Title className='my-3' level={2}>
-            {post?.title}
-          </Title>
-          <div className='w-full flex justify-start text-left p-3 italic'>{post?.description}</div>
-          <div className='w-full flex justify-between text-left p-3 italic'>
-            <span>{post?.createAt && formatDate(post?.createAt, 'DD/MM/YYYY')}</span>
-            <span>{post?.author?.fullName}</span>
-          </div>
-          <QuillContent content={post?.content} showToc={false} />
-        </div>
-        <div id='comment-section' className='w-full max-w-screen-lg mt-8 p-3 text-left bg-white'>
-          <Title level={4}>Bình luận</Title>
-        </div>
+        <PostComponent post={post} />
+        <CommentComponent post={post} />
       </div>
       <div className={'col-span-2 '} />
 
@@ -71,9 +57,9 @@ const Component = () => {
         placement='left'
       >
         {post?.liked ? (
-          <FloatButton icon={<DislikeOutlined />} onClick={handleUnlike} />
+          <FloatButton icon={<HeartFilled className={'text-red-500'} />} onClick={handleUnlike} />
         ) : (
-          <FloatButton icon={<LikeOutlined />} onClick={hanleLike} />
+          <FloatButton icon={<HeartFilled />} onClick={hanleLike} />
         )}
         <FloatButton
           icon={<CommentOutlined />}

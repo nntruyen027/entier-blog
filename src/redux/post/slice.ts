@@ -85,6 +85,7 @@ const PostSlice = createSlice({
     },
     likeAndUnlikePostSuccess: (state, action) => {
       state.post.liked = !state.post.liked;
+      state.post.likeCount = state.post.liked ? state.post.likeCount + 1 : state.post.likeCount - 1;
       state.loading = false;
     },
     likeAndUnlikePostFailure: (state, action) => {
@@ -103,6 +104,51 @@ const PostSlice = createSlice({
       state.rowCount = state.rowCount - 1;
     },
     deletePostFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    createCommentStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
+    createCommentSuccess: (state, action) => {
+      state.post.comments.push(action.payload);
+      state.loading = false;
+    },
+    createCommentFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    updateCommentStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
+    updateCommentSuccess: (state, action) => {
+      const index = state.post.comments.findIndex((e) => e.id === action.payload.id);
+      if (index !== -1) {
+        state.post.comments[index] = action.payload;
+      }
+      state.loading = false;
+    },
+    updateCommentFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    deleteCommentStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
+    deleteCommentSuccess: (state, action) => {
+      console.log(
+        state.post.comments.findIndex((e) => e.id === action.payload),
+        action.payload
+      );
+      const index = state.post.comments.findIndex((e) => e.id === action.payload);
+      if (index !== -1) {
+        state.post.comments.splice(index, 1);
+      }
+    },
+    deleteCommentFailure: (state, action) => {
       state.error = action.payload;
       state.loading = false;
     }
@@ -130,7 +176,16 @@ export const {
   likePostStart,
   unlikePostStart,
   likeAndUnlikePostFailure,
-  likeAndUnlikePostSuccess
+  likeAndUnlikePostSuccess,
+  createCommentStart,
+  createCommentSuccess,
+  createCommentFailure,
+  updateCommentStart,
+  updateCommentSuccess,
+  deleteCommentStart,
+  deleteCommentSuccess,
+  deleteCommentFailure,
+  updateCommentFailure
 } = PostSlice.actions;
 
 export default PostSlice.reducer;

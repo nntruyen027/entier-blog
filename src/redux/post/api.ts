@@ -36,6 +36,24 @@ export const createOne = async (body) => {
   });
 };
 
+export const createComment = async ({ id, body }) => {
+  return await axios.post(`${BASE_URL}/${id}/comments`, JSON.stringify(body), {
+    headers: {
+      ...getAuthHeaders(),
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
+export const updateComment = async ({ id, body }) => {
+  return await axios.put(`${BASE_URL}/comments/${id}`, JSON.stringify(body), {
+    headers: {
+      ...getAuthHeaders(),
+      'Content-Type': 'application/json'
+    }
+  });
+};
+
 export const updateOne = async ({ id, body }) => {
   return await axios.put(`${BASE_URL}/admin/${id}`, JSON.stringify(body), {
     headers: {
@@ -56,6 +74,12 @@ export const asignTag = async ({ id, body }) => {
 
 export const deleteOne = async (id) => {
   return await axios.delete(`${BASE_URL}/admin/${id}`, {
+    headers: getAuthHeaders()
+  });
+};
+
+export const deleteComment = async (id) => {
+  return await axios.delete(`${BASE_URL}/comments/${id}`, {
     headers: getAuthHeaders()
   });
 };

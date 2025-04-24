@@ -40,8 +40,6 @@ const QuillContent: React.FC<QuillContentProps> = ({ content, showToc = true }) 
             body {
               font-family: 'Segoe UI', sans-serif;
               margin: 0;
-              padding: 24px;
-              color: #2d2d2d;
               line-height: 1.7;
             }
             h1, h2, h3, h4, h5, h6 {
@@ -209,7 +207,6 @@ const QuillContent: React.FC<QuillContentProps> = ({ content, showToc = true }) 
           height: `${height}px`,
           border: 'none',
           borderRadius: 8,
-          boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
           transition: 'height 0.3s ease',
           background: 'white'
         }}
