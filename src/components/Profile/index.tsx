@@ -1,7 +1,6 @@
 import React from 'react';
 import type { MenuProps } from 'antd';
 import { Avatar, Button, Dropdown } from 'antd';
-import { UserSwitchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '~/redux/auth/slice';
 import { RootState } from '~/redux/store';
@@ -42,8 +41,7 @@ const Profile: React.FC = () => {
       ? [
           {
             key: 'switch',
-            label: !location.pathname.includes('admin') ? 'Quản trị viên' : 'Blog',
-            icon: <UserSwitchOutlined />
+            label: !location.pathname.includes('admin') ? 'Quản trị viên' : 'Blog'
           }
         ]
       : []),

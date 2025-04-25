@@ -21,6 +21,13 @@ export const getAll = async (params) => {
   });
 };
 
+export const getFavorites = async (params) => {
+  return await axios.get(`${BASE_URL}/favorites`, {
+    params,
+    headers: getAuthHeaders()
+  });
+};
+
 export const getOne = async (id) => {
   return await axios.get(`${BASE_URL}/${id}`, {
     headers: getAuthHeaders()

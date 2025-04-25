@@ -6,6 +6,7 @@ import {
   deleteOne,
   getAll,
   getAllNoAdmin,
+  getFavorites,
   getOne,
   likeOne,
   unlikeOne,
@@ -27,6 +28,7 @@ import {
   deletePostFailure,
   deletePostStart,
   deletePostSuccess,
+  getFavoritePostStart,
   getPostFailure,
   getPostsByNoAdminStart,
   getPostsFailure,
@@ -50,6 +52,16 @@ import { showNotification } from '~/redux/noti/slice'; // Giả sử bạn có s
 function* getPostsRequest(action) {
   try {
     const { data } = yield call(getAll, action.payload);
+    yield put(getPostsSuccess(data));
+  } catch (error) {
+    yield put(getPostsFailure(error));
+    yield put(showNotification({ message: 'Lấy danh sách bài viết thất bại!', variant: 'error' }));
+  }
+}
+
+function* getFavouritePostsRequest(action) {
+  try {
+    const { data } = yield call(getFavorites, action.payload);
     yield put(getPostsSuccess(data));
   } catch (error) {
     yield put(getPostsFailure(error));
@@ -171,6 +183,7 @@ function* deleteCommentRequest(action) {
 
 function* PostSaga() {
   yield takeLatest(getPostsStart.type, getPostsRequest);
+  yield takeLatest(getFavoritePostStart.type, getFavouritePostsRequest);
   yield takeLatest(getPostsByNoAdminStart.type, getPostsByNotAdminRequest);
   yield takeLatest(getPostStart.type, getPostRequest);
   yield takeLatest(createPostStart.type, createPostRequest);

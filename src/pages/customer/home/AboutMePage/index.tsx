@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { RootState } from '~/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostStart } from '~/redux/post/slice';
-import { Button, Empty, Typography } from 'antd';
+import { Button, Empty, Image, Typography } from 'antd';
 import { QuillContent } from '~/components'; // Import the new component
 import { formatDate } from '~/utils/date';
 import { ArrowUpOutlined } from '@ant-design/icons';
@@ -33,9 +33,15 @@ const Page = () => {
   }, [post?.content]);
 
   return (
-    <div className='flex justify-center p-4'>
+    <div className='flex justify-center p-0'>
       <div className='w-full max-w-screen-lg bg-white'>
-        {post?.image ? <img src={post?.image} className='w-full' alt={post.title} /> : <Empty />}
+        {post?.image ? (
+          <div className='w-full aspect-[2.63] overflow-hidden rounded-lg'>
+            <Image src={post?.image} preview={false} className='w-full h-full object-cover' />
+          </div>
+        ) : (
+          <Empty />
+        )}
         <Title className='my-3' level={2}>
           {post?.title}
         </Title>
@@ -44,7 +50,9 @@ const Page = () => {
           <span>{post?.createAt && formatDate(post?.createAt, 'DD/MM/YYYY')}</span>
           <span>{post?.author.fullName}</span>
         </div>
-        <QuillContent content={post?.content} showToc={false} />
+        <div className={'p-3'}>
+          <QuillContent content={post?.content} showToc={false} />
+        </div>
       </div>
 
       <Button

@@ -17,6 +17,10 @@ const PostSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
+    getFavoritePostStart: (state, action) => {
+      state.loading = true;
+      state.error = null;
+    },
     getPostsByNoAdminStart: (state, action) => {
       state.loading = true;
       state.error = null;
@@ -185,7 +189,8 @@ export const {
   deleteCommentStart,
   deleteCommentSuccess,
   deleteCommentFailure,
-  updateCommentFailure
+  updateCommentFailure,
+  getFavoritePostStart
 } = PostSlice.actions;
 
 export default PostSlice.reducer;

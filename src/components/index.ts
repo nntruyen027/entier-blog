@@ -9,6 +9,7 @@ import Tag from './Tag';
 import EditorField from './EditorCompatible';
 import QuillContent from './QuillContent';
 import Profile from './Profile';
+import PostComponent from './PostComponent';
 
 export {
   ItemComponent,
@@ -21,5 +22,6 @@ export {
   Tag,
   EditorField,
   QuillContent,
-  Profile
+  Profile,
+  PostComponent
 };
