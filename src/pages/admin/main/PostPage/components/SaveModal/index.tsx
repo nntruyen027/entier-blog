@@ -15,7 +15,7 @@ const SaveModal = ({ isModalOpen, onCancel, form, onSave, editingPost }) => {
       }, 100);
       return () => clearTimeout(timer);
     } else {
-      setEditorReady(false); // Reset khi đóng modal
+      setEditorReady(false);
     }
   }, [isModalOpen]);
 

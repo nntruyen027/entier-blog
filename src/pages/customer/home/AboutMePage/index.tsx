@@ -48,7 +48,7 @@ const Page = () => {
         <div className='w-full flex justify-start text-left p-3 italic'>{post?.description}</div>
         <div className='w-full flex justify-between text-left p-3 italic'>
           <span>{post?.createAt && formatDate(post?.createAt, 'DD/MM/YYYY')}</span>
-          <span>{post?.author.fullName}</span>
+          <span>{post?.author?.fullName}</span>
         </div>
         <div className={'p-3'}>
           <QuillContent content={post?.content} showToc={false} />
