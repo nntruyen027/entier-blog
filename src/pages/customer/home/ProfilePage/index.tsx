@@ -7,17 +7,19 @@ import { faEnvelope, faLocationDot, faPhone, faVenusMars } from '@fortawesome/fr
 import { useEffect, useState } from 'react';
 import { getFavoritePostStart } from '~/redux/post/slice';
 import { PostComponent } from '~/components';
-import { UpdateInfoModal } from './components';
+import { UpdateInfoModal, UpdatePasswordModal } from './components';
 import { useForm } from 'antd/es/form/Form';
-import { updateSelfStart } from '~/redux/auth/slice';
+import { updatePassSelfStart, updateSelfStart } from '~/redux/auth/slice';
 
 const Page = () => {
   const [isOpenUpdate, setIsOpenUpdate] = useState(false);
+  const [isOpenChangePass, setIsOpenChangePass] = useState(false);
   const [pagination] = useState({
     pageIndex: 0,
     pageSize: 10
   });
   const [form] = useForm();
+  const [passForm] = useForm();
   const { value } = useParamValue('coverPhotoUrl');
   const { account } = useSelector((state: RootState) => state.auth);
   const { posts } = useSelector((state: RootState) => state.post);
@@ -33,19 +35,37 @@ const Page = () => {
     form.setFieldsValue(account);
   };
 
+  const handleEditPass = () => {
+    setIsOpenChangePass(true);
+  };
+
   const handleSave = (value) => {
     form.resetFields();
     setIsOpenUpdate(false);
     dispatch(updateSelfStart(value));
   };
 
+  const handleChangePass = (value) => {
+    passForm.resetFields();
+    setIsOpenChangePass(false);
+    dispatch(updatePassSelfStart(value));
+  };
+
   const handleCancel = () => {
     form.resetFields();
+    passForm.resetFields();
     setIsOpenUpdate(false);
+    setIsOpenChangePass(false);
   };
 
   return (
     <>
+      <UpdatePasswordModal
+        onSave={handleChangePass}
+        form={passForm}
+        isOpen={isOpenChangePass}
+        onCancel={handleCancel}
+      />
       <UpdateInfoModal onSave={handleSave} form={form} isOpen={isOpenUpdate} onCancel={handleCancel} />
       <div className='grid grid-cols-1 md:grid-cols-12 gap-4 w-full min-h-screen '>
         <div className='hidden md:block md:col-span-2 bg-gray-100' />
@@ -87,7 +107,7 @@ const Page = () => {
             </Typography.Text>
             <div className={'mt-5 flex justify-start items-center gap-6'}>
               <Button onClick={handleEditAccount}>Chỉnh sửa thông tin</Button>
-              <Button>Đổi mật khẩu</Button>
+              <Button onClick={handleEditPass}>Đổi mật khẩu</Button>
             </div>
           </div>
 
