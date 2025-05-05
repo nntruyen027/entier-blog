@@ -104,7 +104,7 @@ const Component = ({ post }) => {
                       <EditorField />
                     </Form.Item>
                     <Form.Item className='flex gap-2'>
-                      <Button type='primary' htmlType='submit'>
+                      <Button type='primary' htmlType='submit' className={'mr-2'}>
                         Lưu
                       </Button>
                       <Button onClick={() => setEditingCommentId(null)}>Huỷ</Button>

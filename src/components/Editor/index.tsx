@@ -4,7 +4,6 @@ import 'react-quill/dist/quill.snow.css';
 import 'quill-emoji/dist/quill-emoji.css';
 import { htmlToMarkdown } from '~/utils/parser';
 import quillEmoji from 'quill-emoji';
-import './index.css';
 import ImageResize from 'quill-image-resize-module-react';
 
 const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
@@ -43,7 +42,7 @@ export function Editor(props: EditorProps) {
     setValue(props.value || '');
   }, [props.value]);
 
-  // Khi render xong giá trị value, patch lại style ảnh nếu thiếu
+  // Patch style ảnh nếu thiếu
   useEffect(() => {
     if (reactQuillRef.current) {
       const editor = reactQuillRef.current.getEditor();
@@ -56,6 +55,19 @@ export function Editor(props: EditorProps) {
       });
     }
   }, [value]);
+
+  // Áp dụng chiều cao editor bằng Tailwind (5 đến 50 dòng)
+  useEffect(() => {
+    const editor = document.querySelector('.ql-editor') as HTMLElement;
+    if (editor) {
+      editor.classList.add(
+        'min-h-[100px]', // ~5 dòng
+        'max-h-[1000px]', // ~50 dòng
+        'overflow-y-auto',
+        'resize-none'
+      );
+    }
+  }, []);
 
   const extractImageUrls = (html: string): string[] => {
     const div = document.createElement('div');
@@ -191,8 +203,8 @@ export function Editor(props: EditorProps) {
   return (
     <div className='w-full'>
       <ReactQuill
-        className='w-full'
         ref={reactQuillRef}
+        className='w-full'
         theme='snow'
         placeholder='Start writing...'
         modules={modules}
