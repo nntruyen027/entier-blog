@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getParamByKey } from '~/redux/param/api';
 
 export default function useParamValue(key: string) {
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState<string | null | any>(null);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {

@@ -134,7 +134,7 @@ const HomeLayout = ({ children, title }) => {
             )}
           </div>
         </Header>
-        <Content style={{ margin: '16px', overflow: 'auto' }}>{children}</Content>
+        <Content style={{ overflow: 'auto' }}>{children}</Content>
         <Footer style={{ textAlign: 'center', background: 'transparent' }}>
           © {new Date().getFullYear()} {name}
         </Footer>

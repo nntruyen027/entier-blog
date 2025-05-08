@@ -9,7 +9,7 @@ const Component = ({ post }) => {
   return (
     <Card
       className='w-full text-left cursor-pointer shadow-sm hover:shadow-md transition-all'
-      onClick={() => nav(`${post.id}`)}
+      onClick={() => nav(`/news/${post.id}`)}
       hoverable
       cover={
         <div className='w-full aspect-video bg-gray-100 relative'>

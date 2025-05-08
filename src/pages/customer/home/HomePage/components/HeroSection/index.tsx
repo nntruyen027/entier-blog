@@ -17,7 +17,7 @@ const Page = () => {
   }, [nameParam, sloganParam]);
 
   return (
-    <div className='w-screen h-[calc(100vh-20rem)] flex flex-col items-center justify-center text-center px-4'>
+    <div className='w-screen h-screen flex flex-col items-center justify-center text-center'>
       <Title
         level={1}
         style={{
